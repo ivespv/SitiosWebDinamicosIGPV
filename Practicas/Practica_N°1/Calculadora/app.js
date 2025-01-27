@@ -95,9 +95,36 @@ app.post('/calcular', (req, res) => {
             resultado = 'Operación no válida';
     }
     res.send(`
-        <p>El resultado de ${operacion} ${numA} y ${numB} es: ${resultado}</>
-        <br>
-        <a href="/">Volver a la página inicial</a>
+         <style>
+            body {
+                font-family: Arial, sans-serif;
+                background-color:rgb(231, 231, 231);
+                margin: 0;
+                padding: 20px;
+            }
+            h1 {
+                text-align: center;
+                color: #333;
+            }
+            a {
+                text-align: center;
+                color: #333;
+            }
+            div {
+                max-width: 400px;
+                margin: 0 auto;
+                padding: 20px;
+                background: #fff;
+                border-radius: 5px;
+                box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            }
+        </style>
+        <h1>Resultado</h1>
+        <div>
+            <p>El resultado de ${operacion} ${numA} y ${numB} es: ${resultado}</>
+            <br><br>
+            <a href="/">Volver a la página inicial</a>
+        </div>    
     `);
 });
 
