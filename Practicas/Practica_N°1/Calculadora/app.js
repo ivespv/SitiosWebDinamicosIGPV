@@ -1,28 +1,43 @@
 const express = require('express');
+const path = require('path');
 const app = express();
-const port =3000;
+const port = 3000;
+ 
+app.use(express.static('public'));
 
-app.use(express.urlencoded({extended: false}));
+app.use(express.urlencoded({ extended: true }));
 
-app.get('/', (req, res) =>{
-    res.send(`
-        <form method="POST" action="/calcular">
-            <label for="num1">Número 1:</label>
-            <input type="number" id="num1" name="num1"
-            <br>
-            <label for="num2">Número 2:</label>
-            <input type="number" id="num2" name="num2"
-            <br>
-            <button type="submit">Calcular Suma</button>
-        </form>
-    `);
+app.post('/calcular', (req, res) => {
+    const { a, b, operacion } = req.body;
+    let resultado;
+
+    const numA = parseFloat(a);
+    const numB = parseFloat(b);
+
+    switch (operacion) {
+        case 'sumar':
+            resultado = numA + numB;
+            break;
+        case 'restar':
+            resultado = numA - numB;
+            break;
+        case 'multiplicar':
+            resultado = numA * numB;
+            break;
+        case 'dividir':
+            resultado = numB !== 0 ? numA / numB : 'Error: División por cero';
+            break;
+        default:
+            resultado = 'Operación no válida';
+    }
+
+        res.send(`El resultado de ${operacion} ${numA} y ${numB} es: ${resultado}`);
 });
-app.post('/calcular',(req, res) =>{
-    const num1 = parseInt(req.body.num1);
-    const num2 = parseInt(req.body.num2);
-    const suma = num1 + num2;
-    res.send(`El resultado de la suma es ${num1} y ${num2} es: ${suma} `)
+
+app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
+
 app.listen(port, () => {
-    console.log(`servidor en el puerto ${port}`)
+    console.log(`Servidor escuchando en http://localhost:${port}`);
 });

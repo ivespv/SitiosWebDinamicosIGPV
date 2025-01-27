@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora Web</title>
+</head>
+<body>
+    <h1>Calculadora Web</h1>
+    <form action="/calcular" method="POST">
+        <label for="a">Primer Valor</label>
+        <input type="number" id="a" name="a" required>
+        <br>
+        <label for="b">Segundo Valor</label>
+        <input type="number" id="b" name="b" required>
+        <br>
+        <label for="operacion">Operación:</label>
+        <select id="operacion" name="operacion" required>
+            <option value="sumar">Sumar</option>
+            <option value="restar">Restar</option>
+            <option value="multiplicar">Multiplicar</option>
+            <option value="dividir">Dividir</option>
+        </select>
+        <br>
+        <button type="submit">Calcular</button>
+    </form>
+</body>
+</html>
