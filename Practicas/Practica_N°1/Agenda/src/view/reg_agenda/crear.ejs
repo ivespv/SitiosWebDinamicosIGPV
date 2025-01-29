@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Crear Agenda</title>
+</head>
+<body>
+  <h1>Crear Agenda</h1>
+  <form action="/reg_agenda/crear" method="POST">
+    <label for="nombres">Nombres:</label>
+    <input type="text" name="nombres" id="nombres" required />
+    <br />
+    <label for="apellidos">apellidos:</label>
+    <input type="text" name="apellidos" id="apellidos" required />
+    <br />
+    <label for="direccion">direccion:</label>
+    <input type="text" name="direccion" id="direccion" required />
+    <br />
+    <label for="telefono">telefono:</label>
+    <input type="text" name="telefono" id="telefono" required />
+    <br />
+    <button type="submit">Crear</button>
+  </form>
+  <a href="/">Volver</a>
+</body>
+</html>

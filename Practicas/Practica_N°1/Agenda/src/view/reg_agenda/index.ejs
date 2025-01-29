@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Agenda</title>
+</head>
+<body>
+  <h1>Registro de Agenda</h1>
+  <a href="/reg_agenda/crear">Crear Agenda</a>
+  <table>
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>nombres</th>
+        <th>apellidos</th>
+        <th>direccion</th>
+        <th>telefono</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% reg_agenda.forEach(agenda => { %>
+        <tr>
+          <td><%= agenda.id %></td>
+          <td><%= agenda.nombres %></td>
+          <td><%= agenda.apellidos %></td>
+          <td><%= agenda.direccion %></td>
+          <td><%= agenda.telefono %></td>
+          <td>
+            <a href="/reg_agenda/editar/<%= agenda.id %>">Editar</a>
+            <form action="/reg_agenda/eliminar/<%= agenda.id %>" method="POST" style="display:inline;">
+              <button type="submit">Eliminar</button>
+            </form>
+          </td>
+        </tr>
+      <% }) %>
+    </tbody>
+  </table>
+</body>
+</html>
