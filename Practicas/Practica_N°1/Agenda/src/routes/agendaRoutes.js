@@ -1,7 +1,6 @@
 const express = require("express");
 const router = express.Router();
 const { getRepository } = require("typeorm");
-const bcrypt = require("bcrypt");
 const { agenda } = require("../entity/agenda");
 const controlador = require("../controller/agendaController");
 
