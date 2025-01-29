@@ -6,7 +6,7 @@ const controlador = require("../controller/agendaController");
 
 router.get("/", async (req, res) => {
   controlador.obtenerAgenda(req, res);
-  res.render('index')
+  //res.render('index')
 });
 
 // Página para crear un Registro
