@@ -11,11 +11,11 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // Configuración del motor de vistas
-app.set("view engine", "ejs");
-app.set("view", path.join(__dirname, "view"));
+app.set("views engine", "ejs");
+app.set("views", path.join(__dirname, "views"));
 
 // Rutas
-app.use("/reg_agenda", agendaRoutes);
+app.use("/RegAgenda", agendaRoutes);
 app.use("/", (req, res) => {
   res.send("Bienvenido a la página principal!!");
 });
