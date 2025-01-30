@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const { getRepository } = require("typeorm");
 const { agenda } = require("../entity/agenda");
-const controlador = require("../controller/agendaController");
+const controlador = require("../Controller/agendaController");
 
 router.get("/", async (req, res) => {
   controlador.obtenerAgenda(req, res);

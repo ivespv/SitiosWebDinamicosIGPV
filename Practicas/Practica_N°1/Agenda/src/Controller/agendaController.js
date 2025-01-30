@@ -2,14 +2,11 @@ const { getRepository } = require("typeorm");
 const { agenda } = require("../entity/agenda");
 
 // Obtener todos los registros de Agenda
-
-
-
 const obtenerAgenda = async (req, res) => {
   try {
       const agendaList = await getRepository(agenda).find();
       console.log(agendaList)
-      res.render("reg_agenda/index", { agenda: agendaList });
+      res.render("RegAgenda/index", { agenda: agendaList });
   } catch (error) {
       res.status(500).json({ mensaje: "Error al obtener la agenda ", error });
   }
