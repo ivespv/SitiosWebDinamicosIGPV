@@ -11,7 +11,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // Configuración del motor de vistas
-app.set("views engine", "ejs");
+app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
 
 // Rutas
@@ -27,3 +27,4 @@ connectDB().then(() => {
     console.log(`Servidor corriendo en http://localhost:${PORT}`);
   });
 });
+

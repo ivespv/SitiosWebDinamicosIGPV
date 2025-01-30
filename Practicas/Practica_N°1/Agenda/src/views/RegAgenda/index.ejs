@@ -5,7 +5,7 @@
 </head>
 <body>
   <h1>Registro de Agenda</h1>
-  <a href="crear.ejs">Crear Agenda</a>
+  <a href="crear">Crear Agenda</a>
   <table>
     <thead>
       <tr>
@@ -17,7 +17,7 @@
       </tr>
     </thead>
     <tbody>
-      <% reg_agenda.forEach(agenda => { %>
+      <% agenda.forEach(agenda => { %>
         <tr>
           <td><%= agenda.id %></td>
           <td><%= agenda.nombres %></td>
@@ -25,8 +25,8 @@
           <td><%= agenda.direccion %></td>
           <td><%= agenda.telefono %></td>
        <td>
-            <a href="editar.ejs/<%= agenda.id %>">Editar</a>
-            <form action="eliminar.ejs/<%= agenda.id %>" method="POST" style="display:inline;" onsubmit="return confirm('¿Estás seguro de que deseas eliminar este registro?');">
+            <a href="editar/<%= agenda.id %>">Editar</a>
+            <form action="eliminar/<%= agenda.id %>" method="POST" style="display:inline;" onsubmit="return confirm('¿Estás seguro de que deseas eliminar este registro?');">
              <button type="submit">Eliminar</button>
             </form>
           </td>

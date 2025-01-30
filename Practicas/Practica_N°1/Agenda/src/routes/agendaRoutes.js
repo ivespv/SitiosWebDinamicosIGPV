@@ -11,7 +11,7 @@ router.get("/", async (req, res) => {
 
 // Página para crear un Registro
 router.get("/crear", (req, res) => {
-  res.render("reg_agenda/crear");
+  res.render("RegAgenda/crear");
 });
 
 router.post("/crear", async (req, res) => {
@@ -23,7 +23,7 @@ router.post("/crear", async (req, res) => {
     telefono,
   });
   await getRepository(agenda).save(nuevaAgenda);
-  res.redirect("/reg_agenda");
+  res.redirect("/RegAgenda");
 });
 
 // Página para editar un Registro
@@ -32,7 +32,7 @@ router.get("/editar/:id", async (req, res) => {
    const agenda = await getRepository(agenda).findOneBy({id:req.params.id});
       if (!agenda) return res.status(404).send("Registro no encontrado");
   
-      res.render("reg_agenda/editar", { agenda });
+      res.render("RegAgenda/editar", { agenda });
 });
 
 router.post("/editar/:id", async (req, res) => {
