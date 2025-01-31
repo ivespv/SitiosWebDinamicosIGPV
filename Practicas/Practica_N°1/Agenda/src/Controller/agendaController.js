@@ -20,7 +20,7 @@ async function crearAgenda(req, res) {
       const nuevaAgenda = getRepository(agenda).create({ nombres, apellidos, direccion, telefono });
       const resultado = await getRepository(agenda).save(nuevaAgenda);
       res.status(201).json({ mensaje: "Agenda creada", data: resultado });
-  } catch (error) {
+     } catch (error) {
       res.status(500).json({ mensaje: "Error al crear la agenda", error });
   }
 };
