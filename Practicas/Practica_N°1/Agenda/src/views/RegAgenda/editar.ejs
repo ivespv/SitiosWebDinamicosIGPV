@@ -7,8 +7,8 @@
 </head>
 <body>
   <h1>Editar Agenda</h1>
-  <form action="/agenda/editar/<%= agenda.id %>" method="POST">
-  <label for="nombre">Nombres:</label>
+  <form action="/RegAgenda/editar/<%= agenda.id %>" method="POST">
+  <label for="Nombres">Nombres:</label>
     <input
       type="text"
       name="nombres"
@@ -17,7 +17,7 @@
       required
     />
     <br />
-    <label for="apellidos">Nombre:</label>
+    <label for="apellidos">apellidos:</label>
     <input
       type="text"
       name="apellidos"
@@ -37,7 +37,7 @@
     <br />
     <label for="telefono">telefono:</label>
     <input
-      type="text"
+      type="int"
       name="telefono"
       id="telefono"
       value="<%= agenda.telefono %>"

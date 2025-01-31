@@ -28,31 +28,32 @@ router.post("/crear", async (req, res) => {
 
 // Página para editar un Registro
 router.get("/editar/:id", async (req, res) => {
-    
-   const agenda = await getRepository(agenda).findOneBy({id:req.params.id});
-      if (!agenda) return res.status(404).send("Registro no encontrado");
+  console.log("entro1")
+   const agenda2 = await getRepository(agenda).findOneBy({id:req.params.id});
+      if (!agenda2) return res.status(404).send("Registro no encontrado");
   
-      res.render("RegAgenda/editar", { agenda });
+      res.render("RegAgenda/editar", { agenda2 });
 });
 
 router.post("/editar/:id", async (req, res) => {
+  console.log("entro")
   const { nombres, apellidos, direccion, telefono } = req.body;
-  const agenda = await getRepository(agenda).findOneBy({id:req.params.id});
-  console.log(agenda);
-  if (agenda) {
-    agenda.nombres = nombres;
-    agenda.apellidos = apellidos;
-    agenda.direccion = direccion;
-    agenda.telefono = telefono;
-    await getRepository(agenda).save(agenda);
+  const agenda3 = await getRepository(agenda).findOneBy({id:req.params.id});
+  console.log(agenda3);
+  if (agenda3) {
+    agenda3.nombres = nombres;
+    agenda3.apellidos = apellidos;
+    agenda3.direccion = direccion;
+    agenda3.telefono = telefono;
+    await getRepository(agenda).save(agenda3);
   }
-  res.redirect("/reg_agenda");
+  res.redirect("/RegAgenda");
 });
 
 // Eliminar un Registro
 router.post("/eliminar/:id", async (req, res) => {
   await getRepository(agenda).delete(req.params.id);
-  res.redirect("/reg_agenda");
+  res.redirect("/RegAgenda");
 });
 
 module.exports = router;

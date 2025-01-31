@@ -5,7 +5,7 @@ const { agenda } = require("../entity/agenda");
 const obtenerAgenda = async (req, res) => {
   try {
       const agendaList = await getRepository(agenda).find();
-      console.log(agendaList)
+      //console.log(agendaList)
       res.render("RegAgenda/index", { agenda: agendaList });
   } catch (error) {
       res.status(500).json({ mensaje: "Error al obtener la agenda ", error });
@@ -25,25 +25,43 @@ async function crearAgenda(req, res) {
   }
 };
 
+// Actualizar un usuario
+const editarAgenda = async (req, res) => {
+    const { nombres, apellidos, direccion, telefono } = req.body;
+    const EdAgenda = await getRepository(agenda).findOne(req.params.id);
+    console.log("entro1")
+    if (EdAgenda) {
+      EdAgenda.nombres = nombres;
+      EdAgenda.apellidos = apellidos;
+      EdAgenda.direccion = direccion;
+      EdAgenda.telefono = telefono;
+      const resultado = await getRepository(agenda).save(EdAgenda);
+      res.json(resultado);
+    } else {
+      res.status(404).json({ mensaje: "Agenda no encontrada" });
+    }
+  };
 
-async function editarAgenda(req, res) {
-  const { nombres, apellidos, direccion, telefono } = req.body;
-  try {
-      const agendaEntry = await getRepository(agenda).findOne(req.params.id);
-      if (agendaEntry) {
-          agendaEntry.nombres = nombres;
-          agendaEntry.apellidos = apellidos;
-          agendaEntry.direccion = direccion;
-          agendaEntry.telefono = telefono;
-          const resultado = await getRepository(agenda).save(agendaEntry);
-          res.json({ mensaje: "Agenda actualizada", data: resultado });
-      } else {
-          res.status(404).json({ mensaje: "Registro no encontrado" });
-      }
-  } catch (error) {
-      res.status(500).json({ mensaje: "Error al actualizar la agenda", error });
-  }
-};
+
+//async function editarAgenda(req, res) {
+ // const { nombres, apellidos, direccion, telefono } = req.body;
+ // try {
+  //    const agendaEntry = await getRepository(agenda).findOne(req.params.id);
+      //console.log (agendaEntry)
+  //    if (agendaEntry) {
+   //       agendaEntry.nombres = nombres;
+   //       agendaEntry.apellidos = apellidos;
+    //      agendaEntry.direccion = direccion;
+      //    agendaEntry.telefono = telefono;
+        //  const resultado = await getRepository(agenda).save(agendaEntry);
+          //res.json({ mensaje: "Agenda actualizada", data: resultado });
+ //     } else {
+   //       res.status(404).json({ mensaje: "Registro no encontrado" });
+    //  }
+//  } catch (error) {
+  //    res.status(500).json({ mensaje: "Error al actualizar la agenda", error });
+//  }
+//};
 
 // Eliminar un agenda
 const eliminarAgenda = async (req, res) => {

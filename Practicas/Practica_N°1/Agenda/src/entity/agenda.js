@@ -1,25 +1,28 @@
 const { EntitySchema } = require("typeorm");
 
 module.exports.agenda = new EntitySchema({
-  name: "agenda",
+  name: "Agenda",
   tableName: "agenda",
   columns: {
     id: {
       primary: true,
-      type: "int",
+      type: "smallint",
       generated: true,
     },
     nombres: {
       type: "varchar",
+      length: 40
     },
     apellidos: {    
       type: "varchar",
+      length: 30
     },
     direccion: {
       type: "varchar",
+      length: 100
     },
     telefono: {
-      type: "varchar",
+      type: "int",
     },
   },
 });
