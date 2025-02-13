@@ -7,15 +7,15 @@
 </head>
 <body>
     <h1>Lista de Clientes</h1>
-    <a href="/users/new">Crear Nuevo Cliente</a>
+    <a href="/Cliente/new">Crear Nuevo Cliente</a>
     <ul>
-        <% users.forEach(user => { %>
+        <% Cliente.forEach(user => { %>
             <li>
                 <strong><%= user.ci %></strong> - <%= user.nombres%> 
                 (<%= user.apellidos %>) 
-                <a href="/users/<%= user._id %>">Ver</a>
-                <a href="/users/<%= user._id %>/edit">Editar</a>
-                <form action="/users/<%= user._id %>?_method=DELETE" method="POST" style="display: inline;">
+                <a href="/Cliente/<%= user._id %>">Ver</a>
+                <a href="/Cliente/<%= user._id %>/edit">Editar</a>
+                <form action="/Cliente/<%= user._id %>?_method=DELETE" method="POST" style="display: inline;">
                     <button type="submit">Eliminar</button>
                 </form>
             </li>

@@ -31,42 +31,42 @@ mongoose.connect('mongodb://127.0.0.1:27017/BdCliente', {
 app.get('/', async (req, res) => {
     const consulta = req.query.ci;
     if (consulta) {
-        const users = await User.find({ ci: consulta} );
-        return res.render('index', { users });
+        const Cliente = await User.find({ ci: consulta} );
+        return res.render('index', { Cliente });
     }
-    const users = await User.find( );
-    res.render('index', { users });
+    const Cliente = await User.find( );
+    res.render('index', { Cliente });
 });
 
-app.get('/users/new', (req, res) => {
+app.get('/Cliente/new', (req, res) => {
     res.render('create');
 });
 
-app.post('/users', async (req, res) => {
+app.post('/Cliente', async (req, res) => {
     const { ci, nombres, apellidos, celular, correo } = req.body;
     await User.create({ ci, nombres, apellidos, celular, correo });
     res.redirect('/');
 });
 
-app.get('/users/:id', async (req, res) => {
+app.get('/Cliente/:id', async (req, res) => {
     const user = await User.findById(req.params.id);
     res.render('show', { user });
     console.log(user)
 });
 
 //////////////////////////////
-app.get('/users/:id/edit', async (req, res) => {
+app.get('/Cliente/:id/edit', async (req, res) => {
     const user = await User.findById(req.params.id);
     res.render('edit', { user });
 });
 
-app.put('/users/:id', async (req, res) => {
-    const { correo, password, nombre, rol } = req.body;
-    await User.findByIdAndUpdate(req.params.id, { correo, password, nombre, rol });
+app.put('/Cliente/:id', async (req, res) => {
+    const { ci, nombres, apellidos, celular, correo } = req.body;
+    await User.findByIdAndUpdate(req.params.id, { ci, nombres, apellidos, celular, correo});
     res.redirect('/');
 });
 
-app.delete('/users/:id', async (req, res) => {
+app.delete('/Cliente/:id', async (req, res) => {
     await User.findByIdAndDelete(req.params.id);
     res.redirect('/');
 });
