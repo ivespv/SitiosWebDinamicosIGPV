@@ -4,47 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Detalle Cliente</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
-            margin: 0;
-            padding: 20px;
-        }
-
-        h1 {
-            color: #333;
-            border-bottom: 2px solid #007BFF;
-            padding-bottom: 10px;
-        }
-
-        p {
-            font-size: 16px;
-            color: #555;
-            margin: 10px 0;
-        }
-
-        strong {
-            color: #007BFF;
-        }
-
-        a {
-            display: inline-block;
-            margin-top: 20px;
-            padding: 10px 15px;
-            background-color: #007BFF;
-            color: white;
-            text-decoration: none;
-            border-radius: 5px;
-        }
-
-        a:hover {
-            background-color: #0056b3;
-        }
-    </style>
+    <link rel="stylesheet" href="/css/styles.css">
+    <link rel="stylesheet" href="/css/show.css">
 </head>
 <body>
-    <h1>CI: <%= cliente.ci %></h1>
+    <h2>CI: <%= cliente.ci %></h2>
     <p><strong>Nombres:</strong> <%= cliente.nombres %></p>
     <p><strong>Apellidos:</strong> <%= cliente.apellidos %></p>
     <p><strong>Celular:</strong> <%= cliente.celular %></p>
