@@ -14,7 +14,6 @@ app.get('/', (req, res) => {
                 padding: 20px;
             }
             h1 {
-                text-align: center;
                 color: #333;
             }
             form {

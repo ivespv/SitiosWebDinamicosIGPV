@@ -15,7 +15,7 @@ app.use(methodOverride('_method')); // Para soportar PUT y DELETE
 app.set('view engine', 'ejs');
 
 // Conexión a MongoDB
-// Conexión a MongoDB
+
 mongoose.connect('mongodb://127.0.0.1:27017/RCliente', {
     useNewUrlParser: true,
     useUnifiedTopology: true,
