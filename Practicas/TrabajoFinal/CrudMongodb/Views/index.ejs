@@ -9,13 +9,13 @@
     <h1>Lista de Clientes</h1>
     <a href="/Cliente/new">Crear Nuevo Cliente</a>
     <ul>
-        <% Cliente.forEach(user => { %>
+        <% clientes.forEach(cliente => { %>
             <li>
-                <strong><%= user.ci %></strong> - <%= user.nombres%> 
-                (<%= user.apellidos %>) 
-                <a href="/Cliente/<%= user._id %>">Ver</a>
-                <a href="/Cliente/<%= user._id %>/edit">Editar</a>
-                <form action="/Cliente/<%= user._id %>?_method=DELETE" method="POST" style="display: inline;">
+                <strong><%= cliente.ci %></strong> - <%= cliente.nombres%> 
+                (<%= cliente.apellidos %>) 
+                <a href="/Cliente/<%= cliente._id %>">Ver</a>
+                <a href="/Cliente/<%= cliente._id %>/edit">Editar</a>
+                <form action="/Cliente/<%= cliente._id %>?_method=DELETE" method="POST" style="display: inline;">
                     <button type="submit">Eliminar</button>
                 </form>
             </li>
