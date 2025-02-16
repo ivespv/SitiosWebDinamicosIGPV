@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./css/style.css">
+    <link rel="stylesheet" href="./css/detalle_producto.css">
+    <script src="./js/equipos.js" defer></script>
+    <script src="./js/cartService.js" defer></script>
+    <script src="./js/detalle_producto.js" defer></script>
+    <title>Detalle del Producto</title>
+</head>
+<body>
+    <header>
+        <nav id="navbar">
+            <a href="./index.html"><img src="./img/logo.png" alt="Logo" id="logo"></a>
+            <div>
+                <ul>
+                    <li><a href="">PRODUCTOS</a></li>
+                    <li><a href="">CONTACTOS</a></li>
+                    <li><a href="./cart.html" id="cart"><img src="./img/carrito.png" alt="carrito"><span id="cuenta-carrito">0</span></a></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+    <main>
+        <section id="detalle-producto-container">
+            <img id="producto-imagen" src="" alt="Imagen del producto">
+            <h2 id="producto-nombre"></h2>
+            <p id="producto-precio"></p>
+            <p id="producto-detalle"></p>
+            <button id="agregar-carrito">Agregar al carrito</button>
+        </section>
+    </main>
+    <footer>
+        <p>Tienda Online SOFTCORP</p>
+    </footer>
+</body>
+</html>
