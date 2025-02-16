@@ -1,17 +1,29 @@
 const contenedorTarjetas = document.getElementById("productos-container");
 
-/** Crea las tarjetas de productos teniendo en cuenta la lista en bicicletas.js */
-function crearTarjetasProductosInicio(productos){
+/** Crea las tarjetas de productos teniendo en cuenta la lista en equipos.js */
+function crearTarjetasProductosInicio(productos) {
   productos.forEach(producto => {
-    const nuevaBicicleta = document.createElement("div");
-    nuevaBicicleta.classList = "tarjeta-producto"
-    nuevaBicicleta.innerHTML = `
-    <img src="./img/productos/${producto.id}.jpg" alt="Bicicleta 1">
-    <h3>${producto.nombre}</h3>
-    <p class="precio">$${producto.precio}</p>
-    <button>Agregar al carrito</button>`
-    contenedorTarjetas.appendChild(nuevaBicicleta);
-    nuevaBicicleta.getElementsByTagName("button")[0].addEventListener("click",() => agregarAlCarrito(producto))
+    const equipo = document.createElement("div");
+    equipo.classList = "tarjeta-producto";
+    equipo.innerHTML = `
+      <img src="./img/productos/${producto.id}.jpg" alt="${producto.nombre}">
+      <h3>${producto.nombre}</h3>
+      <p class="precio">$${producto.precio}</p>
+      <button>Agregar al carrito</button>`;
+    
+    // Agregar el evento de clic para redirigir a la página de detalles del producto
+    equipo.addEventListener("click", () => {
+      window.location.href = `detalle_producto.html?id=${producto.id}`;
+    });
+
+    contenedorTarjetas.appendChild(equipo);
+    
+    // Agregar el evento de clic para agregar al carrito
+    equipo.getElementsByTagName("button")[0].addEventListener("click", (event) => {
+      event.stopPropagation(); // Evitar que el clic en el botón redirija a la página de detalles
+      agregarAlCarrito(producto);
+    });
   });
 }
-crearTarjetasProductosInicio(bicicletas);
+
+crearTarjetasProductosInicio(equipos);

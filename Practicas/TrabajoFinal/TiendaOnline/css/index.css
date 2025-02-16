@@ -2,7 +2,7 @@
     display: flex;
     flex-wrap: wrap;
     gap: 10px;
-  justify-content: center;}
+    justify-content: center;}
   
   .tarjeta-producto{
     background-color: var(--color-acento-claro);
@@ -37,3 +37,4 @@
     border:unset;
     cursor:pointer;
   }
+  

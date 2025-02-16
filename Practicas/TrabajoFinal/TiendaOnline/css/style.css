@@ -1,6 +1,6 @@
 :root{
     --color-acento: #ee6130;
-    --color-acento-claro: #ee613033;
+    --color-acento-claro: #1fc93b33;
     --color-texto: black;
   }
   
@@ -11,7 +11,14 @@
     flex-direction: column;
     height: 100vh;
   }
-  
+  ul{
+    list-style-type: none;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content:left;
+  }
   h3, p{
     margin: 5px;
   }
@@ -48,13 +55,13 @@
     display: flex;
     justify-content: space-between;
     margin: 0 60px;
+    
   }
   
   #logo{
-    height: 40px;
-    margin: 20px;
+    height: 100px;
+    margin: 15px;
   }
-  
   header nav div{
     display: flex;
     align-items: center;
