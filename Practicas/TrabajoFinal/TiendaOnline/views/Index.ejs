@@ -6,8 +6,38 @@
     <title>Tienda Online</title>
     <link rel="stylesheet" href="../css/style.css">
     <style>
-        /* Estilos para el modal */
-        
+        /* Estilos para el header */
+        .header-container {
+            display: flex;
+            align-items: center; /* Alinea verticalmente los elementos */
+            justify-content: space-between; /* Espacio entre logo, título y nav */
+            padding: 10px; /* Espaciado alrededor del contenedor */
+        }
+    
+        /* Estilos para el nav */
+        nav {
+            display: flex; /* Usar flexbox para alinear los elementos en una línea */
+        }
+    
+        nav ul {
+            list-style-type: none; /* Eliminar los puntos de la lista */
+            margin: 0; /* Eliminar margen */
+            padding: 0; /* Eliminar padding */
+            display: flex; /* Alinear los elementos de la lista en una línea */
+        }
+    
+        nav li {
+            margin: 0 15px; /* Espaciado entre los elementos de la lista */
+        }
+    
+        nav a {
+            text-decoration: none; /* Eliminar subrayado de los enlaces */
+            color: black; /* Color del texto */
+        }
+    
+        nav a:hover {
+            text-decoration: underline; /* Subrayar al pasar el mouse */
+        }
     </style>
 </head>
 <body>
@@ -16,6 +46,14 @@
         <div class="header-container">
             <img src="Imagenes/logos.jpg" alt="Logo de la Tienda" class="logo">
             <h1>Tienda Online</h1>
+            <nav>
+                <ul>
+                    <li><a href="">PRINCIPAL</a></li>
+                    <li><a href="">PRODUCTOS</a></li>
+                    <li><a href="">CARRITO</a></li>
+                    <li><a href="">CONTACTOS</a></li>
+                </ul>
+            </nav>
         </div>               
     </header>
     <main>

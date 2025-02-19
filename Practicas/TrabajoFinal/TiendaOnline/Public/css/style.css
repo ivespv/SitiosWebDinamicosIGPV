@@ -15,7 +15,8 @@ header {
 .header-container {
     display: flex; 
     align-items: center; 
-    justify-content: center; 
+    justify-content: space-between;
+    padding: 10px; 
 }
 
 .logo {
@@ -127,4 +128,33 @@ footer {
     position: relative;
     bottom: 0;
     width: 100%;
+}
+
+
+
+nav {
+    display: flex; 
+}
+
+nav ul {
+    list-style-type: none; 
+    margin: 0; 
+    padding: 0; 
+    display: flex; 
+}
+
+nav li {
+    margin: 0 15px; 
+    color: white;
+    
+}
+
+nav a {
+    text-decoration: none;
+    
+}
+
+nav a:hover {
+    text-decoration: underline; 
+    color: white;
 }
