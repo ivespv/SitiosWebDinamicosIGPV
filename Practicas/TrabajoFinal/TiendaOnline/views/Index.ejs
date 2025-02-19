@@ -4,29 +4,95 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tienda Online</title>
-    <link rel="stylesheet" href="../css/Estilos.css">
+    <link rel="stylesheet" href="../css/style.css">
+    <style>
+        /* Estilos para el modal */
+        
+    </style>
 </head>
-<body class="grid-container ">
+<body>
     <header>
         <h1>Tienda Online</h1>
     </header>
     <main>
-        <h2>Productos</h2>
+        <h2>productos</h2>
         <div class="productos">
             <% productos.forEach(producto => { %>
                 <div class="producto">
-                    <img src="Imagenes/<%= producto.imagen %>" alt="Imagenes" id="img1"></img>
-                    <img src="Imagenes/<%= producto.imagen1 %>" alt="Imagenes" id="img2"></img>
+                    <img src="Imagenes/<%= producto.imagen %>" alt="<%= producto.nombre %>" class="producto-imagen" 
+                         data-id="<%= producto.id %>" 
+                         data-nombre="<%= producto.nombre %>" 
+                         data-precio="<%= producto.precio %>" 
+                         data-descripcion="<%= producto.detalle %>"
+                         data-imagen="Imagenes/<%= producto.imagen %>"> <!-- Agregar data-imagen -->
+                    <img src="Imagenes/<%= producto.imagen1 %>" alt="<%= producto.nombre %>" class="producto-imagen" 
+                         data-id="<%= producto.id %>" 
+                         data-nombre="<%= producto.nombre %>" 
+                         data-precio="<%= producto.precio %>" 
+                         data-descripcion="<%= producto.detalle %>"     
+                        data-imagen="Imagenes/<%= producto.imagen1 %>"> <!-- Agregar data-imagen -->
                     <h3><%= producto.nombre %></h3>
-                    <p><%= producto.detalle %></p>
                     <p>Costo: <%= producto.precio %> Bs.</p>
-                    <button class="boton">COMPRAR</button>
                 </div>
             <% }); %>
         </div>
     </main>
+
+    <!-- Modal -->
+    <div id="myModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <img id="modal-imagen" src="" alt="Imagen del producto"> <!-- Imagen del producto en el modal -->
+            <h2 id="modal-nombre"></h2>
+            <p id="modal-descripcion"></p>
+            <p id="modal-precio"></p>
+        </div>
+    </div>
+
     <footer>
-        <p>&copy; Tienda Online SOFTCORP</p>
+        <p>&copy; 2023 Tienda Online</p>
     </footer>
-</body>
-</html>
+
+    <script>
+        // Obtener el modal
+        var modal = document.getElementById("myModal");
+
+        // Obtener el elemento <span> que cierra el modal
+        var span = document.getElementsByClassName("close")[0];
+
+        // Obtener todas las imágenes de productos
+        var imagenes = document.querySelectorAll('.producto-imagen');
+
+        // Agregar evento de clic a cada imagen
+        imagenes.forEach(function(imagen) {
+            imagen.onclick = function() {
+                // Obtener los datos del producto desde los atributos de la imagen
+                var nombre = this.getAttribute('data-nombre');
+                var descripcion = this.getAttribute('data-descripcion');
+                var precio = this.getAttribute('data-precio');
+                var imagenSrc = this.getAttribute('data-imagen'); // Obtener la imagen
+
+                // Mostrar los datos en el modal
+                document.getElementById('modal-nombre').innerText = nombre;
+                document.getElementById('modal-descripcion').innerText = descripcion;
+                document.getElementById('modal-precio').innerText = 'Costo: ' + precio + ' Bs.';
+                document.getElementById('modal-imagen').src = imagenSrc; // Establecer la imagen en el modal
+
+                // Mostrar el modal
+                modal.style.display = "block";
+            }
+        });
+
+        // Cuando el usuario hace clic en <span> (x), cierra el modal
+        span.onclick = function() {
+            modal.style.display = "none";
+        }
+
+        // Cuando el usuario hace clic en cualquier parte fuera del modal, cierra el modal
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        }
+    </script>
+</body
