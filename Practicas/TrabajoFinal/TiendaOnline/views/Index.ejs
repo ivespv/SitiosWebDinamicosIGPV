@@ -6,7 +6,7 @@
     <title>Tienda Online</title>
     <link rel="stylesheet" href="../css/Estilos.css">
 </head>
-<body>
+<body class="grid-container ">
     <header>
         <h1>Tienda Online</h1>
     </header>
@@ -15,8 +15,10 @@
         <div class="productos">
             <% productos.forEach(producto => { %>
                 <div class="producto">
+                    <img src="Imagenes/<%= producto.imagen %>" alt="Imagenes" id="img1"></img>
+                    <img src="Imagenes/<%= producto.imagen1 %>" alt="Imagenes" id="img2"></img>
                     <h3><%= producto.nombre %></h3>
-                    <p><%= producto.descripcion %></p>
+                    <p><%= producto.detalle %></p>
                     <p>Costo: <%= producto.precio %> Bs.</p>
                     <button class="boton">COMPRAR</button>
                 </div>
