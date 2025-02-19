@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tienda Online</title>
+    <link rel="stylesheet" href="../css/Estilos.css">
+</head>
+<body>
+    <header>
+        <h1>Tienda Online</h1>
+    </header>
+    <main>
+        <h2>Productos</h2>
+        <div class="productos">
+            <% productos.forEach(producto => { %>
+                <div class="producto">
+                    <h3><%= producto.nombre %></h3>
+                    <p><%= producto.descripcion %></p>
+                    <p>Costo: <%= producto.precio %> Bs.</p>
+                    <button class="boton">COMPRAR</button>
+                </div>
+            <% }); %>
+        </div>
+    </main>
+    <footer>
+        <p>&copy; Tienda Online SOFTCORP</p>
+    </footer>
+</body>
+</html>
