@@ -1,3 +1,17 @@
+html, body {
+    height: 100%; 
+    margin: 0;
+}
+
+body {
+    display: flex; 
+    flex-direction: column; 
+}
+
+main {
+    flex: 1; 
+    padding: 20px; 
+}
 body {
     font-family: Arial, sans-serif;
     margin: 0;
@@ -8,18 +22,23 @@ body {
 header {
     color: #ffffff;
     background-color: #35424a; 
-    padding: 20px 0; /* Aumentar el padding superior e inferior */
+    padding: 20px 0; 
 }
 
 .header-container {
     display: flex; 
     align-items: center; 
-    justify-content: center; /* Cambiar a center para centrar el contenido */
+    justify-content: center; 
     padding: 10px; 
 }
 
 .logo {
     width: 150px; 
+    height: auto;
+    margin-right: 20px; 
+}
+.carrito {
+    width: 50px; 
     height: auto;
     margin-right: 20px; 
 }
@@ -30,6 +49,41 @@ h1 {
     margin: 0; 
     font-size: 60px; 
     
+}
+
+nav {
+    background-color: #333; 
+}
+
+nav ul {
+    list-style-type: none; 
+    margin: 0;
+    padding: 0;
+    display: flex; 
+    justify-content:right;
+}
+
+nav ul li {
+    margin: 0 15px ; 
+}
+
+nav ul li a {
+    color: white; 
+    text-decoration: none; 
+    padding: 14px 20px; 
+    display: block; 
+    transition: background-color 0.3s; 
+}
+
+span {
+    color: white; 
+    padding: 14px 20px; 
+    transition: background-color 0.3s; 
+    margin: 0;
+}
+ 
+nav ul li a:hover {
+    background-color: #575757; 
 }
 
 main {
@@ -64,6 +118,7 @@ h2 {
 }
 
 .producto-imagen {
+    cursor: pointer;
     transition: transform 0.3s ease;
     max-width: 35%;
     height: auto;
@@ -99,7 +154,7 @@ h2 {
 }
 
 .modal-content img {
-    width: 400px; /* Corregir el espacio entre el número y la unidad */
+    width: 400px; 
     height: auto; 
     object-fit: cover; 
     border-radius: 8px; 
@@ -127,30 +182,4 @@ footer {
     position: relative;
     bottom: 0;
     width: 100%;
-}
-
-nav {
-    
-    display: flex; 
-}
-
-nav ul {
-    list-style-type: none; 
-    margin: 0; 
-    padding: 0; 
-    display: flex; 
-    text-align: left;
-}
-
-nav li {
-    margin: 0 15px; 
-}
-
-nav a {
-    text-decoration: none;
-    color: white
-}
-nav a:hover {
-    text-decoration: underline; 
-    color:aquamarine;
 }

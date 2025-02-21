@@ -5,28 +5,31 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tienda Online</title>
     <link rel="stylesheet" href="../css/style.css">
+    <script src="./js/CartService.js" defer></script>
+    <script>
+        // Inyectar el array de productos en una variable JavaScript
+        const productos = `<%- JSON.stringify(productos) %>`;
+    </script>
+    <script src="./js/Indexi.js" defer></script>
 </head>
 <body>
-    
     <header>
         <div class="header-container">
             <img src="Imagenes/logos.jpg" alt="Logo de la Tienda" class="logo">
             <h1>Tienda Online</h1>
-            <nav>
-                <ul>
-                    <li><a href="">CARRITO</a></li>
-                    <li><a href="">CONTACTOS</a></li>
-                </ul>
-            </nav>
         </div>               
     </header>
-   
+<nav>
+    <ul>
+        <li><a href="">CONTACTOS</a></li>
+        <a href="../Public/carrito.html"><img src="Imagenes/carrito3.png" id="cuenta-carrito" class="carrito" alt="Logo"><span >0</span></a>
+    </ul>
+</nav>
     <main>
-        
         <h2>EQUIPOS DE COMUNICACION</h2>
         <div class="productos">
             <% productos.forEach(producto => { %>
-                <div class="producto">
+                <div id="Productos-Container" class="producto">
                         <img src="Imagenes/<%= producto.imagen %>" alt="<%= producto.nombre %>" class="producto-imagen" 
                             data-id="<%= producto.id %>" 
                             data-nombre="<%= producto.nombre %>" 
@@ -41,6 +44,7 @@
                             data-imagen="Imagenes/<%= producto.imagen1 %>"> <!-- Agregar data-imagen -->
                     <h3><%= producto.nombre %></h3>
                     <p>Costo: <%= producto.precio %> $.</p>
+                    <button>Agregar al carrito</button>
                 </div>
             <% }); %>
         </div>
@@ -83,9 +87,7 @@
         modal.style.display = "block";
             }
         });
-
-       
-        span.onclick = function() {
+         span.onclick = function() {
             modal.style.display = "none";
         }
 
@@ -95,4 +97,7 @@
             }
         }
     </script>
+    
+
+
 </body
