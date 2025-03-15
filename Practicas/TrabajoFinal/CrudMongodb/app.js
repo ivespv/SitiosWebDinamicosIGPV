@@ -14,12 +14,16 @@ app.use(methodOverride('_method')); // Para soportar PUT y DELETE
 
 app.set('view engine', 'ejs');
 
-// Conexión a MongoDB
 
-mongoose.connect('mongodb://127.0.0.1:27017/RCliente', {
+// Conexión a MongoDB
+mongoose.connect('mongodb://167.179.100.51:27017/RCliente', {
     useNewUrlParser: true,
     useUnifiedTopology: true,
 })
+/*mongoose.connect('mongodb://127.0.0.1:27017/RCliente', {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+})*/
 .then(() => {
     console.log('Conexión a MongoDB establecida');
 })
