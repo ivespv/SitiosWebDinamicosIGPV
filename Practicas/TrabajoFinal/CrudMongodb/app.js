@@ -6,6 +6,8 @@ const methodOverride = require('method-override');
 const Cliente = require('./models/Cliente');
 
 const app = express();
+const path = require('path')
+
 
 // Configuración
 app.use(express.static('public'));
@@ -13,6 +15,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(methodOverride('_method')); // Para soportar PUT y DELETE
 
 app.set('view engine', 'ejs');
+app.set('views', path.join(__dirname, 'views'));
 
 
 // Conexión a MongoDB
