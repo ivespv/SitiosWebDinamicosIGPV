@@ -10,23 +10,30 @@ const path = require('path')
 
 
 // Configuración
-app.use(express.static('public'));
+app.use(express.static('Public'));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(methodOverride('_method')); // Para soportar PUT y DELETE
 
+
+
+app.set('views', path.join(__dirname, 'Views'));
 app.set('view engine', 'ejs');
-app.set('views', path.join(__dirname, 'views'));
+
 
 
 // Conexión a MongoDB
-mongoose.connect('mongodb://167.179.100.51:27017/RCliente', {
+/*mongoose.connect('mongodb://167.179.100.51:27017/RCliente', {
     useNewUrlParser: true,
-    useUnifiedTopology: true,
-})
-/*mongoose.connect('mongodb://127.0.0.1:27017/RCliente', {
+})*/
+
+/*mongoose.connect('mongodb://167.179.100.51:27017/RCliente', {
     useNewUrlParser: true,
     useUnifiedTopology: true,
 })*/
+mongoose.connect('mongodb://127.0.0.1:27017/RCliente', {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+})
 .then(() => {
     console.log('Conexión a MongoDB establecida');
 })
