@@ -1,0 +1,64 @@
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+}
+
+table th, table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+}
+
+table th {
+    background-color: #004640;
+    color: white;
+}
+
+table tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+table tr:hover {
+    background-color: #ddd;
+}
+
+button {
+    background-color: #E98312;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #E98312;
+}
+.btn {
+    display: inline-block; 
+    padding: 10px 20px; 
+    background-color: #E98312; 
+    color: white; 
+    text-decoration: none; 
+    border-radius: 5px; 
+    border: none; 
+    font-size: 16px; 
+    transition: background-color 0.3s;
+}
+
+.btn:hover {
+    background-color: #004610; 
+}
+.pagination {
+    margin: 20px 0;
+}
+
+.pagination a {
+    margin: 0 5px;
+    text-decoration: none;
+    color: #E98312;
+}
+
+.pagination span {
+    margin: 0 
+}

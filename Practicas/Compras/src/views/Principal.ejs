@@ -1,0 +1,64 @@
+<!-- src/views/principal.ejs --> 
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>CAJA NACIONAL DE SALUD - DISTRITAL TUPIZA</title>
+  <link rel="stylesheet" href="../css/Style.css">
+</head>
+<body>
+  <header>
+    <div class="header-left">
+      <img src="/images/logo.png" alt="Logo Caja Nacional de Salud" />
+      <div class="header-text">
+        <h1>CAJA NACIONAL DE SALUD</h1>
+        <h2>DISTRITAL TUPIZA</h2>
+      </div>
+    </div>
+  </header>
+
+  <nav class="header-right">
+    <ul>
+      <li><a href="/">Inicio</a></li>
+      <li class="coltext">Usuarios
+        <ul>
+          <li><a href="/usuarios">Lista de Usuarios</a></li>
+          <li><a href="/usuarios/crear">Registrar Usuario</a></li>
+        </ul>
+      </li>
+      <li class="coltext">Compras
+        <ul>
+          <li><a href="/compras">Lista de Compras</a></li>
+          <li><a href="/compras/crear">Registrar Compra</a></li>
+        </ul>
+      </li>
+    </ul>
+  </nav>
+
+  <div class="container">
+    <div class="content-box"> <!-- Clase añadida aquí -->
+      <div class="content">
+        <div class="text">
+          <h1>Caja Nacional de Salud</h1>
+          <p>
+            La Caja Nacional de Salud (CNS) es una institución pública boliviana que brinda servicios de salud a los trabajadores y sus familias. Su misión es garantizar la atención médica integral, la protección social y la promoción de la salud en todo el país.
+          </p>
+          <p>
+            En esta plataforma puedes visualizar todas las compras realizadas, registrar nuevas compras, editar y eliminar según sea necesario.
+          </p>
+          <p>
+            Usa el menú para navegar entre las diferentes secciones.
+          </p>
+        </div>
+      </div>
+    </div>
+    <div class="image">
+        <img src="/images/edificio.png" alt="Edificio Caja Nacional de Salud" height="3000" />
+    </div>
+  </div> 
+  <footer>
+    &copy; 2025 Caja Nacional de Salud - Todos los derechos reservados
+  </footer>
+</body>
+</html>

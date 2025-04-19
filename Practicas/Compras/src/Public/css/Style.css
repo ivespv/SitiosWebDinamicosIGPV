@@ -1,0 +1,224 @@
+/* Practicas/Compras/src/Public/css/Style.css */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: #dae2e9;
+  color: #333;
+  line-height: 1.6;
+  min-height: 100vh;
+  position: relative;
+}
+
+header {
+  color: #004640;
+  padding: 1rem 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.header-left {
+  display: flex;
+  align-items: center;
+}
+
+header img {
+  height: 70px;
+  width: auto;
+  margin-right: 1rem;
+}
+
+.header-text h1 {
+  font-size: 1.8rem;
+  font-weight: 700;
+  line-height: 1.2;
+  margin-bottom: 0.2rem;
+}
+
+.header-text h2 {
+  font-size: 1.2rem;
+  font-weight: 500;
+  letter-spacing: 2px;
+}
+
+.header-right {
+  background-color: #004640;
+}
+
+.header-right li {
+  position: relative;
+  margin-right: 40px;
+}
+
+.header-right a {
+  text-decoration: none;
+  padding: 10px;
+  display: block;
+  color: rgb(247, 245, 245);
+}
+
+.header-right ul ul {
+  display: none;
+  position: absolute;
+  background-color: #004640;
+  box-shadow: 0 2px 5px rgba(5, 5, 5, 0.2);
+  z-index: 1000;
+  white-space: nowrap;
+}
+
+.header-right ul ul li {
+  display: inline;
+  margin-right: 0;
+}
+
+.header-right ul ul li a {
+  color: rgb(253, 249, 249);
+}
+
+.header-right ul li:hover > ul {
+  display: block;
+}
+
+.header-right ul li ul {
+  background-color: #003030;
+}
+
+.header-right ul li ul li {
+  padding: 5px 15px;
+  color: #E98312;
+}
+
+.header-right ul li ul li:not(:last-child) {
+  border-bottom: 2px solid #E98312;;
+}
+
+.coltext {
+  color: white;
+}
+
+nav {
+  background-color: #004640;
+  padding: 0.4rem 7rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+nav ul {
+  list-style: none;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 2rem;
+}
+
+nav ul li a:hover {
+  color: #E98312;
+}
+
+.container {
+  margin: 4rem auto;
+  max-width: 2000px;
+  padding: 0 2rem;
+  display: flex;
+  justify-content: space-between;
+}
+
+.text-box {
+  border: 2px solid #004640;
+  border-radius: 8px;
+  padding: 1.5rem;
+  background-color: #d4d8dd;
+  color: white;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.text {
+  flex: 1;
+  margin: 10px 0;
+}
+
+p {
+  font-size: 1.1rem;
+  margin-bottom: 1rem;
+  text-align: justify;
+}
+
+.text p {
+  margin-top: 20px;
+}
+
+footer {
+  background-color: #004640;
+  color: white;
+  text-align: center;
+  padding: 1rem 0;
+  position: relative;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  font-size: 0.9rem;
+  margin-top: 2rem; 
+  box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.content-box {
+  border-radius: 8px;
+  padding: 0rem 1.5rem;
+  background-color: #004640;
+  color: white;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  flex: 1;
+  margin-right: 3rem;
+  margin-bottom: 20px;
+}
+
+.content-box, .image {
+  display: inline-block;
+  vertical-align: top;
+  width: 45%;
+  box-sizing: border-box;
+}
+
+.content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 2rem;
+}
+.image {
+  flex: 1; 
+  text-align: center; 
+}
+    
+.image img {
+  max-width: 100%; 
+  height: auto; 
+}
+
+    @media (max-width: 600px) {
+      header {
+        flex-direction: column;
+        gap: 0.8rem;
+      }
+
+      nav ul {
+        flex-direction: column;
+        gap: 1rem;
+      }
+
+      h1.content-title {
+        font-size: 2rem;
+      }
+      .container {
+        flex-direction: column; 
+      }
+      .content-box, .image {
+        width: 100%; 
+        margin-right: 0; 
+      }
+    }
