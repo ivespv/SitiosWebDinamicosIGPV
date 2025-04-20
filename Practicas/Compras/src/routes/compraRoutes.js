@@ -3,7 +3,10 @@ const express = require("express");
 const router = express.Router();
 const { getRepository } = require("typeorm");
 const { Compra } = require("../entity/Compra");
+const authMiddleware = require("../middleware/authMiddleware");
 const controlador = require("../controller/compraController");
+
+router.use(authMiddleware);
 
 router.get("/", async (req, res) => {
   controlador.obtenerCompras(req, res);

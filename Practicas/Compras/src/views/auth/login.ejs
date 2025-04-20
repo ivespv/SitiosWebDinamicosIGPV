@@ -1,0 +1,33 @@
+<!-- src/views/auth/login.ejs -->
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>CAJA NACIONAL DE SALUD - DISTRITAL TUPIZA</title>
+    <link rel="stylesheet" href="/css/AUTH.css">
+  </head>
+<body>
+  <header>
+    <img src="/images/logo.png" alt="Logo Caja Nacional de Salud" width="100px" />
+    <h1>CAJA NACIONAL DE SALUD - DISTRITAL TUPIZA</h1>
+</header>
+  <main>
+    <h2>inicio de Sesion</h2>
+    <form action="/auth/login" method="POST">
+      <div>
+        <label for="correo">Correo:</label>
+        <input type="email" id="correo" name="correo" required>
+      </div>
+      <div>
+        <label for="contraseña">Contraseña:</label>
+        <input type="password" id="contraseña" name="contraseña" required>
+      </div>
+      <button type="submit">Iniciar Sesión</button>
+      <% if (error) { %>
+        <p style="color:red;"><%= error %></p>
+      <% } %>
+    </form>
+  </main>
+</body>
+</html>

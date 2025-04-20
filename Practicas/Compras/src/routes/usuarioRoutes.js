@@ -4,7 +4,10 @@ const router = express.Router();
 const { getRepository } = require("typeorm");
 const bcrypt = require("bcrypt");
 const { Usuario } = require("../entity/Usuario");
+const authMiddleware = require("../middleware/authMiddleware");
 const controlador = require("../controller/usuarioController");
+
+router.use(authMiddleware);
 
 router.get("/", async (req, res) => {
  controlador.obtenerUsuarios(req, res);
