@@ -33,9 +33,15 @@
           <li><a href="/compras/crear">Registrar Compra</a></li>
         </ul>
       </li>
+      <li>
+        <a href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Cerrar Sesión</a>
+      </li>
     </ul>
+    <form id="logout-form" action="/auth/logout" method="POST" style="display: none;">
+     
+    </form>
   </nav>
-  <h1>Lista de Usuarios</h1>
+  <h1 class="title">Lista de Usuarios</h1>
   <form action="/usuarios/crear" method="GET" style="display:inline;">
     <button type="submit" class="btn modificar">Crear Usuario</button>
   </form>

@@ -33,7 +33,13 @@
           <li><a href="/compras/crear">Registrar Compra</a></li>
         </ul>
       </li>
+      <li>
+        <a href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Cerrar Sesión</a>
+      </li>
     </ul>
+    <form id="logout-form" action="/auth/logout" method="POST" style="display: none;">
+     
+    </form>
   </nav>
   
   <h1>Editar Compra</h1>
@@ -62,7 +68,7 @@
     <div class="button-container">
       <button type="submit" class="btn">Modificar</button>
       <form action="/compras" method="GET" style="display: inline;">
-          <button type="submit" class="btn">Volver</button>
+          <button type="submit" class="btn-Volver">Retornar</button>
       </form>
     </div>
 </body>

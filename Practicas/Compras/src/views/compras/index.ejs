@@ -33,10 +33,16 @@
           <li><a href="/compras/crear">Registrar Compra</a></li>
         </ul>
       </li>
+      <li>
+        <a href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Cerrar Sesión</a>
+      </li>
     </ul>
+    <form id="logout-form" action="/auth/logout" method="POST" style="display: none;">
+     
+    </form>
   </nav>
   <main>
-    <h1>Registro de Compras</h1>
+    <h1 class="title">Registro de Compras</h1>
     <div class="button-container">
       <a href="/compras/crear" class="btn">Registrar Compra</a>
     </div>

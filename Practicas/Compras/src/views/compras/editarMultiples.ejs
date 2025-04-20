@@ -33,7 +33,13 @@
           <li><a href="/compras/crear">Registrar Compra</a></li>
         </ul>
       </li>
+      <li>
+        <a href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Cerrar Sesión</a>
+      </li>
     </ul>
+    <form id="logout-form" action="/auth/logout" method="POST" style="display: none;">
+     
+    </form>
   </nav>
   <% if (typeof errores !== 'undefined' && errores.length > 0) { %>
     <script>
@@ -41,6 +47,7 @@
       alert(errores.join('\\n'));
     </script>
   <% } %>
+  <h1 class="title">Editar Compra</h1>
   <form id="modificarForm" action="/compras/editarMultiples" method="POST">
         <% compras.forEach(compra => { %>
             <div>
@@ -79,7 +86,10 @@
             <hr>
         <% }) %>
         <button type="submit" class="btn">Guardar Cambios</button>
+        <button type="button" class="btn-Volver" onclick="window.location.href='/compras';">Retornar</button>
   </form>
-  
+  <footer>
+    &copy; 2025 Caja Nacional de Salud - Todos los derechos reservados
+  </footer>
 </body>
 </html>

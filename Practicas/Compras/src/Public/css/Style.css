@@ -11,7 +11,7 @@ body {
   color: #333;
   line-height: 1.6;
   min-height: 100vh;
-  position: relative;
+  position: relative;  
 }
 
 header {
@@ -199,7 +199,26 @@ footer {
   max-width: 100%; 
   height: auto; 
 }
-
+.title {
+  text-align: center; 
+  padding: 1rem; 
+}
+.btn-Volver {
+  background-color: #004640; 
+  color: white; 
+  border: none; 
+  padding: 10px 20px; 
+  text-align: center; 
+  text-decoration: none; 
+  display: inline-block; 
+  font-size: 16px; 
+  margin: 4px 2px; 
+  cursor: pointer; 
+  border-radius: 5px; 
+}
+.btn-Volver:hover {
+  background-color: #1a6861; 
+}
     @media (max-width: 600px) {
       header {
         flex-direction: column;

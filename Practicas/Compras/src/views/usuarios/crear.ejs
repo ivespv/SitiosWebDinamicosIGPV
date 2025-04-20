@@ -33,7 +33,13 @@
           <li><a href="/compras/crear">Registrar Compra</a></li>
         </ul>
       </li>
+      <li>
+        <a href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Cerrar Sesión</a>
+      </li>
     </ul>
+    <form id="logout-form" action="/auth/logout" method="POST" style="display: none;">
+     
+    </form>
   </nav>
   <h1>Crear Usuario</h1>
   <form action="/usuarios/crear" method="POST">
@@ -51,7 +57,7 @@
     <br />
     <div class="button-container">
       <button type="submit">Crear</button>
-      <button type="button" class="volver" onclick="window.location.href='/usuarios'">Volver</button>
+      <button type="button" class="btn-Volver" onclick="window.location.href='/usuarios'">Retornar</button>
     </div>
   </form>
   

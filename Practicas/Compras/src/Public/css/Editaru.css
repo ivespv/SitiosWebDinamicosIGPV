@@ -1,6 +1,11 @@
 h1{
-    text-align: center;   
+    text-align: center; 
 }
+.title {
+    text-align: center; 
+    margin-bottom: 2rem;
+    padding: 1rem; 
+  }
 form {
     background-color: #ffffff; 
     border: 1px solid #004640; 
@@ -75,13 +80,7 @@ form {
     background-color: #E98312; 
   }
   
-  a {
-    display: inline-block; 
-    margin-top: 1rem; 
-    color: #004640; 
-    text-decoration: none; 
-    font-weight: bold; 
-  }
+
 
   
   a:hover {

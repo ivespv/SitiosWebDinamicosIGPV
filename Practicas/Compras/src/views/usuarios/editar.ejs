@@ -33,9 +33,15 @@
           <li><a href="/compras/crear">Registrar Compra</a></li>
         </ul>
       </li>
+      <li>
+        <a href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Cerrar Sesión</a>
+      </li>
     </ul>
+    <form id="logout-form" action="/auth/logout" method="POST" style="display: none;">
+     
+    </form>
   </nav>
-  <h1>Editar Usuario</h1>
+  <h1 class="title">Editar Usuario</h1>
   <form action="/usuarios/editar/<%= usuario.id %>" method="POST">
     <label for="correo">Correo:</label>
     <input
@@ -59,7 +65,7 @@
     <input type="text" name="rol" id="rol" value="<%= usuario.rol %>" required />
     <br />
     <button type="submit">Guardar</button>
-   <button type="button" onclick="window.location.href='/'">Volver</button>
+   <button type="button" class="btn-Volver" onclick="window.location.href='/'">Retornar</button>
   </form>
   <footer>
     &copy; 2025 Caja Nacional de Salud - Todos los derechos reservados
