@@ -46,6 +46,17 @@
     <div class="button-container">
       <a href="/compras/crear" class="btn">Registrar Compra</a>
     </div>
+    
+    <!-- Formulario de búsqueda -->
+    <div class="search-container">
+      <form action="/compras" method="GET" class="search-form">
+        <input type="text" name="cite" placeholder="Buscar por Cite" />
+        <input type="text" name="producto" placeholder="Buscar por Producto" />
+        <input type="text" name="proveedor" placeholder="Buscar por Proveedor" />
+        <button type="submit">Buscar o Reestablecer</button>
+      </form>
+    </div>
+  
     <form action="/compras/eliminar-multiples" method="POST">
       <table>
         <thead>
@@ -75,13 +86,12 @@
               <td><%= compra.costo_total %></td>
               <td><%= compra.proveedor %></td>
               <td><%= compra.fecha instanceof Date ? compra.fecha.toISOString().split('T')[0] : compra.fecha %></td>
-              
             </tr>
           <% }) %>
         </tbody>
       </table>
-       <!-- Paginación -->
-       <div class="pagination">
+      <!-- Paginación -->
+      <div class="pagination">
         <% if (currentPage > 1) { %>
             <a href="/compras?page=<%= currentPage - 1 %>">Anterior</a>
         <% } %>
@@ -89,12 +99,25 @@
         <% if (currentPage < totalPages) { %>
             <a href="/compras?page=<%= currentPage + 1 %>">Siguiente</a>
         <% } %>
-    </div>
+      </div>
       <div class="button-container">
         <button type="submit">Eliminar Seleccionadas</button>
         <button type="button" onclick="modificarSeleccionadas()">Modificar</button>
       </div>
+      
     </form>
+    <div class="report-container">
+      <h2>Generar Reporte</h2>
+      <form action="/compras/reporte" method="GET">
+        <select name="tipo">
+          <option value="diario">Diario</option>
+          <option value="mensual">Mensual</option>
+          <option value="anual">Anual</option>
+        </select>
+        <input type="date" name="fecha" required />
+        <button type="submit">Generar Reporte</button>
+      </form>
+    </div>
   </main>  
   <footer>
     &copy; 2025 Caja Nacional de Salud - Todos los derechos reservados

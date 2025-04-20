@@ -1,4 +1,5 @@
 /* src/Public/css/Crear.css */
+
 form {
   max-width: 1500px;
   margin: 0 auto;
@@ -22,7 +23,7 @@ th, td {
 }
 
 th {
-  background-color: #004640;
+  background-color: #6d6b03;
   color: white;
 }
 

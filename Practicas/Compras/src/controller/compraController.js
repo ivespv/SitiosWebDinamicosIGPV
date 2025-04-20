@@ -1,6 +1,12 @@
 // src/controller/compraController.js
-const { getRepository } = require("typeorm");
+const { getRepository, Like } = require("typeorm");
 const { Compra } = require("../entity/Compra");
+
+const PDFDocument = require('pdfkit');
+const fs = require('fs');
+
+const path = require('path');
+
 
 // Obtener todas las compras
 const obtenerCompras = async (req, res) => {
@@ -8,7 +14,26 @@ const obtenerCompras = async (req, res) => {
   const limit = 5; 
   const offset = (page - 1) * limit; 
 
+  const cite = req.query.cite || ''; 
+  const producto = req.query.producto || ''; 
+  const proveedor = req.query.proveedor || ''; 
+
+  const whereConditions = {};
+
+  if (cite) {
+    whereConditions.cite = Like(`%${cite}%`);
+  }
+
+  if (producto) {
+    whereConditions.producto = Like(`%${producto}%`);
+  }
+
+  if (proveedor) {
+    whereConditions.proveedor = Like(`%${proveedor}%`);
+  }
+
   const [compras, total] = await getRepository(Compra).findAndCount({
+    where: whereConditions,
     skip: offset,
     take: limit,
   });
@@ -19,8 +44,9 @@ const obtenerCompras = async (req, res) => {
 
   const totalPages = Math.ceil(total / limit); 
 
-  res.render("compras/index", { compras, currentPage: page, totalPages });
+  res.render("compras/index", { compras, currentPage: page, totalPages, cite, producto, proveedor });
 };
+
 
 const crearMultiplesCompras = async (req, res) => {
   const { cite, codigo, cantidad, producto, precio_unitario, costo_total, proveedor, fecha } = req.body;
@@ -82,10 +108,93 @@ const eliminarCompra = async (req, res) => {
   res.redirect("/compras");
 };
 
+const generarReporte = async (req, res) => {
+  const { tipo, fecha } = req.query; // tipo puede ser 'diario', 'mensual', 'anual'
+  const compras = await getRepository(Compra).find();
+
+  // Filtrar compras según el tipo de reporte
+  let comprasFiltradas;
+  const fechaObj = new Date(fecha);
+
+  if (tipo === 'diario') {
+    comprasFiltradas = compras.filter(compra => {
+      const compraFecha = new Date(compra.fecha);
+      return compraFecha.toDateString() === fechaObj.toDateString();
+    });
+  } else if (tipo === 'mensual') {
+    comprasFiltradas = compras.filter(compra => {
+      const compraFecha = new Date(compra.fecha);
+      return compraFecha.getMonth() === fechaObj.getMonth() && compraFecha.getFullYear() === fechaObj.getFullYear();
+    });
+  } else if (tipo === 'anual') {
+    comprasFiltradas = compras.filter(compra => {
+      const compraFecha = new Date(compra.fecha);
+      return compraFecha.getFullYear() === fechaObj.getFullYear();
+    });
+  } else {
+    return res.status(400).json({ mensaje: "Tipo de reporte no válido" });
+  }
+
+  // Crear el documento PDF
+  const doc = new PDFDocument({ size: 'legal', layout: 'landscape' });
+  const filePath = path.join(__dirname,  '../reports/reporte_compras.pdf');
+  doc.pipe(fs.createWriteStream(filePath));
+
+  // Agregar contenido al PDF
+  doc.fontSize(25).text('Reporte de Compras', { align: 'center' });
+  doc.moveDown();
+
+  // Encabezados de la tabla
+  doc.fontSize(12).text('Cite', 50, 100);
+  doc.text('Código', 150, 100);
+  doc.text('Cantidad', 250, 100);
+  doc.text('Producto', 350, 100);
+  doc.text('Precio Unitario', 450, 100);
+  doc.text('Costo Total', 550, 100);
+  doc.text('Proveedor', 650, 100);
+  doc.text('Fecha', 750, 100);
+  doc.moveDown();
+
+  comprasFiltradas.forEach(compra => {
+    const precioUnitario = parseFloat(compra.precio_unitario);
+    const costoTotal = parseFloat(compra.costo_total);
+    const fechaCompra = new Date(compra.fecha).toLocaleDateString();
+  
+    // Verifica si los valores son números válidos
+    if (isNaN(precioUnitario) || isNaN(costoTotal)) {
+      console.error(`Error en los datos de compra: ${JSON.stringify(compra)}`);
+      return; // Salir de la iteración si hay un error
+    }
+  
+    // Dibuja cada fila de datos
+    doc.text(compra.cite, 50);
+    doc.text(compra.codigo, 150);
+    doc.text(compra.cantidad.toString(), 250);
+    doc.text(compra.producto, 350);
+    doc.text(precioUnitario.toFixed(2), 450);
+    doc.text(costoTotal.toFixed(2), 550);
+    doc.text(compra.proveedor, 650);
+    doc.text(fechaCompra, 750);
+    doc.moveDown();
+  });
+
+  doc.end();
+
+  // Enviar el archivo PDF como respuesta
+  res.download(filePath, 'reporte_compras.pdf', (err) => {
+    if (err) {
+      console.error("Error al enviar el archivo PDF:", err);
+      res.status(500).json({ mensaje: "Error al enviar el archivo PDF" });
+    }
+  });
+};
+
+
 module.exports = {
   obtenerCompras,
   /*crearCompra,*/
   crearMultiplesCompras,
   editarCompra,
   eliminarCompra,
+  generarReporte,
 };

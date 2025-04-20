@@ -133,6 +133,9 @@ router.post("/eliminar-multiples", async (req, res) => {
   }
 });
 
+router.get("/reporte", async (req, res) => {
+  await controlador.generarReporte(req, res);
+});
 
 router.post("/editar/:id", controlador.editarCompra);
 

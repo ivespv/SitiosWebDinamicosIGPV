@@ -12,7 +12,7 @@ table th, table td {
 }
 
 table th {
-    background-color: #004640;
+    background-color: #6d6b03;
     color: white;
 }
 
@@ -63,3 +63,21 @@ button:hover {
 .pagination span {
     margin: 0 
 }
+.search-container {
+    display: flex;
+    justify-content: flex-end; /* Alinear a la derecha */
+    margin-bottom: 20px; /* Espacio debajo del formulario de búsqueda */
+  }
+  
+  .search-form {
+    display: flex; /* Usar flexbox para alinear los elementos dentro del formulario */
+  }
+  
+  .search-form input[type="text"] {
+    margin-right: 10px; /* Espacio entre los campos de entrada */
+    padding: 5px; /* Espaciado interno */
+  }
+  
+  .search-form button {
+    padding: 5px 10px; /* Espaciado interno para el botón */
+  }
