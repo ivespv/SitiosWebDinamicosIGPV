@@ -32,6 +32,9 @@ module.exports.Compra = new EntitySchema({
       precision: 10,
       scale: 2,
     },
+    proveedor: { 
+      type: "varchar",
+    },
     fecha: {
       type: "date",
     },

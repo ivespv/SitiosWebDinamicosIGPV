@@ -52,6 +52,7 @@
             <th>Producto</th>
             <th>Precio Unitario</th>
             <th>Costo Total</th>
+            <th>Proveedor</th>
             <th>Fecha</th>
           </tr>
         </thead>
@@ -66,6 +67,7 @@
               <td><%= compra.producto %></td>
               <td><%= compra.precio_unitario %></td>
               <td><%= compra.costo_total %></td>
+              <td><%= compra.proveedor %></td>
               <td><%= compra.fecha instanceof Date ? compra.fecha.toISOString().split('T')[0] : compra.fecha %></td>
               
             </tr>

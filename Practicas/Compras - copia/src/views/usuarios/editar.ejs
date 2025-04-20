@@ -1,11 +1,40 @@
+<!-- src/views/usuarios/editaru.ejs -->
 <!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Editar Usuario</title>
+  <link rel="stylesheet" href="/css/Style.css">
+  <link rel="stylesheet" href="/css/editaru.css">
 </head>
 <body>
+  <header>
+    <div class="header-left">
+      <img src="/images/logo.png" alt="Logo Caja Nacional de Salud" />
+      <div class="header-text">
+        <h1>CAJA NACIONAL DE SALUD</h1>
+        <h2>DISTRITAL TUPIZA</h2>
+      </div>
+    </div>
+  </header>
+  <nav class="header-right">
+    <ul>
+      <li><a href="/">Inicio</a></li>
+      <li class="coltext">Usuarios
+        <ul>
+          <li><a href="/usuarios">Lista de Usuarios</a></li>
+          <li><a href="/usuarios/crear">Registrar Usuario</a></li>
+        </ul>
+      </li>
+      <li class="coltext">Compras
+        <ul>
+          <li><a href="/compras">Lista de Compras</a></li>
+          <li><a href="/compras/crear">Registrar Compra</a></li>
+        </ul>
+      </li>
+    </ul>
+  </nav>
   <h1>Editar Usuario</h1>
   <form action="/usuarios/editar/<%= usuario.id %>" method="POST">
     <label for="correo">Correo:</label>
@@ -30,7 +59,10 @@
     <input type="text" name="rol" id="rol" value="<%= usuario.rol %>" required />
     <br />
     <button type="submit">Guardar</button>
+   <button type="button" onclick="window.location.href='/'">Volver</button>
   </form>
-  <a href="/">Volver</a>
+  <footer>
+    &copy; 2025 Caja Nacional de Salud - Todos los derechos reservados
+  </footer>
 </body>
 </html>

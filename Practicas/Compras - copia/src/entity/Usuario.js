@@ -12,7 +12,6 @@ module.exports.Usuario = new EntitySchema({
     },
     correo: {
       type: "varchar",
-      unique: true,
     },
     contraseña: {
       type: "varchar",

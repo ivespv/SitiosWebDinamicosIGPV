@@ -23,7 +23,7 @@ const obtenerCompras = async (req, res) => {
 };
 
 const crearMultiplesCompras = async (req, res) => {
-  const { cite, codigo, cantidad, producto, precio_unitario, costo_total, fecha } = req.body;
+  const { cite, codigo, cantidad, producto, precio_unitario, costo_total, proveedor, fecha } = req.body;
 
   try {
     const compras = [];
@@ -35,6 +35,7 @@ const crearMultiplesCompras = async (req, res) => {
         producto: producto[i],
         precio_unitario: parseFloat(precio_unitario[i]),
         costo_total: parseFloat(costo_total[i]),
+        proveedor: proveedor[i],
         fecha: new Date(fecha[i] + 'T00:00:00Z')
       });
       compras.push(nuevaCompra);
@@ -50,7 +51,7 @@ const crearMultiplesCompras = async (req, res) => {
 // Actualizar una compra
 const editarCompra = async (req, res) => {
   const { id } = req.params;  
-  const { cite, codigo, cantidad, producto, precio_unitario, costo_total, fecha } = req.body;
+  const { cite, codigo, cantidad, producto, precio_unitario, costo_total, proveedor, fecha } = req.body;
 
   try {
     const compra = await getRepository(Compra).findOne({ where: { id: parseInt(id) } });
@@ -64,6 +65,7 @@ const editarCompra = async (req, res) => {
     compra.producto = producto;
     compra.precio_unitario = precio_unitario;
     compra.costo_total = costo_total;
+    compra.proveedor = proveedor;
     fecha: new Date(fecha[i] + 'T00:00:00Z')
 
     await getRepository(Compra).save(compra);

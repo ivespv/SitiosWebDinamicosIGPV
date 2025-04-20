@@ -1,4 +1,4 @@
-/* Estilos de la tabla */
+/* src/Public/css/Index.css */
 table {
     width: 100%;
     border-collapse: collapse;
@@ -24,7 +24,6 @@ table tr:hover {
     background-color: #ddd;
 }
 
-/* Estilos de los botones */
 button {
     background-color: #E98312;
     color: white;
@@ -37,19 +36,19 @@ button:hover {
     background-color: #E98312;
 }
 .btn {
-    display: inline-block; /* Para que el enlace se comporte como un botón */
-    padding: 10px 20px; /* Espaciado interno */
-    background-color: #E98312; /* Color de fondo */
-    color: white; /* Color del texto */
-    text-decoration: none; /* Sin subrayado */
-    border-radius: 5px; /* Bordes redondeados */
-    border: none; /* Sin borde */
-    font-size: 16px; /* Tamaño de fuente */
-    transition: background-color 0.3s; /* Transición suave para el color de fondo */
+    display: inline-block; 
+    padding: 10px 20px; 
+    background-color: #E98312; 
+    color: white; 
+    text-decoration: none; 
+    border-radius: 5px; 
+    border: none; 
+    font-size: 16px; 
+    transition: background-color 0.3s;
 }
 
 .btn:hover {
-    background-color: #004610; /* Color de fondo al pasar el mouse */
+    background-color: #004610; 
 }
 .pagination {
     margin: 20px 0;

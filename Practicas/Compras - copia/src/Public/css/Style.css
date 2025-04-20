@@ -1,3 +1,4 @@
+/* Practicas/Compras/src/Public/css/Style.css */
 * {
   margin: 0;
   padding: 0;
@@ -156,11 +157,13 @@ footer {
   color: white;
   text-align: center;
   padding: 1rem 0;
-  position: absolute;
+  position: relative;
   bottom: 0;
   left: 0;
   right: 0;
   font-size: 0.9rem;
+  margin-top: 2rem; 
+  box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
 }
 
 .content-box {
@@ -188,15 +191,15 @@ footer {
   margin-top: 2rem;
 }
 .image {
-  flex: 1; /* Permite que la imagen ocupe el espacio disponible */
-  text-align: center; /* Centrar la imagen */
+  flex: 1; 
+  text-align: center; 
 }
     
 .image img {
-  max-width: 100%; /* Asegura que la imagen no exceda el ancho del contenedor */
-  height: auto; /* Mantiene la proporción de la imagen */
+  max-width: 100%; 
+  height: auto; 
 }
-/*Responsive */
+
     @media (max-width: 600px) {
       header {
         flex-direction: column;
@@ -212,10 +215,10 @@ footer {
         font-size: 2rem;
       }
       .container {
-        flex-direction: column; /* Cambia a columna en pantallas pequeñas */
+        flex-direction: column; 
       }
       .content-box, .image {
-        width: 100%; /* Ocupa todo el ancho en pantallas pequeñas */
-        margin-right: 0; /* Elimina el margen derecho */
+        width: 100%; 
+        margin-right: 0; 
       }
     }

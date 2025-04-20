@@ -3,7 +3,10 @@ const express = require("express");
 const router = express.Router();
 const { getRepository } = require("typeorm");
 const { Compra } = require("../entity/Compra");
+const authMiddleware = require("../middleware/authMiddleware");
 const controlador = require("../controller/compraController");
+
+router.use(authMiddleware);
 
 router.get("/", async (req, res) => {
   controlador.obtenerCompras(req, res);
@@ -23,55 +26,54 @@ router.post("/crear", async (req, res) => {
   const nuevaCompra = getRepository(Compra).create({
     cite,
     codigo,
-    cantidad: parseInt(cantidad, 10), // Convertir a número
+    cantidad: parseInt(cantidad, 10), 
     producto,
-    precio_unitario: parseFloat(precio_unitario), // Convertir a número
-    costo_total: parseFloat(costo_total), // Convertir a número
-    fecha: new Date(fecha), // Asegúrate de que la fecha sea un objeto Date
+    precio_unitario: parseFloat(precio_unitario), 
+    costo_total: parseFloat(costo_total), 
+    fecha: new Date(fecha), 
   });
   await getRepository(Compra).save(nuevaCompra);
   res.redirect("/compras");
 });
 
-// Página para editar múltiples compras
+
 router.get("/editarMultiples", async (req, res) => {
-  const { comprasIds } = req.query; // Obtener los IDs de las compras seleccionadas
+  const { comprasIds } = req.query; 
   if (!comprasIds) {
-    return res.redirect("/compras"); // Redirigir si no hay IDs seleccionados
+    return res.redirect("/compras"); 
   }
 
-  // Convertir los IDs a un array si es necesario
+  
   const ids = Array.isArray(comprasIds) ? comprasIds : [comprasIds];
 
-  // Obtener las compras seleccionadas
+  
   const compras = await getRepository(Compra).findByIds(ids);
-  res.render("compras/editarMultiples", { compras }); // Renderizar la vista para editar múltiples compras
+  res.render("compras/editarMultiples", { compras }); 
 });
 
 router.post("/editarMultiples", async (req, res) => {
-  // Imprimir los datos recibidos para depuración
+  
   console.log("Datos recibidos para guardar múltiples compras:", req.body);
 
-  // Filtrar los campos que comienzan con "cite-"
+  
   const compraIds = Object.keys(req.body).filter(key => key.startsWith("cite-")); 
-  const errores = []; // Array para almacenar errores
-  console.log("IDs de compras a actualizar:", compraIds); // Imprimir los IDs filtrados
+  const errores = [];
+  console.log("IDs de compras a actualizar:", compraIds); 
 
   try {
       for (const id of compraIds) {
-          const compraId = id.split("-")[1]; // Obtener el ID de la compra
-          console.log("Buscando compra con ID:", compraId); // Imprimir el ID que se busca
+          const compraId = id.split("-")[1]; 
+          console.log("Buscando compra con ID:", compraId); 
           
-          // Buscar la compra usando un objeto de condiciones
+          
           const compra = await getRepository(Compra).findOne({ where: { id: parseInt(compraId, 10) } });
           
-          // Asegúrate de que la fecha sea un objeto Date
+          
           if (compra && typeof compra.fecha === 'string') {
-            compra.fecha = new Date(compra.fecha); // Convertir a objeto Date si es un string
+            compra.fecha = new Date(compra.fecha); 
         }
           
           if (compra) {
-              // Actualizar los campos de la compra
               compra.cite = req.body[`cite-${compraId}`];
               compra.codigo = req.body[`codigo-${compraId}`];
               compra.cantidad = parseInt(req.body[`cantidad-${compraId}`], 10); // Convertir a número
@@ -80,49 +82,48 @@ router.post("/editarMultiples", async (req, res) => {
               compra.costo_total = parseFloat(req.body[`costo_total-${compraId}`]); // Convertir a número
               const fecha = new Date(req.body[`fecha-${compraId}`]);
               
-              // Validar la fecha
+              
               if (isNaN(fecha.getTime())) {
                 errores.push("Fecha inválida para la compra ID: " + compraId);
-                continue; // Saltar a la siguiente compra
+                continue; 
               }
-              compra.fecha = fecha; // Asegúrate de que la fecha sea un objeto Date
+              compra.fecha = fecha; 
 
-              // Validar datos antes de guardar
+              
               if (!compra.cite || !compra.codigo || !compra.producto || isNaN(compra.cantidad) || isNaN(compra.precio_unitario) || isNaN(compra.costo_total)) {
                 errores.push("Datos de compra inválidos para la compra ID: " + compraId);
-                continue; // Saltar a la siguiente compra
+                continue; 
               }
 
-              // Guardar los cambios en la base de datos
+              
               await getRepository(Compra).save(compra);
           } else {
               console.error("Compra no encontrada con ID:", compraId);
           }
       }
       if (errores.length > 0) {
-        // Renderizar la vista de editarMultiples con errores
+        
         const compras = await getRepository(Compra).findByIds(compraIds.map(id => id.split("-")[1]));
         return res.render("compras/editarMultiples", { compras, errores });
       }
-      res.redirect("/compras"); // Redirigir a la lista de compras después de guardar
+      res.redirect("/compras"); 
   } catch (error) {
       console.error("Error al guardar múltiples compras:", error.message);
       res.status(500).send("Error al guardar múltiples compras: " + error.message);
   }
 });
 
-// Eliminar múltiples compras
 router.post("/eliminar-multiples", async (req, res) => {
-  const { comprasIds } = req.body; // Asegúrate de que el nombre coincida con el del formulario
+  const { comprasIds } = req.body; 
   if (!comprasIds) {
-    return res.redirect("/compras"); // Si no hay IDs seleccionados, redirige
+    return res.redirect("/compras"); 
   }
 
-  // Asegúrate de que comprasIds sea un array
+ 
   const ids = Array.isArray(comprasIds) ? comprasIds : [comprasIds];
 
   try {
-    await getRepository(Compra).delete(ids); // Eliminar las compras seleccionadas
+    await getRepository(Compra).delete(ids); 
     res.redirect("/compras");
   } catch (error) {
     console.error("Error al eliminar compras:", error);
@@ -130,7 +131,7 @@ router.post("/eliminar-multiples", async (req, res) => {
   }
 });
 
-// Actualizar una compra individual (si es necesario)
+
 router.post("/editar/:id", controlador.editarCompra);
 
 module.exports = router;

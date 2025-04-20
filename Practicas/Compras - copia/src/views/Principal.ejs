@@ -33,7 +33,13 @@
           <li><a href="/compras/crear">Registrar Compra</a></li>
         </ul>
       </li>
+      <li>
+        <a href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Cerrar Sesión</a>
+      </li>
     </ul>
+    <form id="logout-form" action="/auth/logout" method="POST" style="display: none;">
+     
+    </form>
   </nav>
 
   <div class="container">

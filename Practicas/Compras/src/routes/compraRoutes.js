@@ -22,7 +22,7 @@ router.post("/crear-multiples", async (req, res) => {
 });
 
 router.post("/crear", async (req, res) => {
-  const { cite, codigo, cantidad, producto, precio_unitario, costo_total, fecha } = req.body;
+  const { cite, codigo, cantidad, producto, precio_unitario, costo_total, proveedor, fecha } = req.body;
   const nuevaCompra = getRepository(Compra).create({
     cite,
     codigo,
@@ -30,6 +30,7 @@ router.post("/crear", async (req, res) => {
     producto,
     precio_unitario: parseFloat(precio_unitario), 
     costo_total: parseFloat(costo_total), 
+    proveedor,
     fecha: new Date(fecha), 
   });
   await getRepository(Compra).save(nuevaCompra);
@@ -80,6 +81,7 @@ router.post("/editarMultiples", async (req, res) => {
               compra.producto = req.body[`producto-${compraId}`];
               compra.precio_unitario = parseFloat(req.body[`precio_unitario-${compraId}`]); // Convertir a número
               compra.costo_total = parseFloat(req.body[`costo_total-${compraId}`]); // Convertir a número
+              compra.proveedor = req.body[`proveedor-${compraId}`];
               const fecha = new Date(req.body[`fecha-${compraId}`]);
               
               
