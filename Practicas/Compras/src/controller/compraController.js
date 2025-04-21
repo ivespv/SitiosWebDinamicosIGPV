@@ -144,40 +144,62 @@ const generarReporte = async (req, res) => {
   doc.fontSize(25).text('Reporte de Compras', { align: 'center' });
   doc.moveDown();
 
-  // Encabezados de la tabla
-  doc.fontSize(12).text('Cite', 50, 100);
-  doc.text('Código', 150, 100);
-  doc.text('Cantidad', 250, 100);
-  doc.text('Producto', 350, 100);
-  doc.text('Precio Unitario', 450, 100);
-  doc.text('Costo Total', 550, 100);
-  doc.text('Proveedor', 650, 100);
-  doc.text('Fecha', 750, 100);
+  // Definir el ancho total y el número de columnas
+  const totalWidth = doc.page.width - doc.page.margins.left - doc.page.margins.right;
+  const columns = [
+    { title: 'Cite', width: 100 },
+    { title: 'Código', width: 100 },
+    { title: 'Cantidad', width: 100 },
+    { title: 'Producto', width: 200 },
+    { title: 'Precio Unitario', width: 100 },
+    { title: 'Costo Total', width: 100 },
+    { title: 'Proveedor', width: 100 },
+    { title: 'Fecha', width: 100 }
+  ];
+
+   // Calcular la posición inicial
+  let x = doc.page.margins.left;
+  const rowHeight = 20;
+
+  // Dibujar encabezados
+  columns.forEach(column => {
+    doc.fontSize(10).text(column.title, x, 100, { width: column.width });
+    x += column.width;
+  });
   doc.moveDown();
 
+  // Dibujar filas de datos
   comprasFiltradas.forEach(compra => {
+    x = doc.page.margins.left; // Reiniciar la posición x para cada fila
     const precioUnitario = parseFloat(compra.precio_unitario);
     const costoTotal = parseFloat(compra.costo_total);
     const fechaCompra = new Date(compra.fecha).toLocaleDateString();
-  
+
     // Verifica si los valores son números válidos
     if (isNaN(precioUnitario) || isNaN(costoTotal)) {
       console.error(`Error en los datos de compra: ${JSON.stringify(compra)}`);
       return; // Salir de la iteración si hay un error
     }
-  
-    // Dibuja cada fila de datos
-    doc.text(compra.cite, 50);
-    doc.text(compra.codigo, 150);
-    doc.text(compra.cantidad.toString(), 250);
-    doc.text(compra.producto, 350);
-    doc.text(precioUnitario.toFixed(2), 450);
-    doc.text(costoTotal.toFixed(2), 550);
-    doc.text(compra.proveedor, 650);
-    doc.text(fechaCompra, 750);
-    doc.moveDown();
-  });
 
+     // Dibuja cada fila de datos
+     doc.text(compra.cite, x, doc.y);
+     x += columns[0].width;
+     doc.text(compra.codigo, x, doc.y);
+     x += columns[1].width;
+     doc.text(compra.cantidad.toString(), x, doc.y);
+     x += columns[2].width;
+     doc.text(compra.producto, x, doc.y);
+     x += columns[3].width;
+     doc.text(precioUnitario.toFixed(2), x, doc.y);
+     x += columns[4].width;
+     doc.text(costoTotal.toFixed(2), x, doc.y);
+     x += columns[5].width;
+     doc.text(compra.proveedor, x, doc.y);
+     x += columns[6].width;
+     doc.text(fechaCompra, x, doc.y);
+     doc.moveDown(rowHeight); // Mover hacia abajo para la siguiente fila
+   });
+   
   doc.end();
 
   // Enviar el archivo PDF como respuesta
