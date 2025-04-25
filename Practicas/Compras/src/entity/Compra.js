@@ -38,5 +38,8 @@ module.exports.Compra = new EntitySchema({
     fecha: {
       type: "date",
     },
+    nusuario: {
+      type: "varchar",
+    },
   },
 });

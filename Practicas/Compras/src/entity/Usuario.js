@@ -19,6 +19,9 @@ module.exports.Usuario = new EntitySchema({
     nombre: {
       type: "varchar",
     },
+    nusuario: {
+      type: "varchar",
+    },
     rol: {
       type: "varchar",
     },
