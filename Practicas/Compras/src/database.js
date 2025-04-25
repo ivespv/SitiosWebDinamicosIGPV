@@ -12,7 +12,7 @@ const connectDB = async () => {
       password: process.env.DB_PASS,
       database: process.env.DB_NAME, 
       entities: [Usuario, Compra], 
-      synchronize: true, 
+      synchronize: false, 
     });
     console.log("Conexión a la base de datos establecida correctamente.");
   } catch (error) {

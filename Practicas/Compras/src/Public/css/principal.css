@@ -1,0 +1,42 @@
+header {
+    display: flex;
+    justify-content: space-between; /* Alinea los elementos a los extremos */
+    align-items: center; /* Centra verticalmente los elementos */
+    padding: 10px; /* Espaciado interno */
+    background-color: #f8f8f8; /* Color de fondo del header */
+  }
+  
+  .header-left {
+    display: flex;
+    align-items: center; /* Centra verticalmente el logo y el texto */
+    padding-left: 20px;
+  }
+  
+  .header-text h1, .header-text h2 {
+    margin: 0; /* Elimina márgenes por defecto */
+  }
+  
+  .user-info {
+    display: flex; /* Usar flexbox para alinear el ícono y el texto */
+    align-items: center; /* Centra verticalmente el ícono y el texto */
+    margin-left: auto; /* Empuja el bloque de usuario a la derecha */
+    text-align: right; /* Alinea el texto a la derecha */
+    font-size: 14px; /* Tamaño de fuente */
+    color: #333; /* Color del texto */
+    padding-right: 2rem;
+  }
+  
+  .user-info i {
+    font-size: 24px; /* Tamaño del ícono */
+    margin-right: 8px; /* Espacio entre el ícono y el texto */
+    color: #007bff; /* Color del ícono */
+  }
+  
+  .user-info div {
+    display: flex;
+    flex-direction: column; /* Coloca el texto en columnas */
+  }
+  
+  .user-info p {
+    margin: 0; /* Elimina el margen por defecto */
+  }

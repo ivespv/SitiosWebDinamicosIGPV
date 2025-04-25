@@ -4,6 +4,8 @@ const express = require("express");
 const session = require("express-session");
 const connectDB = require("./database");
 const path = require("path");
+const { getRepository } = require("typeorm"); // Importar getRepository
+const { Usuario } = require("./entity/Usuario"); // Asegúrate de importar el modelo Usuario
 const usuarioRoutes = require("./routes/usuarioRoutes");
 const compraRoutes = require("./routes/compraRoutes"); 
 const authRoutes = require("./routes/authRoutes");
@@ -26,9 +28,24 @@ app.use("/usuarios", usuarioRoutes);
 app.use("/compras", compraRoutes); 
 app.use("/auth", authRoutes);
 
-app.get("/", (req, res) => {
-  res.render("Principal");
+app.get("/", async (req, res) => {
+  const usuarioId = req.session.usuarioId;
+  let usuario = null;
+
+  try {
+    if (usuarioId) {
+      usuario = await getRepository(Usuario).findOne({ where: { id: usuarioId } }); // Corrección aquí
+    }
+    res.render("Principal", { usuario });
+  } catch (error) {
+    console.error("Error al obtener el usuario:", error);
+    res.status(500).send("Error interno del servidor");
+  }
 });
+
+/*app.get("/", (req, res) => {
+  res.render("Principal");
+});*/
 
 const PORT = process.env.PORT || 3000;
 

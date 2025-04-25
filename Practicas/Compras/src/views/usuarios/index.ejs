@@ -45,13 +45,13 @@
   <form action="/usuarios/crear" method="GET" style="display:inline;">
     <button type="submit" class="btn modificar">Crear Usuario</button>
   </form>
- 
-  <table>
+   <table>
     <thead>
       <tr>
         <th>ID</th>
         <th>Correo</th>
         <th>Nombre</th>
+        <th>Usuario</th>
         <th>Rol</th>
         <th>Acciones</th>
       </tr>
@@ -62,6 +62,7 @@
           <td><%= usuario.id %></td>
           <td><%= usuario.correo %></td>
           <td><%= usuario.nombre %></td>
+          <td><%= usuario.nusuario %></td>
           <td><%= usuario.rol %></td>
           <td>
             <form action="/usuarios/editar/<%= usuario.id %>" method="GET" style="display:inline;">

@@ -1,7 +1,7 @@
 // src/controller/compraController.js
 const { getRepository, Like } = require("typeorm");
 const { Compra } = require("../entity/Compra");
-
+const { Usuario } = require("../entity/Usuario"); //importar Usuario
 const PDFDocument = require('pdfkit');
 const fs = require('fs');
 
@@ -52,6 +52,19 @@ const crearMultiplesCompras = async (req, res) => {
   const { cite, codigo, cantidad, producto, precio_unitario, costo_total, proveedor, fecha } = req.body;
 
   try {
+    const usuarioId = req.session.usuarioId;
+    console.log("usuarioId:", usuarioId, "tipo:", typeof usuarioId); // Verifica el tipo de usuarioId
+
+    if (!usuarioId) {
+      return res.status(401).json({ mensaje: "Usuario no autenticado" });
+    }
+
+    const usuario = await getRepository(Usuario).findOne({ where: { id: parseInt(usuarioId, 10) } }); // Asegúrate de que el ID sea un número
+    if (!usuario) {
+      console.error("Usuario no encontrado con ID:", usuarioId);
+      return res.status(404).json({ mensaje: "Usuario no encontrado" });
+    }
+
     const compras = [];
     for (let i = 0; i < cite.length; i++) {
       const nuevaCompra = getRepository(Compra).create({
@@ -62,7 +75,8 @@ const crearMultiplesCompras = async (req, res) => {
         precio_unitario: parseFloat(precio_unitario[i]),
         costo_total: parseFloat(costo_total[i]),
         proveedor: proveedor[i],
-        fecha: new Date(fecha[i] + 'T00:00:00Z')
+        fecha: new Date(fecha[i] + 'T00:00:00Z'),
+        nusuario: usuario.nusuario,
       });
       compras.push(nuevaCompra);
     }
@@ -78,12 +92,15 @@ const crearMultiplesCompras = async (req, res) => {
 const editarCompra = async (req, res) => {
   const { id } = req.params;  
   const { cite, codigo, cantidad, producto, precio_unitario, costo_total, proveedor, fecha } = req.body;
+  
 
   try {
     const compra = await getRepository(Compra).findOne({ where: { id: parseInt(id) } });
     if (!compra) {
       return res.status(404).json({ mensaje: "Compra no encontrada" });
     }
+
+    const usuario = await getRepository(Usuario).findOne(req.session.usuarioId); // Obtener el usuario logueado
 
     compra.cite = cite;
     compra.codigo = codigo;
@@ -92,7 +109,8 @@ const editarCompra = async (req, res) => {
     compra.precio_unitario = precio_unitario;
     compra.costo_total = costo_total;
     compra.proveedor = proveedor;
-    fecha: new Date(fecha[i] + 'T00:00:00Z')
+    compra.fecha = new Date(fecha[i] + 'T00:00:00Z')
+    compra.nusuario = usuario.nusuario;
 
     await getRepository(Compra).save(compra);
     res.redirect("/compras");

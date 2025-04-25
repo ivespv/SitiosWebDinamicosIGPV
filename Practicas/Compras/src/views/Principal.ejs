@@ -6,7 +6,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>CAJA NACIONAL DE SALUD - DISTRITAL TUPIZA</title>
   <link rel="stylesheet" href="../css/Style.css">
-</head>
+  <link rel="stylesheet" href="../css/Principal.css">
+  </head>
 <body>
   <header>
     <div class="header-left">
@@ -14,6 +15,17 @@
       <div class="header-text">
         <h1>CAJA NACIONAL DE SALUD</h1>
         <h2>DISTRITAL TUPIZA</h2>
+      </div>
+    </div>
+    <div class="user-info"> <!-- Mover aquí -->
+      <img src="/images/usuario.svg" alt="usuario" />
+      <div>
+        <% if (usuario) { %>
+          <p>Bienvenido</p>
+          <p><%= usuario.nusuario %></p>
+        <% } else { %>
+          <p>Bienvenido, invitado</p>
+        <% } %>
       </div>
     </div>
   </header>
@@ -41,6 +53,8 @@
      
     </form>
   </nav>
+
+  
 
   <div class="container">
     <div class="content-box"> <!-- Clase añadida aquí -->

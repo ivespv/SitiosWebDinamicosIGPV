@@ -13,13 +13,14 @@ const obtenerUsuarios = async (req, res) => {
 
 // Crear un nuevo usuario
 const crearUsuario = async (req, res) => {
-  const { correo, contraseña, nombre, rol } = req.body;
+  const { correo, contraseña, nombre, rol, nusuario } = req.body;
   const hashedPassword = await bcrypt.hash(contraseña, 10);
   const nuevoUsuario = getRepository(Usuario).create({
     correo,
     contraseña: hashedPassword,
     nombre,
     rol,
+    nusuario,
   });
   const resultado = await getRepository(Usuario).save(nuevoUsuario);
   res.json(resultado);
@@ -27,12 +28,13 @@ const crearUsuario = async (req, res) => {
 
 // Actualizar un usuario
 const editarUsuario = async (req, res) => {
-  const { correo, nombre, rol } = req.body;
+  const { correo, nombre, rol,nusuario } = req.body;
   const usuario = await getRepository(Usuario).findOne(req.params.id);
   if (usuario) {
     usuario.correo = correo;
     usuario.nombre = nombre;
     usuario.rol = rol;
+    usuario.nusuario = nusuario;
     const resultado = await getRepository(Usuario).save(usuario);
     res.json(resultado);
   } else {
