@@ -7,7 +7,7 @@
   <title>CAJA NACIONAL DE SALUD - DISTRITAL TUPIZA</title>
   <link rel="stylesheet" href="../css/Style.css">
   <link rel="stylesheet" href="../css/Principal.css">
-  </head>
+</head>
 <body>
   <header>
     <div class="header-left">
@@ -15,17 +15,6 @@
       <div class="header-text">
         <h1>CAJA NACIONAL DE SALUD</h1>
         <h2>DISTRITAL TUPIZA</h2>
-      </div>
-    </div>
-    <div class="user-info"> <!-- Mover aquí -->
-      <img src="/images/usuario.svg" alt="usuario" />
-      <div>
-        <% if (usuario) { %>
-          <p>Bienvenido</p>
-          <p><%= usuario.nusuario %></p>
-        <% } else { %>
-          <p>Bienvenido, invitado</p>
-        <% } %>
       </div>
     </div>
   </header>
@@ -45,16 +34,19 @@
           <li><a href="/compras/crear">Registrar Compra</a></li>
         </ul>
       </li>
+      <li class="coltext">Proveedores
+        <ul>
+          <li><a href="/proveedores">Lista de Proveedores</a></li>
+          <li><a href="/proveedores/crear">Registrar Proveedor</a></li>
+        </ul>
+      </li>
       <li>
         <a href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Cerrar Sesión</a>
       </li>
     </ul>
     <form id="logout-form" action="/auth/logout" method="POST" style="display: none;">
-     
     </form>
   </nav>
-
-  
 
   <div class="container">
     <div class="content-box"> <!-- Clase añadida aquí -->
@@ -66,6 +58,9 @@
           </p>
           <p>
             En esta plataforma puedes visualizar todas las compras realizadas, registrar nuevas compras, editar y eliminar según sea necesario.
+          </p>
+          <p>
+            También puedes gestionar proveedores, incluyendo la posibilidad de agregar, editar y eliminar proveedores.
           </p>
           <p>
             Usa el menú para navegar entre las diferentes secciones.

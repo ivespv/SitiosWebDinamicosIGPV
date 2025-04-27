@@ -9,6 +9,7 @@ const { Usuario } = require("./entity/Usuario"); // Asegúrate de importar el mo
 const usuarioRoutes = require("./routes/usuarioRoutes");
 const compraRoutes = require("./routes/compraRoutes"); 
 const authRoutes = require("./routes/authRoutes");
+const proveedorRoutes = require("./routes/proveedorRoutes");
 
 const app = express();
 
@@ -27,6 +28,7 @@ app.set("views", path.join(__dirname, "views"));
 app.use("/usuarios", usuarioRoutes);
 app.use("/compras", compraRoutes); 
 app.use("/auth", authRoutes);
+app.use("/proveedores", proveedorRoutes);
 
 app.get("/", async (req, res) => {
   const usuarioId = req.session.usuarioId;
