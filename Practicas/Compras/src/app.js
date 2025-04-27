@@ -10,6 +10,8 @@ const usuarioRoutes = require("./routes/usuarioRoutes");
 const compraRoutes = require("./routes/compraRoutes"); 
 const authRoutes = require("./routes/authRoutes");
 const proveedorRoutes = require("./routes/proveedorRoutes");
+const productoRoutes = require("./routes/productoRoutes");
+
 
 const app = express();
 
@@ -29,6 +31,7 @@ app.use("/usuarios", usuarioRoutes);
 app.use("/compras", compraRoutes); 
 app.use("/auth", authRoutes);
 app.use("/proveedores", proveedorRoutes);
+app.use("/productos", productoRoutes);
 
 app.get("/", async (req, res) => {
   const usuarioId = req.session.usuarioId;

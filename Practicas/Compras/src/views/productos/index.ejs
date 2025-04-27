@@ -1,10 +1,10 @@
-<!-- src/views/proveedores/index.ejs -->
+<!-- src/views/productos/index.ejs -->
 <!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Lista de Proveedores</title>
+  <title>Lista de Productos</title>
   <link rel="stylesheet" href="/css/Style.css">
   <link rel="stylesheet" href="/css/index.css">
 </head>
@@ -53,39 +53,38 @@
         <form id="logout-form" action="/auth/logout" method="POST" style="display: none;">
         </form>
       </nav>
-  <header>
-    <h1>Lista de Proveedores</h1>
-    <div>
-      <a href="/proveedores/crear" class="btn">Registrar Proveedor</a>
-    </div>
-  </header>
-  
+  <h1>Lista de Productos</h1>
+  <a href="/productos/crear" class="btn">Registrar Producto</a>
   <table>
     <thead>
       <tr>
         <th>ID</th>
-        <th>Correo</th>
-        <th>Nombre</th>
-        <th>Empresa</th>
-        <th>Dirección</th>
-        <th>Teléfono</th>
+        <th>Código</th>
+        <th>Cod. CIE 10</th>
+        <th>Detalle</th>
+        <th>Unidad</th>
+        <th>Concentración</th>
+        <th>Psicotrópico</th>
+        <th>Estupefaciente</th>
         <th>Acciones</th>
       </tr>
     </thead>
     <tbody>
-      <% proveedores.forEach(proveedor => { %>
+      <% productos.forEach(producto => { %>
         <tr>
-          <td><%= proveedor.id %></td>
-          <td><%= proveedor.correo %></td>
-          <td><%= proveedor.nombre %></td>
-          <td><%= proveedor.empresa %></td>
-          <td><%= proveedor.direccion %></td>
-          <td><%= proveedor.telefono %></td>
+          <td><%= producto.id %></td>
+          <td><%= producto.codigo %></td>
+          <td><%= producto.codint %></td>
+          <td><%= producto.detalle %></td>
+          <td><%= producto.unidad %></td>
+          <td><%= producto.concentracion %></td>
+          <td><%= producto.psicotropico %></td>
+          <td><%= producto.estupefaciente %></td>
           <td>
-            <form action="/proveedores/eliminar/<%= proveedor.id %>" method="POST" style="display:inline;">
+            <form action="/productos/eliminar/<%= producto.id %>" method="POST" style="display:inline;">
               <button type="submit">Eliminar</button>
             </form>
-            <a href="/proveedores/editar/<%= proveedor.id %>">Editar</a>
+            <a href="/productos/editar/<%= producto.id %>">Editar</a>
           </td>
         </tr>
       <% }) %>

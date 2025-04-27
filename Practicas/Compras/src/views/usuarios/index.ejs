@@ -18,6 +18,7 @@
       </div>
     </div>
   </header>
+
   <nav class="header-right">
     <ul>
       <li><a href="/">Inicio</a></li>
@@ -33,12 +34,23 @@
           <li><a href="/compras/crear">Registrar Compra</a></li>
         </ul>
       </li>
+      <li class="coltext">Productos <!-- Agregar el menú de productos aquí -->
+        <ul>
+          <li><a href="/productos">Lista de Productos</a></li>
+          <li><a href="/productos/crear">Registrar Producto</a></li>
+        </ul>
+      </li>
+      <li class="coltext">Proveedores
+        <ul>
+          <li><a href="/proveedores">Lista de Proveedores</a></li>
+          <li><a href="/proveedores/crear">Registrar Proveedor</a></li>
+        </ul>
+      </li>
       <li>
         <a href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Cerrar Sesión</a>
       </li>
     </ul>
     <form id="logout-form" action="/auth/logout" method="POST" style="display: none;">
-     
     </form>
   </nav>
   <h1 class="title">Lista de Usuarios</h1>
