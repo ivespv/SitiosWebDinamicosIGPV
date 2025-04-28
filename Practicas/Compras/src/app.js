@@ -20,6 +20,12 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(session({ secret: 'mi_secreto', resave: false, saveUninitialized: true })); 
 
+// Middleware para manejar errores
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(500).send('Algo salió mal!');
+});
+
 app.use(express.static(path.join(__dirname, "public")));
 
 // Configuración del motor de vistas

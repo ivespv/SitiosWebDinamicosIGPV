@@ -54,10 +54,13 @@
         </form>
       </nav>
   <h1>Lista de Productos</h1>
-  <a href="/productos/crear" class="btn">Registrar Producto</a>
+  
+  <a href="/productos/crear" class="btn-Volver">Registrar Productos</a>
+  <form id="bulk-actions" action="/productos/eliminar" method="POST">
   <table>
     <thead>
       <tr>
+        <th><input type="checkbox" id="select-all" /></th>
         <th>ID</th>
         <th>Código</th>
         <th>Cod. CIE 10</th>
@@ -72,6 +75,7 @@
     <tbody>
       <% productos.forEach(producto => { %>
         <tr>
+          <td><input type="checkbox" name="productos[]" value="<%= producto.id %>" /></td>
           <td><%= producto.id %></td>
           <td><%= producto.codigo %></td>
           <td><%= producto.codint %></td>
@@ -84,13 +88,15 @@
             <form action="/productos/eliminar/<%= producto.id %>" method="POST" style="display:inline;">
               <button type="submit">Eliminar</button>
             </form>
-            <a href="/productos/editar/<%= producto.id %>">Editar</a>
+            <!-- <a href="/productos/editar/<%= producto.id %>">Editar</a> -->
           </td>
         </tr>
       <% }) %>
     </tbody>
   </table>
-
+  <button type="submit">Eliminar Seleccionados</button>
+  <button type="button" id="edit-selected" class="btn">Modificar Seleccionado</button>
+</form>
  <!-- Pagination -->
  <div class="pagination">
   <% if (currentPage > 1) { %>
@@ -107,5 +113,31 @@
   <footer>
     &copy; 2025 Caja Nacional de Salud - Todos los derechos reservados
   </footer>
+  <script>
+    document.querySelector('.btn').addEventListener('click', function(event) {
+      event.preventDefault(); // Evitar el comportamiento por defecto del enlace
+      const selectedCheckbox = document.querySelector('input[name="productos[]"]:checked');
+      if (selectedCheckbox) {
+        const selectedId = selectedCheckbox.value;
+        window.location.href = `/productos/editar/${selectedId}`; // Redirigir a la página de edición
+      } else {
+        alert('Por favor, selecciona un producto para modificar.');
+      }
+    });
+  </script>
+  <script>
+    document.getElementById('edit-selected').addEventListener('click', function(event) {
+      const selectedCheckbox = document.querySelector('input[name="productos[]"]:checked');
+      if (selectedCheckbox) {
+        const selectedId = selectedCheckbox.value;
+        window.location.href = `/productos/editar/${selectedId}`; // Redirigir a la página de edición
+      } else {
+        alert('Por favor, selecciona un producto para modificar.');
+      }
+    });
+  </script>  
+
+
+
 </body>
 </html>

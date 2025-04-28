@@ -17,22 +17,28 @@ const obtenerProductos = async (req, res) => {
 };
 
 const obtenerProductoPorId = async (req, res) => {
-    const { id } = req.params;
-    const producto = await getRepository(Producto).findOne({ where: { id } }); 
-  if (!producto) {
-    return res.status(404).json({ mensaje: "Producto no encontrado" });
+  const { id } = req.params;
+  try {
+    const producto = await getRepository(Producto).findOne({ where: { id: parseInt(id) } });
+    if (!producto) {
+      return res.status(404).json({ mensaje: "Producto no encontrado" });
+    }
+    res.render("productos/editar", { producto }); // Renderiza la vista de edición
+  } catch (error) {
+    console.error("Error al obtener el producto:", error);
+    res.status(500).json({ mensaje: "Error al obtener el producto" });
   }
-  res.render("productos/editar", { producto });
 };
 
 // Crear múltiples productos
 const crearMultiplesProductos = async (req, res) => {
-  const { codigo, detalle, unidad, concentracion, psicotropico, estupefaciente } = req.body;
+  const { codigo, codint, detalle, unidad, concentracion, psicotropico, estupefaciente } = req.body;
 
   const productos = [];
   for (let i = 0; i < codigo.length; i++) {
     const nuevoProducto = getRepository(Producto).create({
       codigo: codigo[i],
+      codint: codint[i],
       detalle: detalle[i],
       unidad: unidad[i],
       concentracion: concentracion[i],
@@ -80,10 +86,27 @@ const eliminarProducto = async (req, res) => {
   res.redirect("/productos");
 };
 
+const eliminarProductos = async (req, res) => {
+  const ids = req.body.productos; // Obtener los IDs de los productos seleccionados
+  if (!ids || ids.length === 0) {
+    return res.redirect("/productos"); // Redirigir si no hay productos seleccionados
+  }
+
+  try {
+    await getRepository(Producto).delete(ids); // Eliminar los productos
+    res.redirect("/productos");
+  } catch (error) {
+    console.error("Error al eliminar productos:", error);
+    res.status(500).json({ mensaje: "Error al eliminar productos" });
+  }
+};
+
+
 module.exports = {
   obtenerProductos,
   crearMultiplesProductos,
   editarProducto,
   eliminarProducto,
   obtenerProductoPorId,
+  eliminarProductos,
 };
