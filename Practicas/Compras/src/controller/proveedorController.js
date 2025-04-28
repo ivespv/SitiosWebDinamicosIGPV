@@ -73,10 +73,19 @@ const eliminarProveedor = async (req, res) => {
   res.redirect("/proveedores");
 };
 
+const eliminarMultiplesProveedores = async (req, res) => {
+  const { proveedorIds } = req.body; // Obtener los IDs de los proveedores seleccionados
+  if (proveedorIds && proveedorIds.length > 0) {
+    await getRepository(Proveedor).delete(proveedorIds); // Eliminar los proveedores
+  }
+  res.redirect("/proveedores");
+};
+
 module.exports = {
   obtenerProveedores,
   editarProveedorPage,
   crearMultiplesProveedores,
   editarProveedor,
   eliminarProveedor,
+  eliminarMultiplesProveedores,
 };

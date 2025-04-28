@@ -7,6 +7,14 @@
   <title>Lista de Proveedores</title>
   <link rel="stylesheet" href="/css/Style.css">
   <link rel="stylesheet" href="/css/index.css">
+  <script>
+    function toggleSelectAll(source) {
+      const checkboxes = document.querySelectorAll('input[name="proveedorIds"]');
+      checkboxes.forEach(checkbox => {
+        checkbox.checked = source.checked;
+      });
+    }
+  </script>
 </head>
 <body>
     <header>
@@ -56,13 +64,14 @@
   <header>
     <h1>Lista de Proveedores</h1>
     <div>
-      <a href="/proveedores/crear" class="btn">Registrar Proveedor</a>
+      <a href="/proveedores/crear" class="btn-Volver">Registrar Proveedor</a>
     </div>
   </header>
-  
+  <form id="bulk-actions" action="/proveedores/eliminar" method="POST">
   <table>
     <thead>
       <tr>
+        <th><input type="checkbox" id="select-all" onclick="toggleSelectAll(this)" /></th>
         <th>ID</th>
         <th>Correo</th>
         <th>Nombre</th>
@@ -75,6 +84,7 @@
     <tbody>
       <% proveedores.forEach(proveedor => { %>
         <tr>
+          <td><input type="checkbox" name="proveedores[]" value="<%= proveedor.id %>" /></td>
           <td><%= proveedor.id %></td>
           <td><%= proveedor.correo %></td>
           <td><%= proveedor.nombre %></td>
@@ -85,7 +95,7 @@
             <form action="/proveedores/eliminar/<%= proveedor.id %>" method="POST" style="display:inline;">
               <button type="submit">Eliminar</button>
             </form>
-            <a href="/proveedores/editar/<%= proveedor.id %>">Editar</a>
+            <!--<a href="/proveedores/editar/<%= proveedor.id %>">Editar</a>-->
           </td>
         </tr>
       <% }) %>
@@ -103,8 +113,35 @@
       <a href="?page=<%= currentPage + 1 %>">Siguiente</a>
     <% } %>
   </div>
+  <button type="submit">Eliminar Seleccionados</button>
+  <button type="button" id="edit-selected" class="btn">Modificar Seleccionado</button>
+  </form>
   <footer>
     &copy; 2025 Caja Nacional de Salud - Todos los derechos reservados
   </footer>
+  <script>
+    document.querySelector('.btn').addEventListener('click', function(event) {
+      event.preventDefault(); // Evitar el comportamiento por defecto del enlace
+      const selectedCheckbox = document.querySelector('input[name="preveedores[]"]:checked');
+      if (selectedCheckbox) {
+        const selectedId = selectedCheckbox.value;
+        window.location.href = `/proveedores/editar/${selectedId}`; // Redirigir a la página de edición
+      } else {
+        alert('Por favor, selecciona un producto para modificar.');
+      }
+    });
+  </script>
+  <script>
+    document.getElementById('edit-selected').addEventListener('click', function(event) {
+      const selectedCheckbox = document.querySelector('input[name="proveedores[]"]:checked');
+      if (selectedCheckbox) {
+        const selectedId = selectedCheckbox.value;
+        window.location.href = `/proveedores/editar/${selectedId}`; // Redirigir a la página de edición
+      } else {
+        alert('Por favor, selecciona un producto para modificar.');
+      }
+    });
+  </script>  
+
 </body>
 </html>

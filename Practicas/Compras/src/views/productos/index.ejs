@@ -94,9 +94,7 @@
       <% }) %>
     </tbody>
   </table>
-  <button type="submit">Eliminar Seleccionados</button>
-  <button type="button" id="edit-selected" class="btn">Modificar Seleccionado</button>
-</form>
+  
  <!-- Pagination -->
  <div class="pagination">
   <% if (currentPage > 1) { %>
@@ -109,6 +107,9 @@
     <a href="?page=<%= currentPage + 1 %>">Siguiente</a>
   <% } %>
 </div>
+<button type="submit">Eliminar Seleccionados</button>
+<button type="button" id="edit-selected" class="btn">Modificar Seleccionado</button>
+</form>
 
   <footer>
     &copy; 2025 Caja Nacional de Salud - Todos los derechos reservados

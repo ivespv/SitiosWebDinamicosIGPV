@@ -28,4 +28,7 @@ router.post("/editar/:id", proveedorController.editarProveedor);
 // Eliminar un proveedor
 router.post("/eliminar/:id", proveedorController.eliminarProveedor);
 
+//Eliminar Multiples proveedores
+router.post("/eliminar-multiples", proveedorController.eliminarMultiplesProveedores); 
+
 module.exports = router;
