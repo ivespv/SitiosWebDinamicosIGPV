@@ -4,8 +4,16 @@ const { Producto } = require("../entity/Producto");
 
 // Obtener todos los productos
 const obtenerProductos = async (req, res) => {
-  const productos = await getRepository(Producto).find();
-  res.render("productos/index", { productos });
+  const page = parseInt(req.query.page) || 1; // Obtener el número de página desde la query
+  const limit = 5; // Número de productos por página
+  const [productos, total] = await getRepository(Producto).findAndCount({
+    skip: (page - 1) * limit,
+    take: limit,
+  });
+
+  const totalPages = Math.ceil(total / limit); // Calcular el total de páginas
+
+  res.render("productos/index", { productos, currentPage: page, totalPages });
 };
 
 const obtenerProductoPorId = async (req, res) => {

@@ -2,8 +2,29 @@
 const express = require("express");
 const router = express.Router();
 const controlador = require("../controller/productoController");
+const { getRepository } = require("typeorm");
+const { Producto } = require("../entity/Producto");
 
-router.get("/", controlador.obtenerProductos);
+/*router.get("/", controlador.obtenerProductos);*/
+// Obtener todos los productos con paginación
+router.get("/", async (req, res) => {
+  const page = parseInt(req.query.page) || 1; // Página actual
+  const limit = parseInt(req.query.limit) || 5; // Número de elementos por página
+
+  const startIndex = (page - 1) * limit; // Índice inicial para la paginación
+  const [productos, total] = await getRepository(Producto).findAndCount({
+      skip: startIndex,
+      take: limit,
+  });
+
+  const totalPages = Math.ceil(total / limit); // Total de páginas
+
+  res.render("productos/index", { 
+      productos, 
+      totalPages, 
+      currentPage: page 
+  });
+});
 
 // Página para crear productos
 router.get("/crear", (req, res) => {

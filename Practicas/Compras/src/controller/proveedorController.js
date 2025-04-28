@@ -4,8 +4,18 @@ const { Proveedor } = require("../entity/Proveedor");
 
 // Obtener todos los proveedores
 const obtenerProveedores = async (req, res) => {
-  const proveedores = await getRepository(Proveedor).find();
-  res.render("proveedores/index", { proveedores });
+  const page = parseInt(req.query.page) || 1; // Obtener el número de página desde la query
+  const limit = 5; // Número de proveedores por página
+  const skip = (page - 1) * limit; // Calcular el número de proveedores a omitir
+
+  const [proveedores, total] = await getRepository(Proveedor).findAndCount({
+    skip: skip,
+    take: limit,
+  });
+
+  const totalPages = Math.ceil(total / limit); // Calcular el total de páginas
+
+  res.render("proveedores/index", { proveedores, currentPage: page, totalPages });
 };
 
 // Mostrar la página de edición de un proveedor
