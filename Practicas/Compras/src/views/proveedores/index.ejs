@@ -9,7 +9,7 @@
   <link rel="stylesheet" href="/css/index.css">
   <script>
     function toggleSelectAll(source) {
-      const checkboxes = document.querySelectorAll('input[name="proveedorIds"]');
+      const checkboxes = document.querySelectorAll('input[name="proveedores[]"]');
       checkboxes.forEach(checkbox => {
         checkbox.checked = source.checked;
       });
@@ -61,8 +61,8 @@
         <form id="logout-form" action="/auth/logout" method="POST" style="display: none;">
         </form>
       </nav>
-  <header>
-    <h1>Lista de Proveedores</h1>
+    </header>
+       <h1>Lista de Proveedores</h1>
     <div>
       <a href="/proveedores/crear" class="btn-Volver">Registrar Proveedor</a>
     </div>
@@ -119,7 +119,7 @@
   <footer>
     &copy; 2025 Caja Nacional de Salud - Todos los derechos reservados
   </footer>
-  <script>
+ <!-- <script>
     document.querySelector('.btn').addEventListener('click', function(event) {
       event.preventDefault(); // Evitar el comportamiento por defecto del enlace
       const selectedCheckbox = document.querySelector('input[name="preveedores[]"]:checked');
@@ -130,7 +130,7 @@
         alert('Por favor, selecciona un producto para modificar.');
       }
     });
-  </script>
+  </script> -->
   <script>
     document.getElementById('edit-selected').addEventListener('click', function(event) {
       const selectedCheckbox = document.querySelector('input[name="proveedores[]"]:checked');

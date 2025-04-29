@@ -18,6 +18,22 @@ const obtenerProveedores = async (req, res) => {
   res.render("proveedores/index", { proveedores, currentPage: page, totalPages });
 };
 
+const obtenerproveedorPorId = async (req, res) => {
+  const { id } = req.params;
+  try {
+    const proveedor = await getRepository(Proveedor).findOne({ where: { id: parseInt(id) } });
+    if (!proveedor) {
+      return res.status(404).json({ mensaje: "Proveedor no encontrado" });
+    }
+    res.render("proveedores/editar", { proveedor }); // Renderiza la vista de edición
+  } catch (error) {
+    console.error("Error al obtener el proveedor:", error);
+    res.status(500).json({ mensaje: "Error al obtener el proveedor" });
+  }
+};
+
+
+
 // Mostrar la página de edición de un proveedor
 const editarProveedorPage = async (req, res) => {
     const { id } = req.params; // Asegúrate de que estás obteniendo el ID correctamente
@@ -73,12 +89,19 @@ const eliminarProveedor = async (req, res) => {
   res.redirect("/proveedores");
 };
 
-const eliminarMultiplesProveedores = async (req, res) => {
-  const { proveedorIds } = req.body; // Obtener los IDs de los proveedores seleccionados
-  if (proveedorIds && proveedorIds.length > 0) {
-    await getRepository(Proveedor).delete(proveedorIds); // Eliminar los proveedores
+const eliminarProveedores = async (req, res) => {
+  const ids = req.body.proveedores; // Obtener los IDs de los proveedores seleccionados
+  if (!ids || ids.length === 0) {
+    return res.redirect("/proveedores"); // Redirigir si no hay proveedores seleccionados
   }
-  res.redirect("/proveedores");
+
+  try {
+    await getRepository(Proveedor).delete(ids); // Eliminar los proveedores
+    res.redirect("/proveedores");
+  } catch (error) {
+    console.error("Error al eliminar proveedores:", error);
+    res.status(500).json({ mensaje: "Error al eliminar proveedores" });
+  }
 };
 
 module.exports = {
@@ -87,5 +110,6 @@ module.exports = {
   crearMultiplesProveedores,
   editarProveedor,
   eliminarProveedor,
-  eliminarMultiplesProveedores,
+  eliminarProveedores,
+  obtenerproveedorPorId,
 };

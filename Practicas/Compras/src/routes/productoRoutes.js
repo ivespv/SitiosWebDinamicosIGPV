@@ -4,6 +4,9 @@ const router = express.Router();
 const controlador = require("../controller/productoController");
 const { getRepository } = require("typeorm");
 const { Producto } = require("../entity/Producto");
+const authMiddleware = require("../middleware/authMiddleware");
+
+router.use(authMiddleware);
 
 /*router.get("/", controlador.obtenerProductos);*/
 // Obtener todos los productos con paginación
