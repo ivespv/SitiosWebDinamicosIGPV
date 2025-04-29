@@ -72,7 +72,10 @@
       <tbody id="comprasContainer">
         <tr class="compra">
           <td><input type="text" name="cite[]" required /></td>
-          <td><input type="text" name="codigo[]" required /></td>
+          <td>
+            <input type="text" name="codigo[]" required id="codigo-0" class="codigo-input" autocomplete="off"/>
+            <ul class="sugerencias" id="sugerencias-0"></ul>
+          </td>
           <td><input type="number" name="cantidad[]" required /></td>
           <td><input type="text" name="producto[]" required /></td>
           <td><input type="number" step="0.01" name="precio_unitario[]" required /></td>
@@ -123,8 +126,41 @@
       }
     });
   </script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+  const inputsCodigo = document.querySelectorAll('.codigo-input');
+
+  inputsCodigo.forEach((input, index) => {
+    input.addEventListener('input', function() {
+      const codigo = this.value;
+
+      if (codigo.length > 0) {
+        fetch(`/compras/productos?codigo=${codigo}`)
+          .then(response => response.json())
+          .then(data => {
+            const sugerenciasContainer = document.getElementById(`sugerencias-${index}`);
+            sugerenciasContainer.innerHTML = ''; // Limpiar sugerencias anteriores
+
+            data.forEach(producto => {
+              const li = document.createElement('li');
+              li.textContent = producto.codigo; // O cualquier otro campo que desees mostrar
+              li.addEventListener('click', function() {
+                input.value = producto.codigo; // Asignar el código al input
+                const productoInput = document.querySelector(`input[name="producto[]"]:nth-of-type(${index + 1})`);
+                productoInput.value = producto.detalle; // Asignar el detalle al input de producto
+                sugerenciasContainer.innerHTML = ''; // Limpiar sugerencias
+              });
+              sugerenciasContainer.appendChild(li);
+            });
+          })
+          .catch(error => console.error('Error al obtener productos:', error));
+      }
+    });
+  });
+});
+  </script>
+  <footer>
+    &copy; 2025 Caja Nacional de Salud - Todos los derechos reservados
+  </footer>
 </body>
-<footer>
-  &copy; 2025 Caja Nacional de Salud - Todos los derechos reservados
-</footer>
 </html>

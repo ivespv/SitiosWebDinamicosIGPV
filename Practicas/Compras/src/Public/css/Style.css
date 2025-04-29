@@ -241,3 +241,23 @@ footer {
         margin-right: 0; 
       }
     }
+    .sugerencias {
+      list-style-type: none;
+      padding: 0;
+      margin: 0;
+      border: 1px solid #ccc;
+      max-height: 150px;
+      overflow-y: auto;
+      position: absolute; /* Asegúrate de que el contenedor esté posicionado correctamente */
+      background: white;
+      z-index: 1000; /* Asegúrate de que esté por encima de otros elementos */
+    }
+    
+    .sugerencias li {
+      padding: 8px;
+      cursor: pointer;
+    }
+    
+    .sugerencias li:hover {
+      background-color: #f0f0f0;
+    }

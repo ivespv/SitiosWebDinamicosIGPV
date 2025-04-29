@@ -1,5 +1,6 @@
 // src/entity/Producto.js
 const { EntitySchema } = require("typeorm");
+const { In } = require("typeorm");
 
 module.exports.Producto = new EntitySchema({
   name: "Producto",

@@ -139,4 +139,8 @@ router.get("/reporte", async (req, res) => {
 
 router.post("/editar/:id", controlador.editarCompra);
 
+router.get("/productos", async (req, res) => {
+  await controlador.obtenerProductosPorCodigo(req, res);
+});
+
 module.exports = router;

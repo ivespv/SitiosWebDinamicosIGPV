@@ -2,6 +2,7 @@
 const { getRepository, Like } = require("typeorm");
 const { Compra } = require("../entity/Compra");
 const { Usuario } = require("../entity/Usuario"); //importar Usuario
+const { Producto } = require("../entity/Producto"); 
 const PDFDocument = require('pdfkit');
 const fs = require('fs');
 
@@ -26,6 +27,20 @@ const obtenerCompras = async (req, res) => {
 
   if (producto) {
     whereConditions.producto = Like(`%${producto}%`);
+  }
+
+  // Filtrar por código de producto
+  let productosFiltrados = [];
+  if (producto) {
+      productosFiltrados = await getRepository(Producto).find({
+          where: { codigo: Like(`%${producto}%`) }
+      });
+  }
+
+  // Si hay productos filtrados, obtener sus IDs
+  const productoIds = productosFiltrados.map(p => p.id);
+  if (productoIds.length > 0) {
+      whereConditions.producto = In(productoIds); // Filtrar compras por IDs de productos
   }
 
   if (proveedor) {
@@ -229,12 +244,36 @@ const generarReporte = async (req, res) => {
   });
 };
 
+const obtenerProductosPorCodigo = async (req, res) => {
+  const { codigo } = req.query;
+  
+
+  try {
+    const productos = await getRepository(Producto).find({
+      where: { codigo: Like(`%${codigo}%`) },
+    });
+
+    // Solo devolver el código y el detalle
+    const productosResponse = productos.map(producto => ({
+      codigo: producto.codigo,
+      detalle: producto.detalle,
+    }));
+
+    res.json(productosResponse);
+  } catch (error) {
+    console.error("Error al obtener productos:", error);
+    res.status(500).json({ mensaje: "Error al obtener productos" });
+  }
+};
+
+
+
 
 module.exports = {
   obtenerCompras,
-  /*crearCompra,*/
   crearMultiplesCompras,
   editarCompra,
   eliminarCompra,
   generarReporte,
+  obtenerProductosPorCodigo,
 };
