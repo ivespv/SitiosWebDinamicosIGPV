@@ -50,4 +50,5 @@ router.post("/eliminar/:id", controlador.eliminarProducto);
 // Ruta para eliminar múltiples producto
 router.post("/eliminar", controlador.eliminarProductos); 
 
+
 module.exports = router;

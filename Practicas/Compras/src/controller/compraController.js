@@ -266,6 +266,26 @@ const obtenerProductosPorCodigo = async (req, res) => {
   }
 };
 
+const obtenerProductosPorNombre = async (req, res) => {
+  const { nombre } = req.query;
+
+  try {
+    const productos = await getRepository(Producto).find({
+      where: { detalle: Like(`%${nombre}%`) },
+    });
+
+    // Solo devolver el código y el detalle
+    const productosResponse = productos.map(producto => ({
+      codigo: producto.codigo,
+      detalle: producto.detalle,
+    }));
+
+    res.json(productosResponse);
+  } catch (error) {
+    console.error("Error al obtener productos:", error);
+    res.status(500).json({ mensaje: "Error al obtener productos" });
+  }
+};
 
 
 
@@ -276,4 +296,5 @@ module.exports = {
   eliminarCompra,
   generarReporte,
   obtenerProductosPorCodigo,
+  obtenerProductosPorNombre,
 };

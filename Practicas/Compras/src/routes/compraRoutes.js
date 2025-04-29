@@ -143,4 +143,8 @@ router.get("/productos", async (req, res) => {
   await controlador.obtenerProductosPorCodigo(req, res);
 });
 
+router.get("/productos/nombre", async (req, res) => {
+  await controlador.obtenerProductosPorNombre(req, res);
+});
+
 module.exports = router;
