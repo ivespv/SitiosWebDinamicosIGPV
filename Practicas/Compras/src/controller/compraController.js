@@ -59,10 +59,31 @@ const obtenerCompras = async (req, res) => {
 
   const totalPages = Math.ceil(total / limit); 
 
-  res.render("compras/index", { compras, currentPage: page, totalPages, cite, producto, proveedor });
+
+  // Obtener el usuario logueado
+  const usuarioId = req.session.usuarioId;
+  const usuario = usuarioId ? await getRepository(Usuario).findOne({ where: { id: usuarioId } }) : null;
+
+  res.render("compras/index", { compras, currentPage: page, totalPages, cite, producto, proveedor, usuario });
 };
 
+const crearCompra = async (req, res) => {
+  try {
+    const usuarioId = req.session.usuarioId;
+    console.log("usuarioId:", usuarioId, "tipo:", typeof usuarioId); // Verifica el tipo de usuarioId
 
+    if (!usuarioId) {
+      return res.status(401).json({ mensaje: "Usuario no autenticado" });     
+    }
+    
+    const usuario = usuarioId ? await getRepository(Usuario).findOne({ where: { id: usuarioId } }) : null;
+    console.log("usuario:", usuario);
+    res.render("compras/crear", { usuario });
+  } catch (error) {
+    console.error("Error al renderizar la vista de crear compra:", error);
+    res.status(500).json({ mensaje: "Error al renderizar la vista de crear compra" });
+  }
+};
 const crearMultiplesCompras = async (req, res) => {
   const { cite, codigo, cantidad, producto, precio_unitario, costo_total, proveedor, fecha } = req.body;
 
@@ -105,6 +126,7 @@ const crearMultiplesCompras = async (req, res) => {
 
 // Actualizar una compra
 const editarCompra = async (req, res) => {
+  console.log("Entrando a editarCompra");
   const { id } = req.params;  
   const { cite, codigo, cantidad, producto, precio_unitario, costo_total, proveedor, fecha } = req.body;
   
@@ -115,7 +137,16 @@ const editarCompra = async (req, res) => {
       return res.status(404).json({ mensaje: "Compra no encontrada" });
     }
 
-    const usuario = await getRepository(Usuario).findOne(req.session.usuarioId); // Obtener el usuario logueado
+    if (typeof compra.fecha === 'string') {
+      compra.fecha = new Date(compra.fecha);
+    }
+
+    //const usuario = await getRepository(Usuario).findOne(req.session.usuarioId); // Obtener el usuario logueado
+    // Obtener el usuario logueado
+    const usuarioId = req.session.usuarioId;
+    console.log("usuarioId:", usuarioId, "tipo:", typeof usuarioId);
+    const usuario = usuarioId ? await getRepository(Usuario).findOne({ where: { id: usuarioId } }) : null;
+    console.log("usuario:", usuario);
 
     compra.cite = cite;
     compra.codigo = codigo;
@@ -124,7 +155,7 @@ const editarCompra = async (req, res) => {
     compra.precio_unitario = precio_unitario;
     compra.costo_total = costo_total;
     compra.proveedor = proveedor;
-    compra.fecha = new Date(fecha[i] + 'T00:00:00Z')
+    compra.fecha = new Date(fecha)
     compra.nusuario = usuario.nusuario;
 
     await getRepository(Compra).save(compra);
@@ -133,6 +164,8 @@ const editarCompra = async (req, res) => {
     console.error("Error al editar la compra:", error);
     res.status(500).json({ mensaje: "Error al editar la compra" });
   }
+
+
 };
 
 // Eliminar una compra
@@ -291,6 +324,7 @@ const obtenerProductosPorNombre = async (req, res) => {
 
 module.exports = {
   obtenerCompras,
+  crearCompra,
   crearMultiplesCompras,
   editarCompra,
   eliminarCompra,

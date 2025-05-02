@@ -1,18 +1,4 @@
-header {
-    display: flex;
-    justify-content: space-between; /* Alinea los elementos a los extremos */
-    align-items: center; /* Centra verticalmente los elementos */
-    padding: 10px; /* Espaciado interno */
-    background-color: #f8f8f8; /* Color de fondo del header */
-  }
-  
-  .header-left {
-    display: flex;
-    align-items: center; /* Centra verticalmente el logo y el texto */
-    padding-left: 20px;
-  }
-  
-  .header-text h1, .header-text h2 {
+.header-text h1, .header-text h2 {
     margin: 0; /* Elimina márgenes por defecto */
   }
   

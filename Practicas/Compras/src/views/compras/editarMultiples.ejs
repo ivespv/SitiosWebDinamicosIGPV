@@ -1,4 +1,4 @@
-<!--  src/views/compras/editarMultiples.ejs -->
+<!--  src/views/compras/editarMultiples.ejs 
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -17,6 +17,10 @@
         <h2>DISTRITAL TUPIZA</h2>
       </div>
     </div>
+    <div class="user-info">
+      <img src="/images/usuario.svg" alt="Usuario" class="user-icon" />
+      <span>Bienvenido, <%= usuario ? usuario.nombre : 'Invitado' %></span>
+    </div>
   </header>
 
   <nav class="header-right">
@@ -34,7 +38,7 @@
           <li><a href="/compras/crear">Registrar Compra</a></li>
         </ul>
       </li>
-      <li class="coltext">Productos <!-- Agregar el menú de productos aquí -->
+      <li class="coltext">Productos        //Agregar el menú de productos aquí 
         <ul>
           <li><a href="/productos">Lista de Productos</a></li>
           <li><a href="/productos/crear">Registrar Producto</a></li>
@@ -63,7 +67,7 @@
   <form id="modificarForm" action="/compras/editarMultiples" method="POST">
         <% compras.forEach(compra => { %>
             <div>
-                <input type="checkbox" name="seleccionado" value="<%= compra.id %>" class="seleccion-checkbox"> <!-- Checkbox para seleccionar la compra -->
+                <input type="checkbox" name="seleccionado" value="<%= compra.id %>" class="seleccion-checkbox">   // Checkbox para seleccionar la compra 
                 <label>Cite:</label>
                 <input type="text" name="cite-<%= compra.id %>" value="<%= compra.cite %>">
             </div>
@@ -104,4 +108,4 @@
     &copy; 2025 Caja Nacional de Salud - Todos los derechos reservados
   </footer>
 </body>
-</html>
+</html>  -->

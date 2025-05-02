@@ -5,55 +5,64 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Registrar Compras</title>
-  <link rel="stylesheet" href="/css/Style.css">
+  <link rel="stylesheet" href="../css/Style.css">
+  <link rel="stylesheet" href="../css/Style1.css">
   <link rel="stylesheet" href="/css/Crear.css">
 </head>
 <body>
   <header>
     <div class="header-left">
-      <img src="/images/logo.png" alt="Logo Caja Nacional de Salud" />
+      <img src="/images/logo.png" alt="Logo Caja Nacional de Salud" height="3000" />
       <div class="header-text">
         <h1>CAJA NACIONAL DE SALUD</h1>
-        <h2>DISTRITAL TUPIZA</h2>
+        
       </div>
+    </div>
+    <div class="user-info">
+      <img src="/images/usuario.svg" alt="Usuario" class="user-icon" />
+      <span>Bienvenido, <%= usuario ? usuario.nombre : 'Invitado' %></span>
     </div>
   </header>
 
   <nav class="header-right">
-    <ul>
-      <li><a href="/">Inicio</a></li>
-      <li class="coltext">Usuarios
-        <ul>
-          <li><a href="/usuarios">Lista de Usuarios</a></li>
-          <li><a href="/usuarios/crear">Registrar Usuario</a></li>
-        </ul>
-      </li>
-      <li class="coltext">Compras
-        <ul>
-          <li><a href="/compras">Lista de Compras</a></li>
-          <li><a href="/compras/crear">Registrar Compra</a></li>
-        </ul>
-      </li>
-      <li class="coltext">Productos <!-- Agregar el menú de productos aquí -->
-        <ul>
-          <li><a href="/productos">Lista de Productos</a></li>
-          <li><a href="/productos/crear">Registrar Producto</a></li>
-        </ul>
-      </li>
-      <li class="coltext">Proveedores
-        <ul>
-          <li><a href="/proveedores">Lista de Proveedores</a></li>
-          <li><a href="/proveedores/crear">Registrar Proveedor</a></li>
-        </ul>
-      </li>
-      <li>
-        <a href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Cerrar Sesión</a>
-      </li>
-    </ul>
-    <form id="logout-form" action="/auth/logout" method="POST" style="display: none;">
-    </form>
+    <div class="header-title">
+      <ul>
+        <h2>DISTRITAL TUPIZA</h2>
+        <li><a href="/">Inicio</a></li>
+        <li class="coltext">Usuarios
+          <ul>
+            <li><a href="/usuarios">Lista de Usuarios</a></li>
+            <li><a href="/usuarios/crear">Registrar Usuario</a></li>
+          </ul>
+        </li>
+        <li class="coltext">Compras
+          <ul>
+            <li><a href="/compras">Lista de Compras</a></li>
+            <li><a href="/compras/crear">Registrar Compra</a></li>
+          </ul>
+        </li>
+        <li class="coltext">Productos <!-- Agregar el menú de productos aquí -->
+          <ul>
+            <li><a href="/productos">Lista de Productos</a></li>
+            <li><a href="/productos/crear">Registrar Producto</a></li>
+          </ul>
+        </li>
+        <li class="coltext">Proveedores
+          <ul>
+            <li><a href="/proveedores">Lista de Proveedores</a></li>
+            <li><a href="/proveedores/crear">Registrar Proveedor</a></li>
+          </ul>
+        </li>
+        <li>
+          <a href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Salir</a>
+        </li>
+      </ul>
+    </div>
+      <form id="logout-form" action="/auth/logout" method="POST" style="display: none;">
+      </form>
   </nav>
   <h1 class="title">Registrar Compras</h1>
+
   <form action="/compras/crear-multiples" method="POST" id="comprasForm">
     <table id="comprasTable">
       <thead>
@@ -64,7 +73,7 @@
           <th>Producto</th>
           <th>Precio Unitario</th>
           <th>Costo Total</th>
-          <th>proveedor</th>
+          <th>Proveedor</th>
           <th>Fecha</th>
           <th>Acciones</th>
         </tr>
@@ -72,17 +81,15 @@
       <tbody id="comprasContainer">
         <tr class="compra">
           <td><input type="text" name="cite[]" required /></td>
-          <td>
-            <input type="text" name="codigo[]" required id="codigo-0" class="codigo-input" autocomplete="off"/>
-            <ul class="sugerencias" id="sugerencias-0"></ul>
+          <td style="position:relative">
+            <input type="text" name="codigo[]" required class="codigo-input" autocomplete="off" />
+            <ul class="sugerencias"></ul>
           </td>
           <td><input type="number" name="cantidad[]" required /></td>
-          
-          <td>
-            <input type="text" name="producto[]" required id="producto-0" class="producto-input" autocomplete="off"/>
-            <ul class="sugerencias" id="sugerencias-producto-0"></ul>
+          <td style="position:relative">
+            <input type="text" name="producto[]" required class="producto-input" autocomplete="off" />
+            <ul class="sugerencias"></ul>
           </td>
-          
           <td><input type="number" step="0.01" name="precio_unitario[]" required /></td>
           <td><input type="number" step="0.01" name="costo_total[]" required /></td>
           <td><input type="text" name="proveedor[]" required /></td>
@@ -91,27 +98,35 @@
         </tr>
       </tbody>
     </table>
+
     <div class="button-container1">
       <button class="button" type="button" id="agregarCompra">Agregar Otra Compra</button>
     </div>
     <div class="button-container">
       <button class="button" type="submit">Registrar Compras</button>
       <form action="/compras" method="get">
-        <button type="submit" class="btn-Volver">Retornar</button>
-    </form>
+        <button type="button" class="btn-Volver" onclick="window.location.href='/compras'">Retornar</button>
+      </form>
     </div>
   </form>
 
   <script>
-    document.getElementById('agregarCompra').addEventListener('click', function() {
+    // Función para agregar una nueva fila con inputs y listas de sugerencias
+    function agregarCompra() {
       const container = document.getElementById('comprasContainer');
       const nuevaCompra = document.createElement('tr');
       nuevaCompra.classList.add('compra');
       nuevaCompra.innerHTML = `
         <td><input type="text" name="cite[]" required /></td>
-        <td><input type="text" name="codigo[]" required /></td>
+        <td style="position:relative">
+          <input type="text" name="codigo[]" required class="codigo-input" autocomplete="off" />
+          <ul class="sugerencias"></ul>
+        </td>
         <td><input type="number" name="cantidad[]" required /></td>
-        <td><input type="text" name="producto[]" required /></td>
+        <td style="position:relative">
+          <input type="text" name="producto[]" required class="producto-input" autocomplete="off" />
+          <ul class="sugerencias"></ul>
+        </td>
         <td><input type="number" step="0.01" name="precio_unitario[]" required /></td>
         <td><input type="number" step="0.01" name="costo_total[]" required /></td>
         <td><input type="text" name="proveedor[]" required /></td>
@@ -119,84 +134,102 @@
         <td><button type="button" class="removeCompra">Eliminar</button></td>
       `;
       container.appendChild(nuevaCompra);
-    });
+      setupAutocompleteForRow(nuevaCompra);
+    }
 
-    document.getElementById('comprasContainer').addEvent
- 
-    // Función para eliminar la fila
+    document.getElementById('agregarCompra').addEventListener('click', agregarCompra);
+
+    // Función para eliminar fila
     document.getElementById('comprasContainer').addEventListener('click', function(event) {
-      if (event.target.classList.contains('removeCompra')) {
+      if(event.target.classList.contains('removeCompra')) {
         const fila = event.target.closest('tr');
-        fila.remove();
+        if(fila) fila.remove();
       }
     });
-  </script>
-  <script>
-    document.addEventListener('DOMContentLoaded', function() {
-  const inputsCodigo = document.querySelectorAll('.codigo-input');
 
-  inputsCodigo.forEach((input, index) => {
-    input.addEventListener('input', function() {
-      const codigo = this.value;
+    // Configura autocompletado para inputs codigo y producto de una fila (tr)
+    function setupAutocompleteForRow(row) {
+      const codigoInput = row.querySelector('.codigo-input');
+      const codigoSugerencias = row.querySelector('td:nth-child(2) ul.sugerencias');
+      const productoInput = row.querySelector('.producto-input');
+      const productoSugerencias = row.querySelector('td:nth-child(4) ul.sugerencias');
 
-      if (codigo.length > 0) {
-        fetch(`/compras/productos?codigo=${codigo}`)
-          .then(response => response.json())
-          .then(data => {
-            const sugerenciasContainer = document.getElementById(`sugerencias-${index}`);
-            sugerenciasContainer.innerHTML = ''; // Limpiar sugerencias anteriores
-
-            data.forEach(producto => {
-              const li = document.createElement('li');
-              li.textContent = producto.codigo; // O cualquier otro campo que desees mostrar
-              li.addEventListener('click', function() {
-                input.value = producto.codigo; // Asignar el código al input
-                const productoInput = document.querySelector(`input[name="producto[]"]:nth-of-type(${index + 1})`);
-                productoInput.value = producto.detalle; // Asignar el detalle al input de producto
-                sugerenciasContainer.innerHTML = ''; // Limpiar sugerencias
-              });
-              sugerenciasContainer.appendChild(li);
-            });
-          })
-          .catch(error => console.error('Error al obtener productos:', error));
+      // Helper para limpiar sugerencias
+      function limpiarSugerencias(container) {
+        container.innerHTML = '';
       }
-    });
-  });
-});
-  </script>
-  <script>
-    document.addEventListener('DOMContentLoaded', function() {
-      const inputsProducto = document.querySelectorAll('.producto-input');
-  
-      inputsProducto.forEach((input, index) => {
-        input.addEventListener('input', function() {
-          const nombre = this.value;
-  
-          if (nombre.length > 0) {
-            fetch(`/compras/productos/nombre?nombre=${nombre}`)
-              .then(response => response.json())
-              .then(data => {
-                const sugerenciasContainer = document.getElementById(`sugerencias-producto-${index}`);
-                sugerenciasContainer.innerHTML = ''; // Limpiar sugerencias anteriores
-  
-                data.forEach(producto => {
-                  const li = document.createElement('li');
-                  li.textContent = producto.detalle; // Mostrar el detalle del producto
-                  li.addEventListener('click', function() {
-                    input.value = producto.detalle; // Asignar el detalle al input
-                    const codigoInput = document.querySelector(`input[name="codigo[]"]:nth-of-type(${index + 1})`);
-                    codigoInput.value = producto.codigo; // Asignar el código al input de código
-                    sugerenciasContainer.innerHTML = ''; // Limpiar sugerencias
-                  });
-                  sugerenciasContainer.appendChild(li);
+
+      // Buscar productos por código al escribir
+      codigoInput.addEventListener('input', function() {
+        const codigo = this.value.trim();
+        limpiarSugerencias(codigoSugerencias);
+        if(codigo.length > 0) {
+          fetch(`/compras/productos?codigo=${encodeURIComponent(codigo)}`)
+            .then(res => res.json())
+            .then(data => {
+              limpiarSugerencias(codigoSugerencias);
+              data.forEach(producto => {
+                const li = document.createElement('li');
+                li.textContent = producto.codigo;
+                li.classList.add('sugerencia-item');
+                li.addEventListener('click', () => {
+                  codigoInput.value = producto.codigo;
+                  productoInput.value = producto.detalle;
+                  limpiarSugerencias(codigoSugerencias);
+                  limpiarSugerencias(productoSugerencias);
                 });
-              })
-              .catch(error => console.error('Error al obtener productos:', error));
-          }
-        });
+                codigoSugerencias.appendChild(li);
+              });
+            })
+            .catch(err => {
+              console.error('Error buscando productos por código:', err);
+            });
+        }
       });
+
+      // Buscar productos por nombre al escribir
+      productoInput.addEventListener('input', function() {
+        const nombre = this.value.trim();
+        limpiarSugerencias(productoSugerencias);
+        if(nombre.length > 0) {
+          fetch(`/compras/productos/nombre?nombre=${encodeURIComponent(nombre)}`)
+            .then(res => res.json())
+            .then(data => {
+              limpiarSugerencias(productoSugerencias);
+              data.forEach(producto => {
+                const li = document.createElement('li');
+                li.textContent = producto.detalle;
+                li.classList.add('sugerencia-item');
+                li.addEventListener('click', () => {
+                  productoInput.value = producto.detalle;
+                  codigoInput.value = producto.codigo;
+                  limpiarSugerencias(productoSugerencias);
+                  limpiarSugerencias(codigoSugerencias);
+                });
+                productoSugerencias.appendChild(li);
+              });
+            })
+            .catch(err => {
+              console.error('Error buscando productos por nombre:', err);
+            });
+        }
+      });
+
+      // Ocultar lista sugerencias al perder foco (con pequeño retardo para click)
+      codigoInput.addEventListener('blur', () => {
+        setTimeout(() => limpiarSugerencias(codigoSugerencias), 200);
+      });
+      productoInput.addEventListener('blur', () => {
+        setTimeout(() => limpiarSugerencias(productoSugerencias), 200);
+      });
+    }
+
+    // Al cargar la pagina, configurar autocompletado para filas existentes
+    document.querySelectorAll('#comprasContainer tr.compra').forEach(row => {
+      setupAutocompleteForRow(row);
     });
   </script>
+
   <footer>
     &copy; 2025 Caja Nacional de Salud - Todos los derechos reservados
   </footer>

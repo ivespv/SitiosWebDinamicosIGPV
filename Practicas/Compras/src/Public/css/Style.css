@@ -26,6 +26,7 @@ header {
 .header-left {
   display: flex;
   align-items: center;
+  padding-left: 20px;
 }
 
 header img {
@@ -260,4 +261,16 @@ footer {
     
     .sugerencias li:hover {
       background-color: #f0f0f0;
+    }
+
+    .user-info {
+      display: flex;
+      align-items: center;
+      margin-left: auto; /* Para empujar el contenido a la derecha */
+    }
+    
+    .user-icon {
+      width: 24px; /* Ajusta el tamaño según sea necesario */
+      height: 24px; /* Ajusta el tamaño según sea necesario */
+      margin-right: 8px; /* Espacio entre el ícono y el texto */
     }

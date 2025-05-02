@@ -1,6 +1,14 @@
 // src/controller/productoController.js
 const { getRepository } = require("typeorm");
 const { Producto } = require("../entity/Producto");
+const { Usuario } = require("../entity/Usuario");
+
+const authMiddleware = (req, res, next) => {
+  if (req.isAuthenticated()) {
+    req.session.usuarioId = req.user.id; // O la forma en que almacenas el usuario
+  }
+  next();
+};
 
 // Obtener todos los productos
 const obtenerProductos = async (req, res) => {
@@ -13,7 +21,21 @@ const obtenerProductos = async (req, res) => {
 
   const totalPages = Math.ceil(total / limit); // Calcular el total de páginas
 
-  res.render("productos/index", { productos, currentPage: page, totalPages });
+  // Obtener el usuario logueado
+  const usuarioId = req.session.usuarioId;
+  console.log("ID del usuario:", usuarioId);
+  const usuario = usuarioId ? await getRepository(Usuario).findOne({ where: { id: usuarioId } }) : null;
+  console.log("Usuario:", usuario);
+
+  res.render("productos/index", { productos, currentPage: page, totalPages, usuario });
+};
+
+// función para mostrar la página de creación de productos
+const mostrarCrearProducto = async (req, res) => {
+  const usuarioId = req.session.usuarioId;
+  const usuario = usuarioId ? await getRepository(Usuario).findOne({ where: { id: usuarioId } }) : null;
+
+  res.render("productos/crear", { usuario }); // Pasar el usuario a la vista
 };
 
 const obtenerProductoPorId = async (req, res) => {
@@ -23,7 +45,12 @@ const obtenerProductoPorId = async (req, res) => {
     if (!producto) {
       return res.status(404).json({ mensaje: "Producto no encontrado" });
     }
-    res.render("productos/editar", { producto }); // Renderiza la vista de edición
+
+    // Obtener el usuario logueado
+    const usuarioId = req.session.usuarioId;
+    const usuario = usuarioId ? await getRepository(Usuario).findOne({ where: { id: usuarioId } }) : null;
+
+    res.render("productos/editar", { producto, usuario }); // Renderiza la vista de edición
   } catch (error) {
     console.error("Error al obtener el producto:", error);
     res.status(500).json({ mensaje: "Error al obtener el producto" });
@@ -103,7 +130,9 @@ const eliminarProductos = async (req, res) => {
 
 
 module.exports = {
+  authMiddleware,
   obtenerProductos,
+  mostrarCrearProducto,
   crearMultiplesProductos,
   editarProducto,
   eliminarProducto,

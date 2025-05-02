@@ -13,10 +13,16 @@ router.get("/", async (req, res) => {
  controlador.obtenerUsuarios(req, res);
 });
 
-// Página para crear un usuario
-router.get("/crear", (req, res) => {
+//para que usuario loguedo se visualize en la pagina crear
+router.get("/crear", controlador.crearUsuarioPage);
+
+//para que usuario loguedo se visualize en la pagina editar
+router.get("/editar/:id", controlador.obtenerUsuarioPorId);
+
+/*// Página para crear un usuario
+router.get("/crear", (req, res) => {   EN COMENTARIO PARA PROBAR ERRORES
   res.render("usuarios/crear");
-});
+});*/
 
 router.post("/crear", async (req, res) => {
   const { correo, contraseña, nombre, rol, nusuario } = req.body;

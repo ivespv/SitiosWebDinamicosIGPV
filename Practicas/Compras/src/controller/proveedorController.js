@@ -1,6 +1,7 @@
 // src/controller/proveedorController.js
 const { getRepository } = require("typeorm");
 const { Proveedor } = require("../entity/Proveedor");
+const { Usuario } = require("../entity/Usuario");
 
 // Obtener todos los proveedores
 const obtenerProveedores = async (req, res) => {
@@ -15,7 +16,12 @@ const obtenerProveedores = async (req, res) => {
 
   const totalPages = Math.ceil(total / limit); // Calcular el total de páginas
 
-  res.render("proveedores/index", { proveedores, currentPage: page, totalPages });
+  const usuarioId = req.session.usuarioId;
+  console.log("ID del usuario:", usuarioId);
+  const usuario = usuarioId ? await getRepository(Usuario).findOne({ where: { id: usuarioId } }) : null;
+  console.log("Usuario:", usuario);
+
+  res.render("proveedores/index", { proveedores, currentPage: page, totalPages, usuario });
 };
 
 const obtenerproveedorPorId = async (req, res) => {

@@ -5,7 +5,8 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Lista de Proveedores</title>
-  <link rel="stylesheet" href="/css/Style.css">
+  <link rel="stylesheet" href="../css/Style.css">
+  <link rel="stylesheet" href="../css/Style1.css">
   <link rel="stylesheet" href="/css/index.css">
   <script>
     function toggleSelectAll(source) {
@@ -17,50 +18,57 @@
   </script>
 </head>
 <body>
-    <header>
-        <div class="header-left">
-          <img src="/images/logo.png" alt="Logo Caja Nacional de Salud" />
-          <div class="header-text">
-            <h1>CAJA NACIONAL DE SALUD</h1>
-            <h2>DISTRITAL TUPIZA</h2>
-          </div>
-        </div>
-      </header>
-    
-      <nav class="header-right">
-        <ul>
-          <li><a href="/">Inicio</a></li>
-          <li class="coltext">Usuarios
-            <ul>
-              <li><a href="/usuarios">Lista de Usuarios</a></li>
-              <li><a href="/usuarios/crear">Registrar Usuario</a></li>
-            </ul>
-          </li>
-          <li class="coltext">Compras
-            <ul>
-              <li><a href="/compras">Lista de Compras</a></li>
-              <li><a href="/compras/crear">Registrar Compra</a></li>
-            </ul>
-          </li>
-          <li class="coltext">Productos <!-- Agregar el menú de productos aquí -->
-            <ul>
-              <li><a href="/productos">Lista de Productos</a></li>
-              <li><a href="/productos/crear">Registrar Producto</a></li>
-            </ul>
-          </li>
-          <li class="coltext">Proveedores
-            <ul>
-              <li><a href="/proveedores">Lista de Proveedores</a></li>
-              <li><a href="/proveedores/crear">Registrar Proveedor</a></li>
-            </ul>
-          </li>
-          <li>
-            <a href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Cerrar Sesión</a>
-          </li>
-        </ul>
-        <form id="logout-form" action="/auth/logout" method="POST" style="display: none;">
-        </form>
-      </nav>
+  <header>
+    <div class="header-left">
+      <img src="/images/logo.png" alt="Logo Caja Nacional de Salud" height="3000" />
+      <div class="header-text">
+        <h1>CAJA NACIONAL DE SALUD</h1>
+        
+      </div>
+    </div>
+    <div class="user-info">
+      <img src="/images/usuario.svg" alt="Usuario" class="user-icon" />
+      <span>Bienvenido, <%= usuario ? usuario.nombre : 'Invitado' %></span>
+    </div>
+  </header>
+
+  <nav class="header-right">
+    <div class="header-title">
+      <ul>
+        <h2>DISTRITAL TUPIZA</h2>
+        <li><a href="/">Inicio</a></li>
+        <li class="coltext">Usuarios
+          <ul>
+            <li><a href="/usuarios">Lista de Usuarios</a></li>
+            <li><a href="/usuarios/crear">Registrar Usuario</a></li>
+          </ul>
+        </li>
+        <li class="coltext">Compras
+          <ul>
+            <li><a href="/compras">Lista de Compras</a></li>
+            <li><a href="/compras/crear">Registrar Compra</a></li>
+          </ul>
+        </li>
+        <li class="coltext">Productos <!-- Agregar el menú de productos aquí -->
+          <ul>
+            <li><a href="/productos">Lista de Productos</a></li>
+            <li><a href="/productos/crear">Registrar Producto</a></li>
+          </ul>
+        </li>
+        <li class="coltext">Proveedores
+          <ul>
+            <li><a href="/proveedores">Lista de Proveedores</a></li>
+            <li><a href="/proveedores/crear">Registrar Proveedor</a></li>
+          </ul>
+        </li>
+        <li>
+          <a href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Salir</a>
+        </li>
+      </ul>
+    </div>
+      <form id="logout-form" action="/auth/logout" method="POST" style="display: none;">
+      </form>
+  </nav>
     </header>
        <h1>Lista de Proveedores</h1>
     <div>

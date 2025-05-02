@@ -1,0 +1,49 @@
+/* Practicas/Compras/src/Public/css/Style1.css */
+body {
+  padding-top: 120px; /* Ajustar el padding para que el contenido no se superponga al header y nav */  
+}
+
+header {
+  position: fixed; /* Mantener el header fijo */
+  top: 0; /* Posición en la parte superior */
+  left: 0; /* Alinear a la izquierda */
+  right: 0; /* Alinear a la derecha */
+  z-index: 1000; /* Asegurarse de que esté por encima de otros elementos */
+}
+
+
+.header-right {
+  padding: 0.4rem 7rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  position: fixed; /* Mantener el nav fijo */
+  top: 70px; /* Ajustar según la altura del header */
+  left: 0; /* Alinear a la izquierda */
+  right: 0; /* Alinear a la derecha */
+  z-index: 999; /* Asegurarse de que esté por encima de otros elementos */
+}
+
+.header-title {
+  display: flex; /* Usar flexbox para alinear h2 y ul en fila */
+  align-items: center; /* Alinear verticalmente al centro */
+  gap: 1.5rem; /* Espacio entre h2 y ul */
+}
+
+.header-title h2 {
+  color: #d9e4e3;
+  white-space: nowrap;
+  margin: 0 200px 0 0;
+}
+
+.header-right ul {
+  list-style: none;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 2rem;
+  margin: 0;
+}
+   
+   
+    
+    
+      
