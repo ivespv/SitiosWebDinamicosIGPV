@@ -32,6 +32,7 @@ header {
   color: #d9e4e3;
   white-space: nowrap;
   margin: 0 200px 0 0;
+  padding:0 0px 0 30px;
 }
 
 .header-right ul {
@@ -42,8 +43,24 @@ header {
   gap: 2rem;
   margin: 0;
 }
-   
-   
-    
-    
-      
+
+ul.sugerencias-proveedor {
+  position: absolute;
+  background: white;
+  border: 1px solid #ccc;
+  width: 100%;
+  max-height: 150px;
+  overflow-y: auto;
+  padding-left: 0;
+  margin-top: 2px;
+  list-style-type: none;
+  z-index: 9999;
+  font-size: 0.9em;
+  cursor: pointer;
+}
+ul.sugerencias-proveedor li {
+  padding: 6px 10px;
+}
+ul.sugerencias-proveedor li:hover {
+  background-color: #ddd;
+}

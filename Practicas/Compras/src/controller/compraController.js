@@ -2,7 +2,8 @@
 const { getRepository, Like } = require("typeorm");
 const { Compra } = require("../entity/Compra");
 const { Usuario } = require("../entity/Usuario"); //importar Usuario
-const { Producto } = require("../entity/Producto"); 
+const { Producto } = require("../entity/Producto");
+const { Proveedor } = require("../entity/Proveedor"); 
 const PDFDocument = require('pdfkit');
 const fs = require('fs');
 
@@ -320,7 +321,22 @@ const obtenerProductosPorNombre = async (req, res) => {
   }
 };
 
-
+const obtenerProveedoresPorNombre = async (req, res) => {
+  const { nombre } = req.query;
+  try {
+    const proveedores = await getRepository(Proveedor).find({
+      where: { empresa: Like(`%${nombre}%`) },
+    });
+    // Solo devolver el nombre de la empresa
+    const proveedoresResponse = proveedores.map(proveedor => ({
+      empresa: proveedor.empresa,
+    }));
+    res.json(proveedoresResponse);
+  } catch (error) {
+    console.error("Error al obtener proveedores:", error);
+    res.status(500).json({ mensaje: "Error al obtener proveedores" });
+  }
+};
 
 module.exports = {
   obtenerCompras,
@@ -331,4 +347,5 @@ module.exports = {
   generarReporte,
   obtenerProductosPorCodigo,
   obtenerProductosPorNombre,
+  obtenerProveedoresPorNombre,
 };

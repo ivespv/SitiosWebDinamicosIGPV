@@ -8,6 +8,29 @@
   <link rel="stylesheet" href="../css/Style.css">
   <link rel="stylesheet" href="../css/Style1.css">
   <link rel="stylesheet" href="/css/Crear.css">
+  <style>
+    /* Estilos básicos para las sugerencias del proveedor - distinto de producto */
+    ul.sugerencias-proveedor {
+      position: absolute;
+      background: white;
+      border: 1px solid #ccc;
+      width: 100%;
+      max-height: 150px;
+      overflow-y: auto;
+      padding-left: 0;
+      margin-top: 2px;
+      list-style-type: none;
+      z-index: 9999;
+      font-size: 0.9em;
+      cursor: pointer;
+    }
+    ul.sugerencias-proveedor li {
+      padding: 6px 10px;
+    }
+    ul.sugerencias-proveedor li:hover {
+      background-color: #ddd;
+    }
+  </style>
 </head>
 <body>
   <header>
@@ -15,7 +38,6 @@
       <img src="/images/logo.png" alt="Logo Caja Nacional de Salud" height="3000" />
       <div class="header-text">
         <h1>CAJA NACIONAL DE SALUD</h1>
-        
       </div>
     </div>
     <div class="user-info">
@@ -41,7 +63,7 @@
             <li><a href="/compras/crear">Registrar Compra</a></li>
           </ul>
         </li>
-        <li class="coltext">Productos <!-- Agregar el menú de productos aquí -->
+        <li class="coltext">Productos
           <ul>
             <li><a href="/productos">Lista de Productos</a></li>
             <li><a href="/productos/crear">Registrar Producto</a></li>
@@ -92,7 +114,10 @@
           </td>
           <td><input type="number" step="0.01" name="precio_unitario[]" required /></td>
           <td><input type="number" step="0.01" name="costo_total[]" required /></td>
-          <td><input type="text" name="proveedor[]" required /></td>
+          <td style="position:relative">
+            <input type="text" name="proveedor[]" required class="proveedor-input" autocomplete="off" />
+            <ul class="sugerencias-proveedor"></ul>
+          </td>
           <td><input type="date" name="fecha[]" required /></td>
           <td><button type="button" class="removeCompra">Eliminar</button></td>
         </tr>
@@ -129,12 +154,16 @@
         </td>
         <td><input type="number" step="0.01" name="precio_unitario[]" required /></td>
         <td><input type="number" step="0.01" name="costo_total[]" required /></td>
-        <td><input type="text" name="proveedor[]" required /></td>
+        <td style="position:relative">
+          <input type="text" name="proveedor[]" required class="proveedor-input" autocomplete="off" />
+          <ul class="sugerencias-proveedor"></ul>
+        </td>
         <td><input type="date" name="fecha[]" required /></td>
         <td><button type="button" class="removeCompra">Eliminar</button></td>
       `;
       container.appendChild(nuevaCompra);
       setupAutocompleteForRow(nuevaCompra);
+      setupProveedorAutocompleteForRow(nuevaCompra);
     }
 
     document.getElementById('agregarCompra').addEventListener('click', agregarCompra);
@@ -147,19 +176,17 @@
       }
     });
 
-    // Configura autocompletado para inputs codigo y producto de una fila (tr)
+    // ----------------- Script para autocomplete producto y codigo -------------------------
     function setupAutocompleteForRow(row) {
       const codigoInput = row.querySelector('.codigo-input');
       const codigoSugerencias = row.querySelector('td:nth-child(2) ul.sugerencias');
       const productoInput = row.querySelector('.producto-input');
       const productoSugerencias = row.querySelector('td:nth-child(4) ul.sugerencias');
 
-      // Helper para limpiar sugerencias
       function limpiarSugerencias(container) {
         container.innerHTML = '';
       }
 
-      // Buscar productos por código al escribir
       codigoInput.addEventListener('input', function() {
         const codigo = this.value.trim();
         limpiarSugerencias(codigoSugerencias);
@@ -187,7 +214,6 @@
         }
       });
 
-      // Buscar productos por nombre al escribir
       productoInput.addEventListener('input', function() {
         const nombre = this.value.trim();
         limpiarSugerencias(productoSugerencias);
@@ -215,7 +241,6 @@
         }
       });
 
-      // Ocultar lista sugerencias al perder foco (con pequeño retardo para click)
       codigoInput.addEventListener('blur', () => {
         setTimeout(() => limpiarSugerencias(codigoSugerencias), 200);
       });
@@ -224,9 +249,49 @@
       });
     }
 
+    // Configura autocomplete para el campo Proveedor separado
+    function setupProveedorAutocompleteForRow(row) {
+      const proveedorInput = row.querySelector('.proveedor-input');
+      const proveedorSugerencias = row.querySelector('td:nth-child(7) ul.sugerencias-proveedor');
+
+      function limpiarSugerencias(container) {
+        container.innerHTML = '';
+      }
+
+      proveedorInput.addEventListener('input', function() {
+        const nombre = this.value.trim();
+        limpiarSugerencias(proveedorSugerencias);
+        if(nombre.length > 0) {
+          fetch(`/compras/proveedores/nombre?nombre=${encodeURIComponent(nombre)}`)
+            .then(res => res.json())
+            .then(data => {
+              limpiarSugerencias(proveedorSugerencias);
+              data.forEach(proveedor => {
+                const li = document.createElement('li');
+                li.textContent = proveedor.empresa;
+                li.classList.add('sugerencia-item-proveedor');
+                li.addEventListener('click', () => {
+                  proveedorInput.value = proveedor.empresa;
+                  limpiarSugerencias(proveedorSugerencias);
+                });
+                proveedorSugerencias.appendChild(li);
+              });
+            })
+            .catch(err => {
+              console.error('Error buscando proveedores por nombre:', err);
+            });
+        }
+      });
+
+      proveedorInput.addEventListener('blur', () => {
+        setTimeout(() => limpiarSugerencias(proveedorSugerencias), 200);
+      });
+    }
+
     // Al cargar la pagina, configurar autocompletado para filas existentes
     document.querySelectorAll('#comprasContainer tr.compra').forEach(row => {
       setupAutocompleteForRow(row);
+      setupProveedorAutocompleteForRow(row);
     });
   </script>
 

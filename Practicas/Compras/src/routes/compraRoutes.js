@@ -4,6 +4,7 @@ const { getRepository, In } = require("typeorm");
 const { Compra } = require("../entity/Compra");
 const authMiddleware = require("../middleware/authMiddleware");
 const compraController = require('../controller/compraController');
+const controlador = require("../controller/compraController");
 
 router.use(authMiddleware);
 
@@ -194,5 +195,8 @@ router.get("/productos/nombre", async (req, res) => {
     res.status(500).send("Error al obtener productos por nombre");
   }
 });
+
+router.get("/proveedores/nombre", controlador.obtenerProveedoresPorNombre);
+
 
 module.exports = router;

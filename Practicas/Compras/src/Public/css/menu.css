@@ -1,0 +1,27 @@
+.header-container {
+    display: flex; /* Usar flexbox para alinear los elementos */
+    justify-content: space-between; /* Espacio entre los elementos */
+    align-items: center; /* Alinear verticalmente al centro */
+    padding: 20px; /* Espaciado alrededor del contenedor */
+}
+.header-container h1 {
+    margin: 0; /* Eliminar márgenes por defecto */
+    font-size: 1.8rem; /* Ajustar el tamaño de la fuente */
+}
+
+.btn-Volver {
+    background-color: #E98312; /* Color de fondo del botón */
+    color: white; /* Color del texto */
+    border: none; /* Sin borde */
+    padding: 10px 20px; /* Espaciado interno */
+    text-align: center; /* Centrar texto */
+    text-decoration: none; /* Sin subrayado */
+    display: inline-block; /* Mostrar como bloque en línea */
+    font-size: 16px; /* Tamaño de fuente */
+    border-radius: 5px; /* Bordes redondeados */
+    cursor: pointer; /* Cambiar cursor al pasar el mouse */
+}
+
+.btn-Volver:hover {
+    background-color: #1a6861; /* Color de fondo al pasar el mouse */
+}

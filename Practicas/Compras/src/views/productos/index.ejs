@@ -8,6 +8,7 @@
   <link rel="stylesheet" href="../css/Style.css">
   <link rel="stylesheet" href="../css/Style1.css">
   <link rel="stylesheet" href="/css/index.css">
+  <link rel="stylesheet" href="/css/menu.css">
   <script>
     function toggleSelectAll(source) {
       const checkboxes = document.querySelectorAll('input[name="proveedores[]"]');
@@ -69,11 +70,12 @@
       <form id="logout-form" action="/auth/logout" method="POST" style="display: none;">
       </form>
   </nav>
-  <h1>Lista de Productos</h1>
-  
-  <a href="/productos/crear" class="btn-Volver">Registrar Productos</a>
+  <div class="header-container">
+    <h1>Lista de Productos</h1>
+    <a href="/productos/crear" class="btn-Volver">Registrar Productos</a>
+  </div>
   <form id="bulk-actions" action="/productos/eliminar" method="POST">
-  <table>
+    <table>
     <thead>
       <tr>
         <th><input type="checkbox" id="select-all" onclick="toggleSelectAll(this)" /></th>

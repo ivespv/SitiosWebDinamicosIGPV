@@ -16,7 +16,7 @@ body {
 
 header {
   color: #004640;
-  padding: 1rem 2rem;
+  padding: 0 2rem;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -30,7 +30,7 @@ header {
 }
 
 header img {
-  height: 70px;
+  height: 100px;
   width: auto;
   margin-right: 1rem;
 }
@@ -270,7 +270,8 @@ footer {
     }
     
     .user-icon {
-      width: 24px; /* Ajusta el tamaño según sea necesario */
+      width: 20px; /* Ajusta el tamaño según sea necesario */
       height: 24px; /* Ajusta el tamaño según sea necesario */
       margin-right: 8px; /* Espacio entre el ícono y el texto */
     }
+    
