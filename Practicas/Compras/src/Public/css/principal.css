@@ -13,7 +13,7 @@
   }
   
   .user-info i {
-    font-size: 24px; /* Tamaño del ícono */
+    font-size: 36px; /* Tamaño del ícono */
     margin-right: 8px; /* Espacio entre el ícono y el texto */
     color: #007bff; /* Color del ícono */
   }

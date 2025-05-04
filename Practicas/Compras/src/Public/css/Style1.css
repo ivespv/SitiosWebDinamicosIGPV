@@ -25,14 +25,14 @@ header {
 .header-title {
   display: flex; /* Usar flexbox para alinear h2 y ul en fila */
   align-items: center; /* Alinear verticalmente al centro */
-  gap: 1.5rem; /* Espacio entre h2 y ul */
+  gap: 0.5rem; /* Espacio entre h2 y ul */
 }
 
 .header-title h2 {
   color: #d9e4e3;
   white-space: nowrap;
-  margin: 0 200px 0 0;
-  padding:0 0px 0 30px;
+  margin: 0 400px 0 0;
+  padding:0 0px 0 10px;
 }
 
 .header-right ul {
@@ -40,8 +40,9 @@ header {
   display: flex;
   justify-content: flex-end;
   align-items: center;
-  gap: 2rem;
+  gap: 1.5px;
   margin: 0;
+  padding: 0;
 }
 
 ul.sugerencias-proveedor {
