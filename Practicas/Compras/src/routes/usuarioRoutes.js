@@ -26,6 +26,12 @@ router.get("/crear", (req, res) => {   EN COMENTARIO PARA PROBAR ERRORES
 
 router.post("/crear", async (req, res) => {
   const { correo, contraseña, nombre, rol, nusuario } = req.body;
+  const usuarioExistente = await getRepository(Usuario).findOne({ where: { correo } });
+  if (usuarioExistente) {
+    // Redirigir a la página de creación con un mensaje de error
+    return res.render("usuarios/crear", { error: "El correo ya está en uso", usuario: req.session.usuarioId });
+  }
+
   const hashedPassword = await bcrypt.hash(contraseña, 10);
   const nuevoUsuario = getRepository(Usuario).create({
     correo,

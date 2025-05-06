@@ -19,7 +19,7 @@ const obtenerUsuarios = async (req, res) => {
     res.render("usuarios/index", { usuarios, usuario });
 };
 
-// Obtener un usuario para editar
+
 // Obtener un usuario para editar
 const obtenerUsuarioPorId = async (req, res) => {
   const { id } = req.params;
@@ -47,20 +47,18 @@ const obtenerUsuarioPorId = async (req, res) => {
 };
 
 // Arrastra suario para la pagina
-const crearUsuarioPage = async (req, res) => {
-  const usuarioId = req.session.usuarioId;
-  let usuario = null;
 
-  if (usuarioId) {
-    usuario = await getRepository(Usuario).findOne({ where: { id: usuarioId } });
-  }
-
-  res.render("usuarios/crear", { usuario }); // Asegúrate de pasar la variable usuario
-};
 
 // Crear un nuevo usuario
 const crearUsuario = async (req, res) => {
   const { correo, contraseña, nombre, rol, nusuario } = req.body;
+  
+  // Verificar si el correo ya existe
+  const usuarioExistente = await getRepository(Usuario).findOne({ where: { correo } });
+  if (usuarioExistente) {
+    return res.status(400).json({ mensaje: "El correo ya está en uso" });
+  } 
+  
   const hashedPassword = await bcrypt.hash(contraseña, 10);
   const nuevoUsuario = getRepository(Usuario).create({
     correo,
@@ -71,6 +69,17 @@ const crearUsuario = async (req, res) => {
   });
   const resultado = await getRepository(Usuario).save(nuevoUsuario);
   res.json(resultado);
+};
+
+const crearUsuarioPage = async (req, res) => {
+  const usuarioId = req.session.usuarioId;
+  let usuario = null;
+
+  if (usuarioId) {
+    usuario = await getRepository(Usuario).findOne({ where: { id: usuarioId } });
+  }
+
+  res.render("usuarios/crear", { usuario, error: null }); // Asegúrate de pasar la variable usuario
 };
 
 // Actualizar un usuario

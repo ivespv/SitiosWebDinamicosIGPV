@@ -1,4 +1,4 @@
-<!-- src/views/usuarios/editaru.ejs -->
+<!-- src/views/usuarios/editar.ejs -->
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -62,6 +62,13 @@
       </form>
   </nav>
   <h1 class="title">Editar Usuario</h1>
+
+  <% if (error) { %>
+    <div class="error-message" style="color: red;">
+      <%= error %>
+    </div>
+  <% } %>
+  
   <form action="/usuarios/editar/<%= usuario.id %>" method="POST">
     <label for="correo">Correo:</label>
     <input
@@ -91,7 +98,10 @@
     />
     <br />
     <label for="rol">Rol:</label>
-    <input type="text" name="rol" id="rol" value="<%= usuario.rol %>" required />
+    <select name="rol" id="rol" required>
+      <option value="Administrador" <%= usuario.rol === 'Administrador' ? 'selected' : '' %>>Administrador</option>
+      <option value="Usuario" <%= usuario.rol === 'Usuario' ? 'selected' : '' %>>Usuario</option>
+    </select>
     <br />
     <button type="submit">Guardar</button>
    <button type="button" class="btn-Volver" onclick="window.location.href='/'">Retornar</button>
