@@ -63,12 +63,6 @@
   </nav>
   <h1 class="title">Editar Usuario</h1>
 
-  <% if (error) { %>
-    <div class="error-message" style="color: red;">
-      <%= error %>
-    </div>
-  <% } %>
-  
   <form action="/usuarios/editar/<%= usuario.id %>" method="POST">
     <label for="correo">Correo:</label>
     <input

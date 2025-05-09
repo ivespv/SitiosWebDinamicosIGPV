@@ -42,6 +42,9 @@ const obtenerCompras = async (req, res) => {
   const productoIds = productosFiltrados.map(p => p.id);
   if (productoIds.length > 0) {
       whereConditions.producto = In(productoIds); // Filtrar compras por IDs de productos
+  } else if (producto) {
+    // fallback para permitir búsqueda parcial producto en compras si producto no encontrado en productos
+    whereConditions.producto = Like(`%${producto}%`);
   }
 
   if (proveedor) {
@@ -175,106 +178,154 @@ const eliminarCompra = async (req, res) => {
   res.redirect("/compras");
 };
 
+// Función para generar el reporte PDF con tabla y logo 
 const generarReporte = async (req, res) => {
-  const { tipo, fecha } = req.query; // tipo puede ser 'diario', 'mensual', 'anual'
+  const { tipo, fecha } = req.query;
   const compras = await getRepository(Compra).find();
-
-  // Filtrar compras según el tipo de reporte
-  let comprasFiltradas;
   const fechaObj = new Date(fecha);
-
-  if (tipo === 'diario') {
-    comprasFiltradas = compras.filter(compra => {
-      const compraFecha = new Date(compra.fecha);
-      return compraFecha.toDateString() === fechaObj.toDateString();
-    });
-  } else if (tipo === 'mensual') {
-    comprasFiltradas = compras.filter(compra => {
-      const compraFecha = new Date(compra.fecha);
-      return compraFecha.getMonth() === fechaObj.getMonth() && compraFecha.getFullYear() === fechaObj.getFullYear();
-    });
-  } else if (tipo === 'anual') {
-    comprasFiltradas = compras.filter(compra => {
-      const compraFecha = new Date(compra.fecha);
-      return compraFecha.getFullYear() === fechaObj.getFullYear();
-    });
-  } else {
-    return res.status(400).json({ mensaje: "Tipo de reporte no válido" });
+  if (isNaN(fechaObj)) {
+    return res.status(400).json({ mensaje: "Fecha no válida" });
   }
-
-  // Crear el documento PDF
-  const doc = new PDFDocument({ size: 'legal', layout: 'landscape' });
-  const filePath = path.join(__dirname,  '../reports/reporte_compras.pdf');
-  doc.pipe(fs.createWriteStream(filePath));
-
-  // Agregar contenido al PDF
-  doc.fontSize(25).text('Reporte de Compras', { align: 'center' });
-  doc.moveDown();
-
-  // Definir el ancho total y el número de columnas
-  const totalWidth = doc.page.width - doc.page.margins.left - doc.page.margins.right;
-  const columns = [
-    { title: 'Cite', width: 100 },
-    { title: 'Código', width: 100 },
-    { title: 'Cantidad', width: 100 },
-    { title: 'Producto', width: 200 },
-    { title: 'Precio Unitario', width: 100 },
-    { title: 'Costo Total', width: 100 },
-    { title: 'Proveedor', width: 100 },
-    { title: 'Fecha', width: 100 }
-  ];
-
-   // Calcular la posición inicial
-  let x = doc.page.margins.left;
-  const rowHeight = 20;
-
-  // Dibujar encabezados
-  columns.forEach(column => {
-    doc.fontSize(10).text(column.title, x, 100, { width: column.width });
-    x += column.width;
+  let comprasFiltradas;
+  switch (tipo) {
+    case 'diario':
+      comprasFiltradas = compras.filter(compra => {
+        const compraFecha = new Date(compra.fecha);
+        return compraFecha.toDateString() === fechaObj.toDateString();
+      });
+      break;
+    case 'mensual':
+      comprasFiltradas = compras.filter(compra => {
+        const compraFecha = new Date(compra.fecha);
+        return compraFecha.getFullYear() === fechaObj.getFullYear() &&
+               compraFecha.getMonth() === fechaObj.getMonth();
+      });
+      break;
+    case 'anual':
+      comprasFiltradas = compras.filter(compra => {
+        const compraFecha = new Date(compra.fecha);
+        return compraFecha.getFullYear() === fechaObj.getFullYear();
+      });
+      break;
+      default:
+      return res.status(400).json({ mensaje: "Tipo de reporte no válido" });
+      }
+      const doc = new PDFDocument({ size: 'legal', layout: 'landscape', margin: 40 });
+      const filePath = path.join(__dirname, '../reports/reporte_compras.pdf');
+      const writeStream = fs.createWriteStream(filePath);
+      doc.pipe(writeStream);
+      const logoPath = path.join(__dirname, '../Public/Images/logo.png');
+      try {
+        doc.image(logoPath, 100, 30, { width: 45 });
+      } catch (err) {
+        console.error("Error cargando logo:", err);
+      }
+      doc.fontSize(20).font('Helvetica-Bold')
+        .text('Caja Nacional de Salud', { align: 'center', underline: true });
+      doc.moveDown(0.3);
+      doc.fontSize(16).text('Reporte de Compras', { align: 'center' });
+      doc.moveDown(1.5);
+    // Espaciado en puntos (~1 cm = 28.35 pts, usar 10 pts para separación visual)
+      const columnSpacing = 10;
+      const columns = [
+        { title: 'Cite', width: 80, align: 'left' },
+        { title: 'Código', width: 80, align: 'left' },
+        { title: 'Cantidad', width: 70, align: 'right' },
+        { title: 'Producto', width: 160, align: 'left' },
+        { title: 'Precio Unitario', width: 90, align: 'right' },
+        { title: 'Costo Total', width: 90, align: 'right' },
+        { title: 'Proveedor', width: 130, align: 'left' },
+        { title: 'Fecha', width: 90, align: 'center' },
+      ];
+      const startX = doc.page.margins.left;
+      let startY = 100;
+      // Dibujar fondo encabezado considerando espacios entre columnas
+      const totalWidth = columns.reduce((acc, c) => acc + c.width, 0) + columnSpacing * (columns.length -1);
+      doc.rect(startX - 2, startY - 4, totalWidth + 4, 22)
+        .fill('#eeeeee');
+      doc.fillColor('black').font('Helvetica-Bold').fontSize(10);
+      let x = startX;
+      columns.forEach(col => {
+    // Reducir el ancho en columnSpacing al escribir texto para que quede espacio entre columnas
+    doc.text(
+      col.title,
+      x,
+      startY,
+      {
+        width: col.width - columnSpacing,
+        align: 'center' // headers centered per user previous request
+      }
+    );
+    x += col.width + columnSpacing;
   });
-  doc.moveDown();
-
-  // Dibujar filas de datos
-  comprasFiltradas.forEach(compra => {
-    x = doc.page.margins.left; // Reiniciar la posición x para cada fila
-    const precioUnitario = parseFloat(compra.precio_unitario);
-    const costoTotal = parseFloat(compra.costo_total);
-    const fechaCompra = new Date(compra.fecha).toLocaleDateString();
-
-    // Verifica si los valores son números válidos
-    if (isNaN(precioUnitario) || isNaN(costoTotal)) {
-      console.error(`Error en los datos de compra: ${JSON.stringify(compra)}`);
-      return; // Salir de la iteración si hay un error
+  // Línea bajo encabezado
+  doc.moveTo(startX - 2, startY + 18).lineTo(startX - 2 + totalWidth + 4, startY + 18).stroke();
+  startY += 25;
+  doc.font('Helvetica').fontSize(9);
+  const drawRowLine = (y) => {
+    doc.moveTo(startX - 2, y).lineTo(startX - 2 + totalWidth + 4, y).strokeColor('#bbbbbb').stroke();
+    doc.strokeColor('black');
+  };
+  const maxY = doc.page.height - doc.page.margins.bottom - 30;
+  for (let compra of comprasFiltradas) {
+    if (startY > maxY) {
+      doc.addPage();
+      startY = doc.page.margins.top;
+      // Repetir encabezado en nueva página con espacios
+      doc.rect(startX - 2, startY - 4, totalWidth + 4, 22)
+        .fill('#eeeeee');
+      doc.fillColor('black').font('Helvetica-Bold').fontSize(10);
+      let xHead = startX;
+      columns.forEach(col => {
+        doc.text(
+          col.title,
+          xHead,
+          startY,
+          { width: col.width - columnSpacing, align: 'center' }
+        );
+        xHead += col.width + columnSpacing;
+      });
+      doc.moveTo(startX - 2, startY + 18).lineTo(startX - 2 + totalWidth + 4, startY + 18).stroke();
+      startY += 25;
+      doc.font('Helvetica').fontSize(9);
     }
-
-     // Dibuja cada fila de datos
-     doc.text(compra.cite, x, doc.y);
-     x += columns[0].width;
-     doc.text(compra.codigo, x, doc.y);
-     x += columns[1].width;
-     doc.text(compra.cantidad.toString(), x, doc.y);
-     x += columns[2].width;
-     doc.text(compra.producto, x, doc.y);
-     x += columns[3].width;
-     doc.text(precioUnitario.toFixed(2), x, doc.y);
-     x += columns[4].width;
-     doc.text(costoTotal.toFixed(2), x, doc.y);
-     x += columns[5].width;
-     doc.text(compra.proveedor, x, doc.y);
-     x += columns[6].width;
-     doc.text(fechaCompra, x, doc.y);
-     doc.moveDown(rowHeight); // Mover hacia abajo para la siguiente fila
-   });
-   
+    let xRow = startX;
+    let cantidad = compra.cantidad;
+    let precioUnitario = parseFloat(compra.precio_unitario);
+    let costoTotal = parseFloat(compra.costo_total);
+    let fechaCompra = new Date(compra.fecha).toLocaleDateString();
+    if (isNaN(precioUnitario)) precioUnitario = 0;
+    if (isNaN(costoTotal)) costoTotal = 0;
+    doc.text(compra.cite || '', xRow, startY, { width: columns[0].width - columnSpacing, align: columns[0].align });
+    xRow += columns[0].width + columnSpacing;
+    doc.text(compra.codigo || '', xRow, startY, { width: columns[1].width - columnSpacing, align: columns[1].align });
+    xRow += columns[1].width + columnSpacing;
+    doc.text(cantidad != null ? cantidad.toString() : '', xRow, startY, { width: columns[2].width - columnSpacing, align: columns[2].align });
+    xRow += columns[2].width + columnSpacing;
+    doc.text(compra.producto || '', xRow, startY, { width: columns[3].width - columnSpacing, align: columns[3].align });
+    xRow += columns[3].width + columnSpacing;
+    doc.text(precioUnitario.toFixed(2), xRow, startY, { width: columns[4].width - columnSpacing, align: columns[4].align });
+    xRow += columns[4].width + columnSpacing;
+    doc.text(costoTotal.toFixed(2), xRow, startY, { width: columns[5].width - columnSpacing, align: columns[5].align });
+    xRow += columns[5].width + columnSpacing;
+    doc.text(compra.proveedor || '', xRow, startY, { width: columns[6].width - columnSpacing, align: columns[6].align });
+    xRow += columns[6].width + columnSpacing;
+    doc.text(fechaCompra, xRow, startY, { width: columns[7].width - columnSpacing, align: columns[7].align });
+    drawRowLine(startY + 18);
+    startY += 22;
+  }
   doc.end();
-
-  // Enviar el archivo PDF como respuesta
-  res.download(filePath, 'reporte_compras.pdf', (err) => {
-    if (err) {
-      console.error("Error al enviar el archivo PDF:", err);
-      res.status(500).json({ mensaje: "Error al enviar el archivo PDF" });
-    }
+  writeStream.on('finish', () => {
+    res.download(filePath, 'reporte_compras.pdf', (err) => {
+      if (err) {
+        console.error("Error al enviar el archivo PDF:", err);
+        res.status(500).json({ mensaje: "Error al enviar el archivo PDF" });
+      }
+    });
+  });
+  writeStream.on('error', (error) => {
+    console.error("Error al crear el archivo PDF:", error);
+    res.status(500).json({ mensaje: "Error al crear el archivo PDF" });
   });
 };
 
