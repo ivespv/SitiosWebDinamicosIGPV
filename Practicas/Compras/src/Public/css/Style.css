@@ -17,7 +17,8 @@ body {
   color: #004640;
   line-height: 1.6;
   min-height: 100vh;
-  position: relative;  
+  position: relative; 
+  
 }
 
 header {
@@ -40,19 +41,6 @@ header img {
   width: auto;
   margin-right: 1rem;
 }
-
-/*.header-text h1 {
-  font-size: 1.2rem;
-  font-weight: 700;
-  line-height: 1.2;
-  margin-bottom: 0.2rem;
-}*/
-
-/*.header-text h2 {
-  font-size: 0.5rem;
-  font-weight: 200;
-  letter-spacing: 2px;
-}*/
 
 .header-right {
   background-color: #004640;

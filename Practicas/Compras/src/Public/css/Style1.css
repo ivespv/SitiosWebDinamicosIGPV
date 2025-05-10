@@ -65,3 +65,29 @@ ul.sugerencias-proveedor li {
 ul.sugerencias-proveedor li:hover {
   background-color: #ddd;
 }
+
+.news-section {
+  background-color: #e9f5f5; /* Color de fondo suave */
+  border: 2px solid #004640; /* Borde del mismo color que el tema */
+  border-radius: 8px; /* Bordes redondeados */
+  padding: 1rem; /* Espaciado interno */
+  margin-bottom: 20px; /* Espaciado inferior */
+}
+
+.news-section h2 {
+  color: #004640; /* Color del título */
+  margin-bottom: 1rem; /* Espaciado inferior del título */
+}
+
+.news-section ul {
+  list-style-type: none; /* Sin viñetas */
+}
+
+.news-section li {
+  margin-bottom: 0.5rem; /* Espaciado entre los elementos de la lista */
+}
+
+.news-section li a {
+  color: #004640; /* Color del enlace */
+  text-decoration: none; /* Sin subrayado */
+}

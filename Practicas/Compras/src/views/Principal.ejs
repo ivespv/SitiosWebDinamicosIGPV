@@ -1,21 +1,20 @@
-<!-- src/views/principal.ejs --> 
+<!-- src/views/principal.ejs  --> 
 <!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>CAJA NACIONAL DE SALUD - DISTRITAL TUPIZA</title>
-  <link rel="stylesheet" href="../css/Style.css">
-  <link rel="stylesheet" href="../css/Style1.css">
-  <!--<link rel="stylesheet" href="../css/Principal.css">-->
+  <link rel="stylesheet" href="../css/Style.css" />
+  <link rel="stylesheet" href="../css/Style1.css" />
+  <link rel="stylesheet" href="../css/med.css" />
 </head>
 <body>
   <header>
     <div class="header-left">
-      <img src="/images/logo.png" alt="Logo Caja Nacional de Salud" height="3000" />
+      <img src="/images/logo.png" alt="Logo Caja Nacional de Salud" height="100" />
       <div class="header-text">
         <h1>CAJA NACIONAL DE SALUD</h1>
-        
       </div>
     </div>
     <div class="user-info">
@@ -41,7 +40,7 @@
             <li><a href="/compras/crear">Registrar Compra</a></li>
           </ul>
         </li>
-        <li class="coltext">Productos <!-- Agregar el menú de productos aquí -->
+        <li class="coltext">Productos
           <ul>
             <li><a href="/productos">Lista de Productos</a></li>
             <li><a href="/productos/crear">Registrar Producto</a></li>
@@ -62,8 +61,8 @@
       </form>
   </nav>
   <div class="container">
-    <div class="content-box"> <!-- Clase añadida aquí -->
-      <div class="content">
+    <div class="content-box" style="flex-direction: column;">
+      <div class="content" style="margin-top: 1rem; width: 100%;">
         <div class="text">
           <h1>Caja Nacional de Salud</h1>
           <p>
@@ -81,12 +80,77 @@
         </div>
       </div>
     </div>
-    <div class="image">
-        <img src="/images/edificio.png" alt="Edificio Caja Nacional de Salud" />
+
+    <!-- Sector cinta giratoria con tabla de médicos -->
+    <div class="carousel-wrapper" aria-label="Horarios médicos emergencia">
+      <h3>TURNO MEDICOS DE EMERGENCIA</h3>
+
+      <!-- Aquí están los botones de flechas para navegar -->
+      <button class="carousel-arrow left" aria-label="Desplazar izquierda" type="button">&#9664;</button>
+      <button class="carousel-arrow right" aria-label="Desplazar derecha" type="button">&#9654;</button>
+
+      <div class="carousel-container" role="region" aria-live="polite" tabindex="0">
+        <table class="medicos-table" role="table">
+          <thead>
+            <tr>
+              <th>MAYO-2025</th>
+              <th>Lunes 12/05</th>
+              <th>Martes 13/05</th>
+              <th>Miércoles 14/05</th>
+              <th>Jueves 15/05</th>
+              <th>Viernes 16/05</th>
+              <th>Sábado 17/05</th>
+              <th>Domingo 18/05</th>
+              <th>Estado</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% medicos.forEach(doctor => { %>
+              <tr>
+                <td><%= doctor.nombre %></td>
+                <td><%= doctor.horario.lunes %></td>
+                <td><%= doctor.horario.martes %></td>
+                <td><%= doctor.horario.miercoles %></td>
+                <td><%= doctor.horario.jueves %></td>
+                <td><%= doctor.horario.viernes %></td>
+                <td><%= doctor.horario.sabado %></td>
+                <td><%= doctor.horario.domingo %></td>
+                <td class="
+                  <% if(doctor.estado === 'Disponible') { %>estado-disponible<% } else if(doctor.estado === 'Vacaciones') { %>estado-vacaciones<% } else { %>estado-licencia<% } %>
+                "><%= doctor.estado %></td>
+              </tr>
+            <% }); %>
+          </tbody>
+        </table>
+      </div>
     </div>
-  </div> 
+  </div>
+
   <footer>
     &copy; 2025 Caja Nacional de Salud - Todos los derechos reservados
   </footer>
+
+  <script>
+    // Seleccionamos elementos de flechas y contenedor de carrusel
+    const carousel = document.querySelector('.carousel-container');
+    const leftArrow = document.querySelector('.carousel-arrow.left');
+    const rightArrow = document.querySelector('.carousel-arrow.right');
+
+    // Cantidad para desplazar en px por cada clic
+    const scrollAmount = 150;
+
+    // Función para desplazar a la izquierda
+    leftArrow.addEventListener('click', () => {
+      carousel.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
+    });
+
+    // Función para desplazar a la derecha
+    rightArrow.addEventListener('click', () => {
+      carousel.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+    });
+
+    // Opcional: el scroll automático infinito ha sido reemplazado porque el usuario ahora puede controlar con flechas
+  </script>
 </body>
 </html>
+

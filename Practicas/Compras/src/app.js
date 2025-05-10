@@ -15,6 +15,8 @@ const productoRoutes = require("./routes/productoRoutes");
 
 const app = express();
 
+const principalRoutes = require('./routes/principalRoutes');
+
 // Configuración de middlewares
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -38,6 +40,7 @@ app.use("/compras", compraRoutes);
 app.use("/auth", authRoutes);
 app.use("/proveedores", proveedorRoutes);
 app.use("/productos", productoRoutes);
+app.use('/', principalRoutes);
 
 app.get("/", async (req, res) => {
   const usuarioId = req.session.usuarioId;
@@ -46,6 +49,7 @@ app.get("/", async (req, res) => {
   try {
     if (usuarioId) {
       usuario = await getRepository(Usuario).findOne({ where: { id: usuarioId } }); // Corrección aquí
+      console.log("Usuario:", usuario);
     }
     res.render("Principal", { usuario });
   } catch (error) {

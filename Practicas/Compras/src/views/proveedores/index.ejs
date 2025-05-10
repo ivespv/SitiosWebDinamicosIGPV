@@ -9,6 +9,7 @@
   <link rel="stylesheet" href="../css/Style1.css">
   <link rel="stylesheet" href="/css/index.css">
   <link rel="stylesheet" href="/css/menu.css">
+  <link rel="stylesheet" href="/css/med.css" />
   <script>
     function toggleSelectAll(source) {
       const checkboxes = document.querySelectorAll('input[name="proveedores[]"]');
@@ -103,7 +104,7 @@
           <td><%= proveedor.telefono %></td>
           <td>
             <form action="/proveedores/eliminar/<%= proveedor.id %>" method="POST" style="display:inline;">
-              <button type="submit">Eliminar</button>
+              <button class="btn" type="submit">Eliminar</button>
             </form>
             <!--<a href="/proveedores/editar/<%= proveedor.id %>">Editar</a>-->
           </td>
@@ -123,7 +124,7 @@
       <a href="?page=<%= currentPage + 1 %>">Siguiente</a>
     <% } %>
   </div>
-  <button type="submit">Eliminar Seleccionados</button>
+  <button type="submit" class="btn">Eliminar Seleccionados</button>
   <button type="button" id="edit-selected" class="btn">Modificar Seleccionado</button>
   </form>
   <footer>
