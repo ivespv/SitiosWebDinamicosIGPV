@@ -1,13 +1,13 @@
-<!-- src/views/principal.ejs  --> 
 <!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>CAJA NACIONAL DE SALUD - DISTRITAL TUPIZA</title>
-  <link rel="stylesheet" href="../css/Style.css" />
+   <link rel="stylesheet" href="../css/Style.css" />
   <link rel="stylesheet" href="../css/Style1.css" />
   <link rel="stylesheet" href="../css/med.css" />
+  
 </head>
 <body>
   <header>
@@ -60,68 +60,114 @@
       <form id="logout-form" action="/auth/logout" method="POST" style="display: none;">
       </form>
   </nav>
+  
   <div class="container">
-    <div class="content-box" style="flex-direction: column;">
-      <div class="content" style="margin-top: 1rem; width: 100%;">
-        <div class="text">
-          <h1>Caja Nacional de Salud</h1>
-          <p>
-            La Caja Nacional de Salud (CNS) es una institución pública boliviana que brinda servicios de salud a los trabajadores y sus familias. Su misión es garantizar la atención médica integral, la protección social y la promoción de la salud en todo el país.
-          </p>
-          <p>
-            En esta plataforma puedes visualizar todas las compras realizadas, registrar nuevas compras, editar y eliminar según sea necesario.
-          </p>
-          <p>
-            También puedes gestionar proveedores, incluyendo la posibilidad de agregar, editar y eliminar proveedores.
-          </p>
-          <p>
-            Usa el menú para navegar entre las diferentes secciones.
-          </p>
+    <div class="text-container">
+      <div class="content-box" style="flex-direction: column;">
+        <div class="content" style="margin-top: 1rem;">
+          <div class="text">
+            <h1>Caja Nacional de Salud</h1>
+            <p>
+              La Caja Nacional de Salud (CNS) es una institución pública boliviana que brinda servicios de salud a los trabajadores y sus familias. Su misión es garantizar la atención médica integral, la protección social y la promoción de la salud en todo el país.
+            </p>
+            <p>
+              En esta plataforma puedes visualizar todas las compras realizadas, registrar nuevas compras, editar y eliminar según sea necesario.
+            </p>
+            <p>
+              También puedes gestionar proveedores, incluyendo la posibilidad de agregar, editar y eliminar proveedores.
+            </p>
+            <p>
+              Usa el menú para navegar entre las diferentes secciones.
+            </p>
+          </div>
         </div>
       </div>
     </div>
+    
+    <div class="carousel-column">
+      <!-- Primer carrusel: Medicos emergencia -->
+      <div class="carousel-wrapper" aria-label="Horarios médicos emergencia">
+        <h3>TURNO MEDICOS DE EMERGENCIA</h3>
 
-    <!-- Sector cinta giratoria con tabla de médicos -->
-    <div class="carousel-wrapper" aria-label="Horarios médicos emergencia">
-      <h3>TURNO MEDICOS DE EMERGENCIA</h3>
+        <button class="carousel-arrow left" aria-label="Desplazar izquierda" type="button">&#9664;</button>
+        <button class="carousel-arrow right" aria-label="Desplazar derecha" type="button">&#9654;</button>
 
-      <!-- Aquí están los botones de flechas para navegar -->
-      <button class="carousel-arrow left" aria-label="Desplazar izquierda" type="button">&#9664;</button>
-      <button class="carousel-arrow right" aria-label="Desplazar derecha" type="button">&#9654;</button>
-
-      <div class="carousel-container" role="region" aria-live="polite" tabindex="0">
-        <table class="medicos-table" role="table">
-          <thead>
-            <tr>
-              <th>MAYO-2025</th>
-              <th>Lunes 12/05</th>
-              <th>Martes 13/05</th>
-              <th>Miércoles 14/05</th>
-              <th>Jueves 15/05</th>
-              <th>Viernes 16/05</th>
-              <th>Sábado 17/05</th>
-              <th>Domingo 18/05</th>
-              <th>Estado</th>
-            </tr>
-          </thead>
-          <tbody>
-            <% medicos.forEach(doctor => { %>
+        <div class="carousel-container" role="region" aria-live="polite" tabindex="0">
+          <table class="medicos-table" role="table">
+            <thead>
               <tr>
-                <td><%= doctor.nombre %></td>
-                <td><%= doctor.horario.lunes %></td>
-                <td><%= doctor.horario.martes %></td>
-                <td><%= doctor.horario.miercoles %></td>
-                <td><%= doctor.horario.jueves %></td>
-                <td><%= doctor.horario.viernes %></td>
-                <td><%= doctor.horario.sabado %></td>
-                <td><%= doctor.horario.domingo %></td>
-                <td class="
-                  <% if(doctor.estado === 'Disponible') { %>estado-disponible<% } else if(doctor.estado === 'Vacaciones') { %>estado-vacaciones<% } else { %>estado-licencia<% } %>
-                "><%= doctor.estado %></td>
+                <th>MAYO-2025</th>
+                <th>Lunes 12/05</th>
+                <th>Martes 13/05</th>
+                <th>Miércoles 14/05</th>
+                <th>Jueves 15/05</th>
+                <th>Viernes 16/05</th>
+                <th>Sábado 17/05</th>
+                <th>Domingo 18/05</th>
+                <th>Estado</th>
               </tr>
-            <% }); %>
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              <% medicos.forEach(doctor => { %>
+                <tr>
+                  <td><%= doctor.nombre %></td>
+                  <td><%= doctor.horario.lunes %></td>
+                  <td><%= doctor.horario.martes %></td>
+                  <td><%= doctor.horario.miercoles %></td>
+                  <td><%= doctor.horario.jueves %></td>
+                  <td><%= doctor.horario.viernes %></td>
+                  <td><%= doctor.horario.sabado %></td>
+                  <td><%= doctor.horario.domingo %></td>
+                  <td class="
+                    <% if(doctor.estado === 'Disponible') { %>estado-disponible<% } else if(doctor.estado === 'Vacaciones') { %>estado-vacaciones<% } else { %>estado-licencia<% } %>
+                  "><%= doctor.estado %></td>
+                </tr>
+              <% }); %>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Segundo carrusel: Medicos adicionales -->
+      <div class="carousel-wrapper" aria-label="Horarios médicos adicionales">
+        <h3>HORARIOS ADICIONALES DE MÉDICOS</h3>
+
+        <button class="carousel-arrow left" aria-label="Desplazar izquierda" type="button">&#9664;</button>
+        <button class="carousel-arrow right" aria-label="Desplazar derecha" type="button">&#9654;</button>
+
+        <div class="carousel-container" role="region" aria-live="polite" tabindex="0">
+          <table class="medicos-table" role="table">
+            <thead>
+              <tr>
+                <th>Médico</th>
+                <th>Estado</th>
+                <th>Horario</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Dr. Medina</td>
+                <td>Licencia</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Dra. Chispas</td>
+                <td>Vacaciones</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Dr. Sume</td>
+                <td></td>
+                <td>8:00 a 14:00</td>
+              </tr>
+              <tr>
+                <td>Dra. Cervantes</td>
+                <td></td>
+                <td>14:00 a 20:00</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   </div>
@@ -131,26 +177,26 @@
   </footer>
 
   <script>
-    // Seleccionamos elementos de flechas y contenedor de carrusel
-    const carousel = document.querySelector('.carousel-container');
-    const leftArrow = document.querySelector('.carousel-arrow.left');
-    const rightArrow = document.querySelector('.carousel-arrow.right');
+    // Funcion para inicializar carruseles, toma el wrapper como parámetro
+    function initCarousel(carouselWrapper) {
+      const carousel = carouselWrapper.querySelector('.carousel-container');
+      const leftArrow = carouselWrapper.querySelector('.carousel-arrow.left');
+      const rightArrow = carouselWrapper.querySelector('.carousel-arrow.right');
+      const scrollAmount = 150;
 
-    // Cantidad para desplazar en px por cada clic
-    const scrollAmount = 150;
+      leftArrow.addEventListener('click', () => {
+        carousel.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
+      });
 
-    // Función para desplazar a la izquierda
-    leftArrow.addEventListener('click', () => {
-      carousel.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
+      rightArrow.addEventListener('click', () => {
+        carousel.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+      });
+    }
+
+    // Inicializar ambos carruseles independientemente
+    document.querySelectorAll('.carousel-wrapper').forEach(wrapper => {
+      initCarousel(wrapper);
     });
-
-    // Función para desplazar a la derecha
-    rightArrow.addEventListener('click', () => {
-      carousel.scrollBy({ left: scrollAmount, behavior: 'smooth' });
-    });
-
-    // Opcional: el scroll automático infinito ha sido reemplazado porque el usuario ahora puede controlar con flechas
   </script>
 </body>
 </html>
-

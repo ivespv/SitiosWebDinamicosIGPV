@@ -1,65 +1,151 @@
+/*src/Public/css/med.css*/
 /* Cinta giratoria estilos */
-.carousel-wrapper {
-    position: relative; /* Para posicionar las flechas */
-    max-width: 100%;
-    margin: 1.5rem auto 2rem auto;
-    border: 2px solid #004640;
-    border-radius: 8px;
-    background-color: #e9f5f5;
-  }
-  .carousel-container {
-    overflow-x: auto;
-    white-space: nowrap;
-    padding: 1rem;
-    scroll-behavior: smooth;
-    scrollbar-width: none; /* Firefox */
-    max-width: 100%;
-    box-sizing: border-box;
-  }
-  .carousel-container::-webkit-scrollbar {
-    display: none; /* Chrome, Safari */
-  }
-  .carousel-arrow {
-    cursor: pointer;
-    background-color: #004640;
-    color: white;
-    border: none;
-    padding: 10px;
-    border-radius: 50%;
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    z-index: 10;
-    user-select: none;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.3);
-    transition: background-color 0.2s ease;
-  }
-  .carousel-arrow:hover {
-    background-color: #02302b;
-  }
-  .carousel-arrow.left {
-    left: 10px;
-  }
-  .carousel-arrow.right {
-    right: 10px;
-  }
+.container {
+      display: flex;
+      width: 90vw;
+      height: auto;
+      max-width: 90vw;
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      overflow-x: hidden;
+    }
+  .text-container {
+      width: 100vw;
+      padding: 1.5rem;
+      box-sizing: border-box;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+    }
+  .carousel-column {
+      width: 100vw;
+      padding: 1.5rem;
+      box-sizing: border-box;
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+      overflow-x: hidden;
+    }
+    /* Estilos para separar carruseles verticalmente */
+    .carousel-wrapper {
+      border: 2px solid #004640;
+      border-radius: 8px;
+      background-color: #e9f5f5;
+      padding: 1rem;
+      position: relative; /* Para posicionar flechas */
+      box-sizing: border-box;
+    }
+    .carousel-wrapper h3 {
+      text-align: center;
+      margin-bottom: 1rem;
+      color: #004640;
+    }
+    /* Reuso estilos medicos-table para tablas */
+    .medicos-table {
+      border-collapse: collapse;
+      width: 100%;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      box-sizing: border-box;
+    }
+    .medicos-table th, .medicos-table td {
+      border: 1px solid #004640;
+      padding: 10px 15px;
+      text-align: center;
+      color: #004640;
+      background-color: #f0f8f7;
+      white-space: nowrap;
+      box-sizing: border-box;
+    }
+    .medicos-table th {
+      background-color: #004640;
+      color: white;
+      position: sticky;
+      top: 0;
+      z-index: 2;
+    }
+    .estado-disponible {
+      color: #006400;
+      font-weight: 600;
+    }
+    .estado-vacaciones {
+      color: #d9534f;
+      font-weight: 600;
+    }
+    .estado-licencia {
+      color: #f0ad4e;
+      font-weight: 600;
+    }
+    /* Scroll horizontal oculto para carrusel */
+    .carousel-container {
+      overflow-x: auto;
+      white-space: nowrap;
+      scroll-behavior: smooth;
+      scrollbar-width: none;
+      max-width: 100%;
+      box-sizing: border-box;
+    }
+    .carousel-container::-webkit-scrollbar {
+      display: none;
+    }
+    /* Botones flecha */
+    .carousel-arrow {
+      cursor: pointer;
+      background-color: #004640;
+      color: white;
+      border: none;
+      padding: 10px;
+      border-radius: 50%;
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      z-index: 10;
+      user-select: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+      transition: background-color 0.2s ease;
+    }
+    .carousel-arrow:hover {
+      background-color: #02302b;
+    }
+    .carousel-arrow.left {
+      left: 10px;
+    }
+    .carousel-arrow.right {
+      right: 10px;
+    }
+    /* Ajustes responsive para móviles */
+    @media (max-width: 600px) {
+      .container {
+        flex-direction: column;
+        width: 100vw;
+        max-width: 100vw;
+      }
+      .text-container,
+      .carousel-column {
+        width: 100vw;
+        padding: 1rem;
+      }
+      .carousel-wrapper {
+        padding: 0.5rem;
+      }
+      .medicos-table th, .medicos-table td {
+        padding: 6px 8px;
+        font-size: 0.9rem;
+      }
+      .carousel-arrow {
+        padding: 8px;
+      }
+    }
   table.medicos-table {
     border-collapse: collapse;
     width: max-content;
     min-width: 600px;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   }
-  table.medicos-table th, table.medicos-table td {
-    border: 1px solid #004640;
-    padding: 10px 15px;
-    text-align: center;
-    color: #004640;
-    background-color: #f0f8f7;
-    white-space: nowrap;
-  }
+  
   table.medicos-table th {
     background-color: #004640;
     color: white;
@@ -67,19 +153,7 @@
     top: 0; /* Sticky header */
     z-index: 2;
   }
-  /* Estado highlight */
-  .estado-disponible {
-    color: #006400;
-    font-weight: 600;
-  }
-  .estado-vacaciones {
-    color: #d9534f;
-    font-weight: 600;
-  }
-  .estado-licencia {
-    color: #f0ad4e;
-    font-weight: 600;
-  }
+  
   @media (max-width: 600px) {
     .carousel-container {
       padding: 0.5rem;
@@ -88,14 +162,7 @@
       min-width: 500px;
     }
   }
-  .container {
-    display: flex;
-    width: 100%;
-  }
-  .text-container, .carousel-wrapper {
-    width: 50%;
-    padding: 10px; /* Espaciado opcional */
-  }
+
   .medicos-table {
     width: 100%; /* Asegura que la tabla ocupe todo ancho del contenedor */
     border-collapse: collapse;

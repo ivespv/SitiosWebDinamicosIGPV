@@ -116,13 +116,6 @@ nav ul li a:hover {
   color: #E98312;
 }
 
-.container {
-  margin: 4rem auto;
-  max-width: 1200px; /* Limita el ancho máximo */
-  padding: 0 1rem; /* Ajusta el padding */
-  display: flex;
-  justify-content: space-between;
-}
 
 .text-box {
   border: 2px solid #004640;
@@ -173,12 +166,7 @@ footer {
   margin-bottom: 20px;
 }
 
-.content-box, .image {
-  display: inline-block;
-  vertical-align: top;
-  width: 45%;
-  box-sizing: border-box;
-}
+
 
 .content {
   display: flex;
